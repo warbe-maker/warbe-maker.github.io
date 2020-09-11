@@ -4,28 +4,29 @@ title:  "Application versus Visual Basic error"
 date:   2020-09-11 13:49:00 +0200
 categories: vba excel snippet
 ---
-I didn't use Err.Raise because of an uncertainty regarding the handling of programmed application errors - in contrast to Visual Basic errors. This mainly had got to do with the use of the vbObjectError constant which may look a bit strange at the first glance. The code below shows a way for dealing with programmed errors.
+I didn't use Err.Raise because of an uncertainty regarding the handling of programmed application errors in contrast to Visual Basic errors. This mainly had got to do with the use of the vbObjectError constant which appeared bit strange to me. The code below now shows a proper way for dealing with programmed errors.
 ```vbscript
 Public Function AppErr(ByVal lNo As Long, _
-              Optional ByRef sError As String = vbNullString) As Variant
-' ---------------------------------------------------------------------------
+              Optional ByRef sError As String = vbNullString) As Long
+' -------------------------------------------------------------------
 ' Usage example when a programmed application error occurs:
 '    If ..... Then Err.Raise AppErr(1), ....
-' Usage example when the error message is displayed, e.g. by means of MsgBox:
+' Example when the error message is displayed:
 '   AppErr Err.Number, sErrTitle
 '   MsgBox title:=sErrTitle
-' ---------------------------------------------------------------------------
+' --------------------------------------------------------------------
     If lNo < 0 Then
-        '~~ This is an application error number which had turned into a negative number
-        '~~ in order to avoid any conflict with a VB error. The function returns the
-        '~~ original positive application error number and a corresponding title
+        '~~ This is an application error number which had been turned into a negative
+        '~~ number in order to avoid any conflict with a VB error. The function returns
+        '~~ the original positive application error number and a corresponding title
         AppErr = lNo - vbObjectError
         If Not IsMissing(sError) Then sError = "Application error " & AppErr
     Else
-        '~~ This is a positive error number regarded as a programmed application error
-        '~~ The function returns a negative number in order to avoid any conflict with
-        '~~ a VB error.
+        '~~ This is a positive error number which is regarded as a programmed application
+        '~~ error. The function thus returns a negative number in order to avoid any
+        '~~  conflict with a VB error.
         AppErr = vbObjectError + lNo
+        '~~ For the case the positive lNo is a Visual Basic Error a corresponding string is returned 
         If Not IsMissing(sError) Then sError = "Microsoft Visual Basic runtime error " & lNo
     End If
 End Function
