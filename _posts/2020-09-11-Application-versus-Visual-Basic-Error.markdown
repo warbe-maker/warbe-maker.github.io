@@ -31,7 +31,7 @@ Public Function AppErr(ByVal lNo As Long, _
     End If
 End Function
 ```
-There may be a slightly better way but this should be a good start. The following testing is shows the usage of it.
+There may be a slightly better way but this should be a good start. The following two test examples show the usage of the AppErr function - by the way outlining some error handling in general.
 ```vbscript
 Public Sub Test_AppErr()
     On Error GoTo on_error
