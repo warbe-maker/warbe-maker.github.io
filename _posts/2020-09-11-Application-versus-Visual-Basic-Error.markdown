@@ -4,6 +4,8 @@ title:  "Application versus Visual Basic error"
 date:   2020-09-11 13:49:00 +0200
 categories: vba excel snippet
 ---
+This is my very first blogging exercise!
+
 I didn't use Err.Raise because of an uncertainty regarding the handling of programmed application errors in contrast to Visual Basic errors. This mainly had got to do with the use of the vbObjectError constant which appeared bit strange to me. The code below now shows a proper way for dealing with programmed errors.
 ```vbscript
 Public Function AppErr(ByVal lNo As Long, _
@@ -66,7 +68,6 @@ on_error:
                    "Error source:" & vbLf & vbLf & ErrSrc(PROC)
 End Sub
 ```
-This is my very first exercise in blogging!
 The little function ErrSrc addresses the fact that VB only knows the project as the error source and has got no idea of in which module/procedure the error occurred. I do have this function in each module by default.
 The advantage of identifying the error source is that each procedure can have its own application error numbered from 1 to n. And thus no need to maintain a list of application error numbers used in a project. 
 ```vbscript
