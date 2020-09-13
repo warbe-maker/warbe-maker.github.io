@@ -2,7 +2,7 @@
 layout: post
 title: Min and Max
 ---
-I've looked for these functions and did not find something really convincing. The below do the job for any number of values provided as a ParmArray:
+I've looked for these "bread and butter"  functions and did not find something really convincing. The below are in my _mBasics_ module in any VBA PROJECT almost by default. They do the job for any number of values:
 ```vbscript
 Private Function Max(ParamArray va() As Variant) As Variant
 ' ---------------------------------------------------------
@@ -25,4 +25,10 @@ Private Function Min(ParamArray va() As Variant) As Variant
       If v < Min Then Min = v
    Next v
 End Function
+```
+
+Usage:
+```vbscript
+   x = Max(value, value, value, ...)
+   n = Min(value, value, value, ...)
 ```
