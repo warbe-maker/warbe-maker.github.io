@@ -75,9 +75,9 @@ Private Function ErrSrc(ByVal s As String) As String
     ErrSrc = "mTest." & s
 End Function
 ```
-As the error source can be seen as a property of a module, and also a little bit more sophisticated but fully equivalent - for those who love properties like me - would be:
+When the error source is regarded a property of a module the following will as be appropriate:
 ```vbscript
 Private Property Get ErrSrc(Optional ByVal s As String) As String:  ErrSrc = "mTest." & s:  End Property
-```
 
+```
 
