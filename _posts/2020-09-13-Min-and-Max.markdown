@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Min and Max
+subtitle: Minimum and Maximum out of any number of values
 ---
 I've looked for these "bread and butter"  functions and did not find something really convincing. The below are in my _mBasics_ module in any VBA PROJECT almost by default. They do the job for any number of values:
 ```vbscript
