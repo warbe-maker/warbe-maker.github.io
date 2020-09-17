@@ -68,7 +68,7 @@ on_error:
                    "Error source:" & vbLf & vbLf & ErrSrc(PROC)
 End Sub
 ```
-The little function ErrSrc addresses the fact that VB only knows the project as the error source and has got no idea of in which module/procedure the error occurred. I do have this function in each module by default.
+The little function _ErrSrc_ addresses the fact that VB only knows the project as the error source and has got no idea of in which module/procedure the error occurred. I do have this function in each module by default.
 The advantage of identifying the error source is that each procedure can have its own application error numbered from 1 to n. And thus no need to maintain a list of application error numbers used in a project. 
 ```vbscript
 Private Function ErrSrc(ByVal s As String) As String
@@ -80,4 +80,3 @@ When the error source is regarded a property of a module the following will as b
 Private Property Get ErrSrc(Optional ByVal s As String) As String:  ErrSrc = "mTest." & s:  End Property
 
 ```
-
