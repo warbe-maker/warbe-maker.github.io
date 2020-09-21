@@ -3,9 +3,11 @@ layout: post
 title: Errors in VBA projects
 subtitle: Error numbers and error source in VBA projects
 ---
-First of all _VB Run Time Errors_ should be distinguished from _Application Errors_ because they have a different reason and a different handling.
+<small>The aspects of this blog are part of  the [github repo Common VBA Error Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler)</small>. 
 
-### VB Run Time Errors 
+First of all _VB Runtime Errors_ should be distinguished from _Application Errors_ because they have a different reason and a different handling.
+
+### VB Runtime Errors 
 - Are caused by an incorrect use of Visual Basic and/or VBA
 - Are (or should be) trapped by an error handler (On Error Goto ...)
 - Can only be avoided by sufficient testing  (white box and boundary testing at the minimum)
@@ -16,15 +18,29 @@ First of all _VB Run Time Errors_ should be distinguished from _Application Erro
 - May be avoided by making it impossible to pass invalid arguments or are trapped by an error handler (On Error Go-to ...)
 
 ### Error Handler covering both
-When both kinds of error are handled by the only one error handler it makes sens to distinguish them.
-
-VBA offers the [vbObjectError](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) constant (-2147221504) to be used for the distinction of the two kinds of error. While the reason to use it is clear I found it difficult to implement it's use appropriately.
-
-When the vbObjectError constant is added to an Application Error Number let's say 1 the result is an error number -2147221503. When the error is displayed, a negative number can thus be identified as an _Application Error_ and turned back into the origin number:
+When both kinds of error are handled by the same error handler it makes sense to distinguish them.<br>
+For this VBA offers the [vbObjectError](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) constant (-2147221504) which is to be added to the _Application Error Number_ for the distinction.<br>
+When the _vbObjectError_ constant is added to an _Application Error Number_ let's say 1 the result is an error number -2147221503 - quite inappropriate to remember. When the error is displayed, a negative number can be identified as an _Application Error_ but should be translated back into the origin positive number by subtracting vbObjectError. Both directions are provided by:
 ```vbscript
+Public Function AppErr(ByVal lNo As Long) As Long
 
+    IIf lNo < 0, _
+        AppErr = lNo - vbObjectError, _
+        AppErr = vbObjectError + lNo
+End Function
 ```
-The advantage of this approach is obvious. Provided the error source (the procedure where the error occurred) is known and displayed with the error message each procedure can have its own _Application Error Numbers_ ranging from 1 to n.
+The advantage of this approach is that each procedure can have its own _Application Error Numbers_ ranging from 1 to n.
 
-Since VB does not provide any means to obtain the procedures and the modules name the following should be mandatory for each module and procedure:
+#### Error source
+Since VB does not provide any means to obtain the procedures and the modules name the following should be mandatory for procedure:
 
+and the following for each module:
+```vbscript
+Private Property ErrSrc(Optional ByVal s As String) As String
+    ErrSrc = "<module name>" & "." & s
+End Function
+```
+Used as follows:
+```vbscript
+code
+```
