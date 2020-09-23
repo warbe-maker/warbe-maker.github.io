@@ -1,39 +1,79 @@
 ---
 layout: post
-title: Errors in VBA projects
+title: Err.Number, vbObjectError, and Err.Source
 subtitle: Error numbers and error source in VBA projects
 ---
 <small>All aspects of this post are part of  the public [Common VBA Error Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler)</small>. 
 
-### VB Runtime and other errors
-First of all I prefer to distinguish _VB Runtime Errors_ from _Application Errors_.
+### vbObjectError and Err.Number
+- Microsoft documentation says, the error number raised by means of ```Err.Raise``` should be the sum of n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_
+- When the source of the error is known, i.e. the module and the procedure application errors can be source specific and range from number 1 to n
 
-- VB Runtime Errors are raised by VB and are caused by coding deficiencies.
-- Application Errors are caused by an incorrect application or usage of any kind of procedure, foreseeable and thus can be trapped by the explicit raise of an error (```Err.Raise```)
+What does this mean for an error handling?
 
-### Error Handler covering both
-An error handling is able to distinguish _VB Runtime_ from _Application Errors_ by means of the [vbObjectError](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) constant (-2147221504) which is to be added to the _Application Error Number_.<br>
-As a result an _Application Error Number_ 1 becomes the number -2147221503 - which is quite inappropriate to be displayed in an error message. When the error is displayed, a negative number can be identified as an _Application Error_ and translated back into the origin positive number by subtracting vbObjectError. Both directions are provided by:
+1. A negative Err.Number can be identified as an _Application Error_ and thus can be displayed in the title of the error message as<br>```Application Error n in <error source> at line m```
+2. Because a huge negative number is pretty inappropriate when displayed vbObjectErr should be subtracted which translates it back to the original _Application Error_ number.
+
+### _Err.Source_
+The _Source_ property of the _Err_ object unfortunately not provides what it's pretending. The only way to get the source of the error as \<module>.\<procedure> is to do it "manually" (see [Error handling in any procedure](#error-handling-in-any-procedure)
+
+### _Err.Number_ and _Err.Source_ wrapped up in an ErrHndlr Module
+In fact the Err.Source may only be used to identify a _Database Error_ so that it is not used for the "pretended" purpose.
 ```vbscript
 Public Function AppErr(ByVal lNo As Long) As Long
+    If lNo < 0 _
+    Then AppErr = lNo - vbObjectError _
+    Else AppErr = lNo + vbObjectError lNo
+End Function
 
-    IIf lNo < 0, _
-        AppErr = lNo - vbObjectError, _
-        AppErr = vbObjectError + lNo
+Private Function ErrMsgTitle( _
+                 ByVal errornumber As Long, _
+                 ByVal errorsource As String, _ 
+        Optional ByVal errorline As Long = 0) As String
+        
+   If Err.Number < 0 _
+   Then ErrMsgTitle = "Application Error " & Err.Number + vbObjectError _
+   Else ErrMsgTitle = "VB Runtime Error " & Err.Number
+   ErrMsgTitle = ErrMsgTitle & " in " & errorsource
+   If errorline <> 0 _
+   Then ErrMsgTitle = ErrMsgTitle & " at line " & errorline
+   
+End Function
+
+Public Function ErrDisplay( _
+                ByVal errornumber As Long, _
+                ByVal errorsource As String, _
+                ByVal errordescription As String Long _
+       Optional ByVal continue As Variant = vbOkOnly) As Variant
+
+   ErrDisplay = _
+      MsgBox(title:=ErrMsgTitle(errornumber,errorsource, errorline, continue), prompt:=errordescription, buttons:=replies)
+   
 End Function
 ```
-The error is raised by ```Err.Raise AppErr(1), ....``` and translated back when the error us displayed. In connection with a clear identification of the error source each procedure can have its own _Application Error Numbers_ ranging from 1 to n.
-
-#### Error source
-Since VB does not provide any means to obtain the procedures and the modules name the following should be mandatory for procedure:
-
-and the following for each module:
+#### Error handling in any procedure
 ```vbscript
+Private Sub Any
+   Const PROC = "Any"
+   On Error Goto on_error
+   ...
+   If ... _
+   Then Err.Raise AppErr(1), "Error description" ' example of an "Application Error"
+   ...
+
+end_proc:
+   Exit Sub
+   
+on_error:
+   ErrDisplay Err.Number, ErrSrc(PROC), Err.Description, Erl, vbOkOnly
+   ' or in case of a continue option
+   ' Select Case ErrDisplay(...., continue:=vbYesNo)
+   '    Case vbYes
+   '    Case vbNo
+   ' End Select
+End Sub
+
 Private Property ErrSrc(Optional ByVal s As String) As String
     ErrSrc = "<module name>" & "." & s
 End Function
-```
-Used as follows:
-```vbscript
-code
 ```
