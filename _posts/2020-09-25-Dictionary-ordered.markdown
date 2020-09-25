@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Add items to a Dictionary "ordered"
-date:   2020-09-30 09:11:20 +0200
+date:   2020-09-25 16:00 +0200
 categories: vba basic
 ---
 Instead of sorting a dictionary when all items had been added, adding them directly in the desired order is an option. The below procedure adds items to a dictionary in either of the modes enumerated in ```enDctMode```.
@@ -199,4 +199,3 @@ Private Sub DctAddExample()
              
    Next vbc
 ```
-
