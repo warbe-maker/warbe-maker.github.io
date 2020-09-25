@@ -193,7 +193,7 @@ Private Sub DctAddExample()
    
    For each vbc in This workbook.VBProject.VBComponents
       DctAdd dct:=dct, _
-             dctkey:=cbc, _
+             dctkey:=vbc, _
              dctitem:=vbc.name _
              dctmode:=dct_ascendingcasesensitive 
              
