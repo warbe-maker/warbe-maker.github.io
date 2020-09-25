@@ -18,7 +18,8 @@ Public Enum enDctMode ' Dictionary add/insert modes
     dct_descendingcaseignored
     dct_sequence
 End Enum
-
+```
+```vbscript
 Public Sub DctAdd(ByRef dct As Dictionary, _
                   ByVal dctkey As Variant, _
                   ByVal dctitem As Variant, _
@@ -183,6 +184,7 @@ End Function
 
 End Sub
 ```
+
 ### Usage example
 The _VBComponents_ of ThisWorkbook are added ordered in ascending sequence case sensitive (requires a reference to "") 
 ```vbscript
@@ -192,10 +194,12 @@ Private Sub DctAddExample()
    Dim cbc As VbComponent
    
    For each vbc in This workbook.VBProject.VBComponents
-      DctAdd dct:=dct, _
-             dctkey:=vbc, _
-             dctitem:=vbc.name _
-             dctmode:=dct_ascendingcasesensitive 
-             
+      ' DctAdd dct, vbc, vbc.name
+      ' would be the equivalent of
+      ' dct.Add cbc, cbc.Name
+      ' The items are added in entry
+      DctAdd dct, vbc, vbc.name, dct_ascendingcasesensitive
+      ' adds each item in ascending
+      ' sequence         
    Next vbc
 ```
