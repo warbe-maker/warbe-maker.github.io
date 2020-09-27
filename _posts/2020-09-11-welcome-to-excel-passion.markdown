@@ -4,7 +4,7 @@ title: Welcome to Excel Passion!
 date:   2020-09-11 09:11:20 +0200
 categories: blog excel passion
 ---
-Finally I've found a home - at the age of 70 - for some of my "Common Excel VBA modules" which had grown over decades - and hopefully had become mature enough worth being published. For example:
+Finally I've found a home - at the age of 70 - for some of my _Common Excel Components_ (VBA modules) which had grown over decades - and hopefully had become mature enough worth being published. For example:
 - A [VBA MsgBox Alternative](<https://github.com/warbe-maker/MsgBox-Alternative>) for appealing messages with minimum effort
 - A [Common Error-Handler]() providing
   - the "path to the error"
