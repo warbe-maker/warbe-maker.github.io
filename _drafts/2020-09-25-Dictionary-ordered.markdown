@@ -4,9 +4,12 @@ title: Add items to a Dictionary "ordered"
 date:   2020-09-25 16:00 +0200
 categories: vba basic
 ---
-Instead of sorting a dictionary when all items had been added, adding them directly in the desired order is an option. The below procedure adds items to a dictionary in either of the modes enumerated in ```enDctMode```.
 
-The performance may suffer when several hundreds of items are added and for many of them the entry sequence is not the specified one. Testing available in the dedicated _Common Component Workbook_ Basic.xlsm has proven that the procedure works fine even when the key is an object, provided the object has a name property.
+It makes a difference when a function I've used regularly is going to be published. Demands regarding quality, stability, etc. escalate. Anyhow.
+
+In many cases it's appropriate to collect items in a Dictionary directly ordered - instead of sorting them finally. The below procedure(s) add items to a dictionary in either of the modes enumerated in ```enDctMode```.
+
+The performance may suffer when several hundreds of items are added and for the majority the entry sequence is not the specified one. A full test environment is available in the dedicated _Common Component Workbook_ Basic.xlsm. Testing had proven that the procedure works fine even when the key/item is the ordered object.
 
 ````vbscript
 Public Enum enDctMode ' Dictionary add/insert modes
