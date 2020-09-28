@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Add items to a Dictionary "ordered"
+subtitle: Adding item to a Dictionary by any sequence order without extra sorting
 date:   2020-09-25 16:00 +0200
 categories: vba basic
 ---
