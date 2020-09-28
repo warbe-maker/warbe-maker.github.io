@@ -13,6 +13,7 @@ testing, and continuous improvement of _Common Components_
 - Procedures often used and regarded mature enough worth being published
 - Experience made with VB-Projects and GitHub
 - and others
+
 #### Environment
 This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
 
