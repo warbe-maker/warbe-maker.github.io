@@ -9,7 +9,7 @@ This blog is dedicated to posts regarding
   - VB-Projects dedicated to the development, 
 testing, and continuous improvement of _Common Components_ 
   - Usage i.e. uodate/synchronization of _Common Components_ used in VB-Projects
-- Modules which do offer some extra value for example my mErrHndl module or a _VBA MsgBox Alternative_
+- Modules which do offer some extra value for example my _mErrHndlr_ module or a _VBA MsgBox Alternative_
 - Procedures often used and regarded mature enough worth being published
 - Experience made with VB-Projects and GitHub
 - and others
