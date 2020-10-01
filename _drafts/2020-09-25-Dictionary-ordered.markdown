@@ -18,54 +18,23 @@ In many cases, specifically when entries to be added are not several hundreds, c
 
 ### Syntax
 
-<<<<<<< HEAD
-`DctAdd dictionary, key, item[, order][,casesensitive][, duplicates]`
-=======
-`DctAdd dictionary, key, item[, order][, seq][, sense][, target][, staywithfirst]`
->>>>>>> branch 'master' of https://github.com/warbe-maker/warbe-maker.github.io.git
+`DctAdd dct, key, item[, order][, seq][, sense][, target][, staywithfirst]`
 
 The procedure has these names arguments:
 
 | Part | Description |
 | -------- | ----------- |
 | dct      |  	Required. Always the name of a Dictionary variable or object. When not an object a new Dictionary is established. Dictionary object  returned with the provided key/item pair added.|
-<<<<<<< HEAD
-| dctkey   | Required. The key associated with the item being added. May be numeric, string, or an object.  |
-| dctitem. | Required. The item associated with the key being added. May be numeric, string, or an object. |
-| dctorder | If dctorder is omitted it defaults entry sequence.   |
-| dctcasesensitive | Optional. Boolean. Defaults to True. When provided False the key/item is added case ignored |
-| keepduplicates | Optional. Boolean. Defaults to True.<br>False = when the same item is added with a different key the item is replaced by the key/item pair<br>True = when the same item is added with a key which does not exist, the key/item pair is added|
-| dcttarget | Optional. Target when the dctorder is add before by key/item or add after key/item. When not provided along with such a dctorder the dctorder is changed to addascending_bykey/item adddescending_bykey/item  |
-=======
 | key      | Required. The key associated with the item being added. May be numeric, string, or an object.  |
 | item    | Required. The item associated with the key being added. May be numeric, string, or an object. |
 | order | Optional. Defaults to by key when omitted. |
 | seq    | Optional. Defaults to entry sequence when omitted. |
 | sense   | Optional. Defaults to case sensiticve when omitted.|
 | target | Optional. Target key or item when seq is add before or add after. When omitted:<br>When the sequence is add before the sequence is changed to descending<b>When the sequence is add after it is changed to ascending. |
->>>>>>> branch 'master' of https://github.com/warbe-maker/warbe-maker.github.io.git
 
 
 ### Settings
 
-<<<<<<< HEAD
-The dctorder argument settings are:
-=======
-The order argument settings are:
->>>>>>> branch 'master' of https://github.com/warbe-maker/warbe-maker.github.io.git
-
-<<<<<<< HEAD
-| Constant          	| Description |
-| ----------------- | ----------- |
-| after_byitem.     | |
-| after_bykey       | |
-| before_byitem     | |
-| before_bykey      | |
-| ascending_bykey   | Performs an add operation with the key/item pair added/inserted ascending by key.|
-| ascending_byitem  | |
-| descending_bykey  | |
-| descending_byitem | |
-=======
 | Argument | Constant            | Description |
 | -------- | ------------------- | ----------- |
 | order    | order_bykey         |             |
@@ -76,8 +45,6 @@ The order argument settings are:
 |          | seq_beforetarget    |             |
 | sense    | sense_caseignored   |             |
 |          | sense_casesensitive |             |
->>>>>>> branch 'master' of https://github.com/warbe-maker/warbe-maker.github.io.git
-
 
 ### Examples
 #### Entry sequence
@@ -89,11 +56,7 @@ Private Sub DctAddExample()
    Dim vbc As VBComponent
    
    For each vbc in ThisWorkbook.VBProject.VBComponents
-<<<<<<< HEAD
-      DctAdd dct, vbc, vbc.name        
-=======
       DctAdd dct, vbc, vbc ' key and item is an object       
->>>>>>> branch 'master' of https://github.com/warbe-maker/warbe-maker.github.io.git
    Next vbc
    
 End Sub
@@ -107,7 +70,7 @@ Private Sub DctAddExample()
    Dim vbc As VBComponent
    
    For each vbc in ThisWorkbook.VBProject.VBComponents
-      DctAdd dct, vbc, vbc.name, ascending_bykey        
+      DctAdd dct, vbc, vbc.name, seq:=seq_ascending       
    Next vbc
    
 End Sub
