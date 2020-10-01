@@ -1,208 +1,86 @@
 ---
 layout: post
-title: Add items to a Dictionary "ordered"
+title: DctAdd: Add key/item pairs to a Dictionary "instantly ordered"
+subtitle: Adding item to a Dictionary by any sequence order without extra sorting
 date:   2020-09-25 16:00 +0200
 categories: vba basic
 ---
 
-It makes a difference when a function I've used regularly is going to be published. Demands regarding quality, stability, etc. escalate. Anyhow.
+In this post<br>
+[Method](#method)<br>
+[Syntax](#syntax)<br>
+[Settings](#settinhs)<br>
+[Examples](#examples)<br>
+[Development, test, maintenance](#development-test-maintenance)
 
-In many cases it's appropriate to collect items in a Dictionary directly ordered - instead of sorting them finally. The below procedure(s) add items to a dictionary in either of the modes enumerated in ```enDctMode```.
+### Method
+In many cases, specifically when entries to be added are not several hundreds, collecting items in a Dictionary instantly ordered is an option - especially when this method offers uncommon options. The procedure _DctAdd_ in the module _mDct.bas_ offers ascending/descending either by key or by item whereby both may also be an object, provided the object has a name property. It also offers the explicit add before/after a specific target entry (key or item) and all either case sensitive or case ignored.
 
-The performance may suffer when several hundreds of items are added and for the majority the entry sequence is not the specified one. A full test environment is available in the dedicated _Common Component Workbook_ Basic.xlsm. Testing had proven that the procedure works fine even when the key/item is the ordered object.
+### Syntax
 
-````vbscript
-Public Enum enDctMode ' Dictionary add/insert modes
-    dct_addafter
-    dct_addbefore
-    dct_ascendingcasesensitive
-    dct_ascendingcaseingignored
-    dct_descendingcasesensitive
-    dct_descendingcaseignored
-    dct_sequence
-End Enum
-```
-```vbscript
-Public Sub DctAdd(ByRef dct As Dictionary, _
-                  ByVal dctkey As Variant, _
-                  ByVal dctitem As Variant, _
-         Optional ByVal dctmode As enDctMode = dct_sequence, _
-         Optional ByVal dcttargetkey As Variant)
-' ----------------------------------------------------------------------
-' Adds the item (dctitem) to the Dictionary (dct) with the key (dctkey).
-' Supports various key sequences, case and case insensitive key as well
-' as adding items before or after an existing item.
-' - When the key (dctkey) already exists the item is updated when it is
-'   numeric or a string, else it is ignored.
-' - When the dictionary (dct) is Nothing it is setup on the fly.
-' - When dctmode = before or after dcttargetkey is obligatory and an
-'   error is raised when not provided.
-' - When the item's key is an object any dctmode other then by sequence
-'   requires an object with a name property. If not the case an error is
-'   raised.
+`DctAdd dictionary, key, item[, order][, seq][, sense][, target][, staywithfirst]`
 
-' W. Rauschenberger, Berlin Mar 2020
-' -----------------------------------------------------------------
-    Const PROC = "DctAdd"
-    Dim dctTemp As Dictionary
-    Dim vKey    As Variant
-    Dim bAdd    As Boolean
+The procedure has these names arguments:
 
-    On Error GoTo on_error
-    
-    If dct Is Nothing Then Set dct = New Dictionary
-    
-    If Not IsNumeric(dctkey) And TypeName(dctkey) <> "String" Then
-        On Error Resume Next
-        Debug.Print "Added object with name '" & dctkey.Name & "'"
-        If Err.Number <> 0 _
-        Then Err.Raise AppErr(1), ErrSrc(PROC), "The key is neither a numeric value nor a string, nor an object with a name property!"
-    End If
-    
-    With dct
-        If .Count = 0 Or dctmode = dct_sequence Then ' the very first item is just added
-            .Add dctkey, dctitem
-            Exit Sub
-        End If
-        ' ----------------------------------------------------------------------
-        ' Let's see whether the new key can be added directly after the last key
-        ' ----------------------------------------------------------------------
-        If IsNumeric(.Keys()(.Count - 1)) Or TypeName(.Keys()(.Count - 1)) = "String" _
-        Then vKey = .Keys()(.Count - 1) _
-        Else Set vKey = .Keys()(.Count - 1)
-        
-        Select Case dctmode
-            Case dct_ascendingcasesensitive
-                If DctAddKeyValue(dctkey) > DctAddKeyValue(vKey) Then
-                    .Add dctkey, dctitem
-                    Exit Sub                ' Done!
-                End If
-            Case dct_ascendingcaseingignored
-                If LCase$(dctkey) > LCase$(DctAddKeyValue(vKey)) Then
-                    .Add dctkey, dctitem
-                    Exit Sub                ' Done!
-                End If
-            Case dct_descendingcasesensitive
-                If DctAddKeyValue(dctkey) < DctAddKeyValue(vKey) Then
-                    .Add dctkey, dctitem
-                    Exit Sub                ' Done!
-                End If
-            Case dct_descendingcaseignored
-                If LCase$(DctAddKeyValue(dctkey)) < LCase$(DctAddKeyValue(vKey)) Then
-                    .Add dctkey, dctitem
-                    Exit Sub                ' Done!
-                End If
-        End Select
-    End With
+| Part | Description |
+| -------- | ----------- |
+| dct      |  	Required. Always the name of a Dictionary variable or object. When not an object a new Dictionary is established. Dictionary object  returned with the provided key/item pair added.|
+| key      | Required. The key associated with the item being added. May be numeric, string, or an object.  |
+| item    | Required. The item associated with the key being added. May be numeric, string, or an object. |
+| order | Optional. Defaults to by key when omitted. |
+| seq    | Optional. Defaults to entry sequence when omitted. |
+| sense   | Optional. Defaults to case sensiticve when omitted.|
+| target | Optional. Target key or item when seq is add before or add after. When omitted:<br>When the sequence is add before the sequence is changed to descending<b>When the sequence is add after it is changed to ascending. |
 
-    '~~ -------------------------------------------------------------------------
-    '~~ Since the new key could not simply be added to the Dictionary it will be
-    '~~ added, somewhere in between, before the very first or after the last key.
-    '~~ -------------------------------------------------------------------------
-    Set dctTemp = New Dictionary
-    bAdd = True
-    For Each vKey In dct
-        With dctTemp
-            If bAdd Then
-                If dct.Exists(dctkey) Then
-                    '~~ When the item is numeric or a string and the key already exists the item is updated
-                    '~~ else ignored
-                    If IsNumeric(dctitem) Or TypeName(dctitem) = "String" Then dct.Item(dctkey) = dctitem
-                    Exit Sub
-                End If
-                Select Case dctmode
-                    Case dct_ascendingcasesensitive
-                        If DctAddKeyValue(vKey) > DctAddKeyValue(dctkey) Then
-                            .Add dctkey, dctitem
-                            bAdd = False ' Add done
-                        End If
-                    Case dct_ascendingcaseingignored
-                        If LCase$(DctAddKeyValue(vKey)) > LCase$(DctAddKeyValue(dctkey)) Then
-                            .Add dctkey, dctitem
-                            bAdd = False ' Add done
-                        End If
-                    Case dct_addbefore
-                        If DctAddKeyValue(vKey) = dcttargetkey Then
-                            '~~> Add before dcttargetkey key has been reached
-                            .Add dctkey, dctitem
-                            bAdd = True
-                        End If
-                    Case dct_descendingcasesensitive
-                        If DctAddKeyValue(vKey) < DctAddKeyValue(dctkey) Then
-                            .Add dctkey, dctitem
-                            bAdd = False ' Add done
-                        End If
-                    Case dct_descendingcaseignored
-                        If LCase$(DctAddKeyValue(vKey)) < LCase$(DctAddKeyValue(dctkey)) Then
-                            .Add dctkey, dctitem
-                            bAdd = False ' Add done
-                        End If
-                End Select
-            End If
-            
-            '~~> Transfer the existing item to the temporary dictionary
-            .Add vKey, dct.Item(vKey)
-            
-            If dctmode = dct_addafter And bAdd Then
-                If DctAddKeyValue(vKey) = dcttargetkey Then
-                    ' ----------------------------------------
-                    ' Just add when dctmode indicates add after,
-                    ' and the vTraget key has been reached
-                    ' ----------------------------------------
-                    .Add dctkey, dctitem
-                    bAdd = False
-                End If
-            End If
-            
-        End With
-    Next vKey
-    
-    '~~> Return the temporary dictionary with the new item added
-    Set dct = dctTemp
-    Set dctTemp = Nothing
 
-end_proc:
-    Exit Sub
+### Settings
 
-on_error:
-#If Debugging Then
-    Debug.Print Err.Description: Stop: Resume
-#End If
-    MsgBox Prompt:=Err.Description, Title:="VB Runtime Error " & Err.Number & " in " & ErrSrc(PROC)
-End Sub
+The order argument settings are:
 
-Private Function DctAddKeyValue(ByVal dctkey As Variant) As Variant
-' -----------------------------------------------------------------
-' When dctkey is numeric or a string it is returned as is
-' else when it is an object with a name property the name
-' else a vbNullString. -----------------------------------------------------------------
-    If IsNumeric(dctkey) Or TypeName(dctkey) = "String" Then
-        DctAddKeyValue = dctkey
-    Else
-        On Error Resume Next
-        DctAddKeyValue = dctkey.Name
-        If Err.Number <> 0 Then DctAddKeyValue = vbNullString
-    End If
-End Function
+| Argument | Constant            | Description |
+| -------- | ------------------- | ----------- |
+| order    | order_bykey         |             |
+|          | order_byitem        |             |
+| seq      | seq_ascending       | Performs an add operation with the key/item pair added/inserted ascending by key.|
+|          | seq_descending      |             |
+|          | seq_aftertarget     |             |
+|          | seq_beforetarget    |             |
+| sense    | sense_caseignored   |             |
+|          | sense_casesensitive |             |
 
-End Sub
-```
 
-### Usage example
-The _VBComponents_ of ThisWorkbook are added ordered in ascending sequence case sensitive (requires a reference to "") 
+### Examples
+#### Entry sequence
+In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in entry sequence (the default):
 ```vbscript
 Private Sub DctAddExample()
 
    Dim dct As Dictionary
-   Dim cbc As VbComponent
+   Dim vbc As VBComponent
    
-   For each vbc in This workbook.VBProject.VBComponents
-      ' DctAdd dct, vbc, vbc.name
-      ' would be the equivalent of
-      ' dct.Add cbc, cbc.Name
-      ' The items are added in entry
-      DctAdd dct, vbc, vbc.name, dct_ascendingcasesensitive
-      ' adds each item in ascending
-      ' sequence         
+   For each vbc in ThisWorkbook.VBProject.VBComponents
+      DctAdd dct, vbc, vbc ' key and item is an object       
    Next vbc
+   
+End Sub
 ```
+#### Ascending by key case sensitive
+In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in ascending sequence case sensitive. The order criteria is the name property of the key object:
+```vbscript
+Private Sub DctAddExample()
+
+   Dim dct As Dictionary
+   Dim vbc As VBComponent
+   
+   For each vbc in ThisWorkbook.VBProject.VBComponents
+      DctAdd dct, vbc, vbc.name, ascending_bykey        
+   Next vbc
+   
+End Sub
+```
+
+### Development, test, maintenance
+- The dedicated _Common Component Workbook_ Dct.xlsm is the development, test, and maintenance environment.
+- The procedure _Test\_DctAdd_ in module _mTest_ provides a fully automated regression test, obligatory after any kind of code modification
+- The procedure _Test\_DctAddPerfornance_ in module _mTest_ provides an example for a performance test. In order to trace the execution time the tests make use of  the _mErrHndlr_ module (not required for the _DctAdd_ procedure)
+- The _DctAdd_ procedure uses the _ErrMsg_ procedure in module _mBasic_
