@@ -24,18 +24,18 @@ The procedure has these names arguments:
 | Part | Description |
 | -------- | ----------- |
 | dct      |  	Required. Always the name of a Dictionary variable or object. When not an object a new Dictionary is established. Dictionary object  returned with the provided key/item pair added.|
-| key      | Required. The key associated with the item being added. May be numeric, string, or an object.  |
-| item    | Required. The item associated with the key being added. May be numeric, string, or an object. |
-| order | Optional. Defaults to by key when omitted. |
-| seq    | Optional. Defaults to entry sequence when omitted. |
-| sense   | Optional. Defaults to case sensiticve when omitted.|
-| target | Optional. Target key or item when seq is add before or add after. When omitted:<br>When the sequence is add before the sequence is changed to descending<b>When the sequence is add after it is changed to ascending. |
-
+| key      | Required. The key associated with the item being added. May be numeric, string, or an object.<br><br>**Note:** When the key is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised.  |
+| item    | Required. The item associated with the key being added. May be numeric, string, or an object.<br><br>**Note:** When the item is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised. |
+| order | Optional. Defaults to _order\_bykey_ when omitted. |
+| seq    | Optional. Defaults to entry sequence (_seq\_entry_) when omitted. |
+| sense   | Optional. Defaults to _case\_sensitive_ when omitted.|
+| target | Optional. An existing key or item. When omitted:<br>-When the sequence is _seq\_beforekey_, or _seq\_beforeitem_, the sequence is changed to _seq\_descending_<br>- When the sequence  _seq\_afterkey_, _seq\_afteritem_ the sequence is changed to _seq\_ascending_ |
+| staywithfirst | Optional. Boolean. Defaults to False.<br>False:<br>- With _order\_bykey_ any add of an existing key updates the item<br>- With _order\_byitem_ any add if the same item is added provided it has a new key.<br>True:<br>- With _order\_bykey_ any add for an existing key is ignored<br>- With _order\_byitem_ Attention!!! Any add if an existing item is ignored - even when it has a new unique key !!!|
 
 ### Settings
 
 | Argument | Constant   | Description |
-| --------------------- | ----------- |
+| -------- | ---------- | ----------- |
 | order    | order_bykey         |    |
 |          | order_byitem        |    |
 | seq      | seq_ascending       | Performs an add operation with the key/item pair added/inserted ascending by key.|
@@ -45,6 +45,7 @@ The procedure has these names arguments:
 |          | seq_entry.          |    | 
 | sense    | sense_caseignored   |    |
 |          | sense_casesensitive |    |
+
 
 ### Examples
 #### Entry sequence
