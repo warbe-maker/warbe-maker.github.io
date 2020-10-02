@@ -13,7 +13,13 @@ In this post<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 ### Method
-In many cases, specifically when entries to be added are not several hundreds, collecting items in a Dictionary instantly ordered is an option - especially when this method offers uncommon options. The procedure _DctAdd_ in the module _mDct.bas_ offers ascending/descending either by key or by item whereby both may also be an object, provided the object has a name property. It also offers the explicit add before/after a specific target entry (key or item) and all either case sensitive or case ignored.
+In many cases, specifically when entries to be added are not several hundreds, collecting items in a Dictionary instantly ordered is an option. The procedure _DctAdd_ in  module _mDct.bas_ provides:
+- ascending, descending, and entry sequence
+-  order by key or by item whereby both may also be an object, provided the object has a name property
+- case sensitive and case ignored
+- add before or add after a specific target entry (by key or by item)
+- unique or duplicate items even when sort order is by item, provided the items have different keys
+- item update for duplicate keys when ordered by key
 
 ### Syntax
 
