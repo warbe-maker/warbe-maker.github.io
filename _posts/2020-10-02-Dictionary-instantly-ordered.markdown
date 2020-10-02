@@ -9,11 +9,12 @@ In this post<br>
 [Method](#method)<br>
 [Syntax](#syntax)<br>
 [Settings](#settinhs)<br>
-[Examples](#examples)<br>
+[Usage examples](#usage-examples)<](#installation)
+[Installation](#installation)
 [Development, test, maintenance](#development-test-maintenance)
 
 ### Method
-In many cases, specifically when entries to be added are not several hundreds, collecting items in a Dictionary instantly ordered is an option. The procedure _DctAdd_ in  module _mDct.bas_ provides:
+In many cases, specifically when items to be collected in a Dictionary are not several hundreds, adding them instantly ordered is an option. The procedure _DctAdd_ in  module _mDct.bas_ provides:
 - ascending, descending, and entry sequence
 -  order by key or by item whereby both may also be an object, provided the object has a name property
 - case sensitive and case ignored
@@ -44,18 +45,18 @@ The procedure has these names arguments:
 
 | Argument | Constant   | Description |
 | -------- | ---------- | ----------- |
-| order    | order_bykey         |    |
-|          | order_byitem        |    |
-| seq      | seq_ascending       | Performs an add operation with the key/item pair added/inserted ascending by key.|
-|          | seq_descending      |    |
-|          | seq_aftertarget     |    |
-|          | seq_beforetarget    |    |
-|          | seq_entry.          |    | 
-| sense    | sense_caseignored   |    |
-|          | sense_casesensitive |    |
+| order    | order_bykey         | Items added are ordered by key (default for ascending or descending sequence)   |
+|          | order_byitem        | Items added are ordered by item                  |
+| seq      | seq_ascending       | Items are added in ascending sequence            |
+|          | seq_descending      | Items are added in descending sequence           |
+|          | seq_aftertarget     | The item is added after a specified target entry |
+|          | seq_beforetarget    | The item is added before a specified target entry|
+|          | seq_entry.          | Items are added in entry sequence (default)      | 
+| sense    | sense_caseignored   | Items are ordered with case ignored              |
+|          | sense_casesensitive | Items are ordered with case sensitive (default)  |
 
 
-### Examples
+### Usage examples
 #### Entry sequence
 In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in entry sequence (the default):
 ```vbscript
@@ -79,14 +80,17 @@ Private Sub DctAddExample()
    Dim vbc As VBComponent
    
    For each vbc in ThisWorkbook.VBProject.VBComponents
+      ' order_bykey and case_sensitive are defaults
       DctAdd dct, vbc, vbc.name, seq:=seq_ascending       
    Next vbc
    
 End Sub
 ```
+### Installation
+Download [_mDct.bas_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Dictionary-Procedures/master/mDct.bas) and import it into your VB-Project. Alternatively you may fork the [Github repo Common-VBA-Dictionary-Procedures](https://github.com/warbe-maker/Common-VBA-Dictionary-Procedures).
 
 ### Development, test, maintenance
-- The dedicated _Common Component Workbook_ Dct.xlsm is the development, test, and maintenance environment.
+- The dedicated _Common Component Workbook_ Dct.xlsm (see Github repo) is the development, test, and maintenance environment.
 - The procedure _Test\_DctAdd_ in module _mTest_ provides a fully automated regression test, obligatory after any kind of code modification
 - The procedure _Test\_DctAddPerfornance_ in module _mTest_ provides an example for a performance test. In order to trace the execution time the tests make use of  the _mErrHndlr_ module (not required for the _DctAdd_ procedure)
 - The _DctAdd_ procedure uses the _ErrMsg_ procedure in module _mBasic_
