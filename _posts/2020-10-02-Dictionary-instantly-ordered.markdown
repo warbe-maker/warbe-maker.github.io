@@ -25,11 +25,13 @@ In many cases, specifically when entries to be added are not several hundreds, c
 
 `DctAdd dct, key, item[, order][, seq][, sense][, target][, staywithfirst]`
 
+Note: Without any optional argument are the result is identical with<br>`dct.Add key, item`
+
 The procedure has these names arguments:
 
 | Part | Description |
 | -------- | ----------- |
-| dct      |  	Required. Always the name of a Dictionary variable or object. When not an object a new Dictionary is established. Dictionary object  returned with the provided key/item pair added.|
+| dct      |  	Required. Always the name of a Dictionary variable or object. When not an object a new Dictionary is established. Dictionary object  is returned by the method with the provided key/item pair added.|
 | key      | Required. The key associated with the item being added. May be numeric, string, or an object.<br><br>**Note:** When the key is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised.  |
 | item    | Required. The item associated with the key being added. May be numeric, string, or an object.<br><br>**Note:** When the item is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised. |
 | order | Optional. Defaults to _order\_bykey_ when omitted. |
