@@ -1,11 +1,10 @@
 ---
 layout: post
-title: DctAdd: Add key/item pairs to a Dictionary "instantly ordered"
+title: Add key/item pairs to a Dictionary "instantly ordered"
 subtitle: Adding item to a Dictionary by any sequence order without extra sorting
-date:   2020-09-25 16:00 +0200
+date: 2020-10-02 16:00 +0200
 categories: vba dictionary common
 ---
-
 In this post<br>
 [Method](#method)<br>
 [Syntax](#syntax)<br>
