@@ -1,9 +1,10 @@
+
 ---
 layout: post
 title: DctAdd: Add key/item pairs to a Dictionary "instantly ordered"
 subtitle: Adding item to a Dictionary by any sequence order without extra sorting
 date:   2020-09-25 16:00 +0200
-categories: vba basic
+categories: vba dictionary common
 ---
 
 In this post<br>
@@ -35,16 +36,17 @@ The procedure has these names arguments:
 
 ### Settings
 
-| Argument | Constant            | Description |
-| -------- | ------------------- | ----------- |
-| order    | order_bykey         |             |
-|          | order_byitem        |             |
+| Argument | Constant   | Description |
+| --------------------- | ----------- |
+| order    | order_bykey         |    |
+|          | order_byitem        |    |
 | seq      | seq_ascending       | Performs an add operation with the key/item pair added/inserted ascending by key.|
-|          | seq_descending      |             |
-|          | seq_aftertarget     |             |
-|          | seq_beforetarget    |             |
-| sense    | sense_caseignored   |             |
-|          | sense_casesensitive |             |
+|          | seq_descending      |    |
+|          | seq_aftertarget     |    |
+|          | seq_beforetarget    |    |
+|          | seq_entry.          |    | 
+| sense    | sense_caseignored   |    |
+|          | sense_casesensitive |    |
 
 ### Examples
 #### Entry sequence
