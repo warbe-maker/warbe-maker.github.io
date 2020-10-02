@@ -82,5 +82,5 @@ End Sub
 ### Development, test, maintenance
 - The dedicated _Common Component Workbook_ Dct.xlsm is the development, test, and maintenance environment.
 - The procedure _Test\_DctAdd_ in module _mTest_ provides a fully automated regression test, obligatory after any kind of code modification
-- The procedure _Test\_DctAddPerfornance_ in module _mTest_ provides an example for a performance test. In order to trace the execution time the tests make use of  the _mErrHndlr_ module (not required for the _DctAdd_ procedure)
+- The procedure _Test\_DctAdd\_99\_Performance_ in module _mTest_ provides an example for a performance test. In order to trace the execution time the tests make use of  the _mErrHndlr_ module (not required for the _DctAdd_ procedure)
 - The _DctAdd_ procedure uses the _ErrMsg_ procedure in module _mBasic_
