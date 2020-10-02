@@ -9,8 +9,8 @@ In this post<br>
 [Method](#method)<br>
 [Syntax](#syntax)<br>
 [Settings](#settinhs)<br>
-[Usage examples](#usage-examples)<](#installation)
-[Installation](#installation)
+[Usage examples](#usage-examples)<br>
+[Installation](#installation)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 ### Method
