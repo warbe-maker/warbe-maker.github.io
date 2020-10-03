@@ -14,11 +14,13 @@ In this post<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 ### Method
-The method is as simple as displaying an error message, the result however is as complete as one can think.
-The _ErrHndlr_ in module _mErrHndlr_ provides:
-- a comprehensive error message
-- a path to the error
-- a complete execution trace
+The method is as simple as displaying an error message, the result however may be a little surprise as complete.
+Four code lines in a procedure which make the difference:
+- an error message which discriminates _VB Runtime Errors, _Application Error_, and _Database-Error_
+- a clear indication of the error source in the form <module>.<procedure>
+- a path to the error or better a path from the error source to the _Entry Procedure_
+- ptionally an execution time trace
+- an optional writing of an error log file is still missing.
 
 ### Syntax
 
