@@ -8,7 +8,7 @@ categories: vba dictionary common
 In this post<br>
 [Method](#method)<br>
 [Syntax](#syntax)<br>
-[Settings](#settinhs)<br>
+[Settings](#settings)<br>
 [Usage examples](#usage-examples)<br>
 [Installation](#installation)<br>
 [Development, test, maintenance](#development-test-maintenance)
