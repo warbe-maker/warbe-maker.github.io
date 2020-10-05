@@ -10,11 +10,15 @@ In this post<br>
 [Method](#method)<br>
 [Syntax](#syntax)<br>
 [Settings](#settinhs)<br>
-[Examples](#examples)<br>
+[Example](#example)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 ### Method
-
+Comparing Dictionaries may not be worth another post unless the function's options make a difference:
+- Compare either the Keys, the Items or both
+- Compare case sensitive or case ignored (for items if type String)
+- Accept objects for both, keys an items whereby objects can only constitute a difference when they have a name property
+- optionally ignore/skip empty items
 
 ### Syntax
 
@@ -25,9 +29,9 @@ The procedure has these names arguments:
 | Part         | Description |
 | ------------ | ----------- |
 | dict1, dict2 | Obligatory. The two Dictionary objects to be compared
-| criteria.    | Optional. Defaults to item when omitted. Specifies, what is compared to determine a difference
-| sense        | Optional. Defaults to case sensitive
-
+| criteria     | Optional. Defaults to item when omitted. Specifies, what is compared to determine a difference
+| sense        | Optional. Defaults to case sensitive |
+| ignoreemptyitems| Optional. Boolean. Defaults to False when omitted. When True and the compare criterion is byitem or byentry any empty items `Trim(item) = vbNullString` are skipped.|
 
 ### Settings
 
@@ -35,44 +39,14 @@ The order argument settings are:
 
 | Argument | Constant   | Description |
 | -------- | ---------- | ----------- |
-| criteria | crit_bykey |             |
-|          | crit_byitem|             |
-| sense    | sense_caseignored   |             |
-|          | sense_casesensitive |             |
+| criteria | crit_bykey | only the keys are compared           |
+|          | crit_byitem| only the items are compared           |
+|          | crit_entry |             |
+| sense    | sense_caseignored |      |
+|          | sense_casesensitive |    |
 
-
-### Examples
-#### Entry sequence
-In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in entry sequence (the default):
-```vbscript
-Private Sub DctAddExample()
-
-   Dim dct As Dictionary
-   Dim vbc As VBComponent
-   
-   For each vbc in ThisWorkbook.VBProject.VBComponents
-      DctAdd dct, vbc, vbc ' key and item is an object       
-   Next vbc
-   
-End Sub
-```
-#### Ascending by key case sensitive
-In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in ascending sequence case sensitive. The order criteria is the name property of the key object:
-```vbscript
-Private Sub DctAddExample()
-
-   Dim dct As Dictionary
-   Dim vbc As VBComponent
-   
-   For each vbc in ThisWorkbook.VBProject.VBComponents
-      DctAdd dct, vbc, vbc.name, ascending_bykey        
-   Next vbc
-   
-End Sub
-```
+### Example
 
 ### Development, test, maintenance
-- The dedicated _Common Component Workbook_ Dct.xlsm is the development, test, and maintenance environment.
-- The procedure _Test\_DctAdd_ in module _mTest_ provides a fully automated regression test, obligatory after any kind of code modification
-- The procedure _Test\_DctAdd\_99\_Performance_ in module _mTest_ provides an example for a performance test. In order to trace the execution time the tests make use of  the _mErrHndlr_ module (not required for the _DctAdd_ procedure)
-- The _DctAdd_ procedure uses the _ErrMsg_ procedure in module _mBasic_
+- The dedicated _Common Component Workbook_ Dct.xlsm is the development, test, and maintenance environment for _DctDiff_ (see the GitHub repo [Common VBA Dictionary Procedures](https://github.com/warbe-maker/Common-VBA-Dictionary-Procedures).
+- The procedures _Test\_DctDiff*_ in module _mTest_ provide tests, obligatory after any kind of code modification.
