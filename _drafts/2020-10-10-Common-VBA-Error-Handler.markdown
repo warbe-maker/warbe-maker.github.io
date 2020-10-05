@@ -9,8 +9,9 @@ In this post<br>
 [Method](#method)<br>
 [Syntax](#syntax)<br>
 [Settings](#settings)<br>
-[Usage examples](#usage-examples)<br>
 [Installation](#installation)<br>
+[Usage examples](#usage-examples)<br>
+&nbsp&nbsp[Error handler, alternative MsgBox and debugging](#error-handler-alternative-msgbox-and-debuggung)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 ### Method
@@ -33,6 +34,7 @@ but provides a possibly surprising result:
 
 ### Settings
 The _ErrHndlr_ has the 
+
 ### Usage
 #### Basic usage
  ```vbscript
@@ -50,14 +52,16 @@ on_error:
    ErrHndlr .... ' see syntax and examples
 End Sub/Function
 ```
-
-#### Complete usage
-
 ### Installation
 - Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
 - Download and import [_clsCallStack_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStack.cls)
 - Download and import [_clsCallStackItem_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStackItem.cls)
-- In case a more appealing kind of error message is preferred (see the [difference in the display](#difference-in-display-of-the-error-message)) also download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx), import _fMsg.frm_ and in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
+- With the alternative VBA MsgBox is used (download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx), import _fMsg.frm_) the options become very interesting (see [Error handler, the alternative MsgBox and debugging](#error-handler-alternative-msgbox-and debugging)
+
+and in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
+#### Complete usage
+
+#### Error handler, alternative MsgBox,  and debugging
 
 #### Difference in display of the error message
 ##### Using the VB MsgBox
