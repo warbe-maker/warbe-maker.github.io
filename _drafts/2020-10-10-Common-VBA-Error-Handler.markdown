@@ -5,16 +5,18 @@ subtitle: An Error Handler assembled from the best which can be found in foruns
 date: 2020-10-02 16:00 +0200
 categories: vba common
 ---
+
+
 In this post<br>
-[Method](#method)<br>
+[Methods](#methods)<br>
 [Syntax](#syntax)<br>
 [Settings](#settings)<br>
 [Installation](#installation)<br>
 [Usage examples](#usage-examples)<br>
-&nbsp&nbsp[Error handler, alternative MsgBox and debugging](#error-handler-alternative-msgbox-and-debuggung)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
-### Method
+
+### Methods
 The method is as simple as displaying an error message:
 ```vbscript
 ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl, vbOkOnly
@@ -59,7 +61,19 @@ End Sub/Function
 - With the alternative VBA MsgBox is used (download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx), import _fMsg.frm_) the options become very interesting (see [Error handler, the alternative MsgBox and debugging](#error-handler-alternative-msgbox-and debugging)
 
 and in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
-#### Complete usage
+
+### Usage examples
+#### Basic
+#### Elaborated
+#### Debugging
+When the Conditional Compile Argument Conditional CompileArgument:<br>`#Const AlternateMsgBox = 1` in module mErrHndlr is set the fMsg UserForm is required (see [Installation](#installation) which provides an outperforming means for debugging. When familiar with the "trick"
+```vbs
+on_error:
+#If Debugging Then
+    Debug.Print Err Description: Stop: Resume
+#End If
+```
+the combination mErrHndlr with fMsg offers something even more convenient.
 
 #### Error handler, alternative MsgBox,  and debugging
 
