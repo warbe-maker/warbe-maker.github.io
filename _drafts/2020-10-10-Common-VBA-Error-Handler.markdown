@@ -17,25 +17,38 @@ In this post<br>
 
 
 ### Methods
-The method is as simple as displaying an error message:
-```vbscript
-ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl, vbOkOnly
-```
+The method is very similar to the  display of an error message:
+
+`ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl, vbOkOnly
+`
+
 but provides a possibly surprising result:
-- an error message which discriminates _VB Runtime Errors, _Application Error_, and _Database-Error_
+- an error message which discriminates _VB Runtime Errors_, _Application Error_, and _Database-Error_
 - a clear indication of the error source in the form <module>.<procedure>
 - a path to the error or better a path from the error source to the _Entry Procedure_
-- ptionally an execution time trace
+- optionally an execution time trace
 - an optional writing of an error log file is still missing.
 
  with just 4 code lines in a procedure (see [Basic usage](#basic-usage):
 
 
 ### Syntax
-`ErrHndlr errornumber, errorsource, errordescription, errorline[, buttons]
+```vbs
+ErrHndlr error-number, error-source, error-description, error-line[, buttons]
+```
+The procedure has these named arguments:
+
+|  Argument  | Description |
+| ---------- | ----------- |
+| errnumber  |             |
+| errsource  |             |
+| errdscrptn |             |
+| errline    |             |
+| buttons    | Optional. Variant. Defaults to vbOkOnly when omitted.<br>May be any VBA MsgBox value or - in case the alternative MsgNox _fMsg_ is used - any descriptive button caption strings delimited by a comma. |
+
 
 ### Settings
-The _ErrHndlr_ has the 
+The _ErrHndlr_ has the follo 
 
 ### Usage
 #### Basic usage
