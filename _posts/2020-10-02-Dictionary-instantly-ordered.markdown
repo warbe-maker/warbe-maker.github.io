@@ -28,7 +28,7 @@ In many cases, specifically when items to be collected in a Dictionary are not s
 
 Note: Without any optional argument are the result is identical with<br>`dct.Add key, item`
 
-The procedure has these names arguments:
+The procedure has these named arguments:
 
 | Part | Description |
 | -------- | ----------- |
