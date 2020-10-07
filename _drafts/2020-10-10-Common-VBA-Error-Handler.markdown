@@ -10,8 +10,11 @@ categories: vba common
 In this post<br>
 [Methods](#methods)<br>
 [Syntax](#syntax)<br>
-[Installation](#installation)<br>
-[Usage](#usage)<br>
+[Installation of the Error Handler](#installation-of-the-error-handler)<br>
+[Installation of the Alternative VBA MsgBox](#installation-of-the-alternative-vba-msgbox)<br>
+[Basic usage](#basic-usage)<br>
+[Elaborated usage](#elaborated-usage)<br>
+[A usage which supports debugging](#a-usage-which-supports-debugging)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 
@@ -45,11 +48,17 @@ The procedure has these named arguments:
 | errline    |             |
 | buttons    | Optional. Variant. Defaults to vbOkOnly when omitted.<br>May be  [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) or - in case the Alternative VBA MsgBox (_fMsg_) is used - descriptive button caption strings, including line breaks, delimited by a comma. |
 
-### Installation
+### Installation of the Error Handler
 - Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
 - Download and import [_clsCallStack_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStack.cls)
 - Download and import [_clsCallStackItem_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStackItem.cls)
-- With the alternative VBA MsgBox is used (download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx), import _fMsg.frm_) the options become very interesting (see [Error handler, the alternative MsgBox and debugging](#error-handler-alternative-msgbox-and debugging)
+
+### Installation of the Alternative VBA MsgBox
+See the [Debugging](#debugging) for one of the benefits of it.
+- Download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
+- Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx)
+- Import _fMsg.frm_
+
 
 and in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
 ### Usage
@@ -70,10 +79,9 @@ on_error:
 End Sub/Function
 ```
 
-### Usage
-#### Basic
-#### Elaborated
-#### Debugging
+### Basic usage
+### Elaborated usage
+### A usage which supports debugging
 When the Conditional Compile Argument Conditional CompileArgument:<br>`#Const AlternateMsgBox = 1` in module mErrHndlr is set the fMsg UserForm is required (see [Installation](#installation) which provides an outperforming means for debugging. When familiar with the "trick"
 ```vbs
 on_error:
@@ -83,7 +91,6 @@ on_error:
 ```
 the combination mErrHndlr with fMsg offers something even more convenient.
 
-#### Error handler, alternative MsgBox,  and debugging
 
 #### Difference in display of the error message
 ##### Using the VB MsgBox
