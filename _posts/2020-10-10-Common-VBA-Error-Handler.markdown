@@ -86,34 +86,16 @@ when the **Alternative  MsgBox** is used
 
 #### With a "path to the error"
 #### Debug supporting usage 
-Specifically those who are familiar with the "trick"
-```vbs
-on_error:
-#If Debugging Then
-    Debug.Print Err.Description: Stop: Resume
-#End If
-```
-the combination _mErrHndlr_ module plus _fMsg_ UserForm offers an elegant equivalent to this when the Conditional Compile Argument<br>
-`Debugging = 1`
-
+The combination _mErrHndlr_ module plus _fMsg_ UserForm offers an elegant way to identify the code line which caused the error. When the Conditional Compile Argument `Debugging = 1` the error message is displayed with an additional Resume button
+![image](../Assets/ErrrorMessageWithResumeButton.png)
+of which the xaption is returned when clicked. This return can be used as follows:
 ```vbs
 on_error:
    If ErrHndlr(Err.Number, ErrSrc(PROC), Err.Description, Erl) = ResumeButton _
    Then Stop: Resume ' F8 leads to the error line
 Exit Sub/Function
 ```
-The error message is displayed with an additional button
-
-
-```
-+--------------+
-| Resume error |
-|  code line   |
-+--------------+
-```
-which is returned when clicked (one of the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm). When in production the Conditional Compile Argument is set 0 the error message appears with the usual OK only button.
-Of course, there may be other additionally specified buttons for a regular user choice (with any multiline free caption text!
-
+With the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm) there may be other additionally specified buttons for a  user's choice.
 
 #### Difference in display of the error message
 ##### Using the VB MsgBox
