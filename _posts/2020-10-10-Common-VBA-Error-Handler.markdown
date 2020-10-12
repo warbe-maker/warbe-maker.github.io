@@ -103,6 +103,8 @@ on_error:
 Exit Sub/Function
 ```
 The error message is displayed with an additional button
+
+
 ```
 +--------------+
 | Resume error |
