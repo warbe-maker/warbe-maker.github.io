@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Common VBA Error Handler
+title: A common VBA Error Handler
 subtitle: An Error Handler assembled from the best which can be found in foruns
 date: 2020-10-02 16:00 +0200
 categories: vba common
@@ -99,9 +99,9 @@ With the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ Use
 
 #### Difference in display of the error message
 ##### Using the VB MsgBox
-![](Assets/ErrorMsgMsgBox.png)
+![](../Assets/ErrorMsgMsgBox.png)
 ##### Using the Alternative VB MsgBox
-![](Assets/ErrMsgAlternativeMsgBox.png)
+![](../Assets/ErrMsgAlternativeMsgBox.png)
 
 ### Development, test, maintenance
 - The dedicated _Common Component Workbook_ ErrHndlr.xlsm is the development, test, and maintenance environment (see the Guthub repo [Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler).
