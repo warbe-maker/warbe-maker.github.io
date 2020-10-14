@@ -12,10 +12,9 @@ In this post<br>
 [Syntax](#syntax)<br>
 [Installation of the Error Handler](#installation-of-the-error-handler)<br>
 [Installation of the Alternative VBA MsgBox](#installation-of-the-alternative-vba-msgbox)<br>
-[Usage](#usage)<br>
-&nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
-&nbsp;&nbsp;&nbsp;[With a "path to the error"](#with-a-path-to-the-error)<br>
-&nbsp;&nbsp;&nbsp;[Debug supporting usage](#debug-supporting-usage)<br>
+[Basic usage](#basic-usage)
+[Usage which provides a "path to the error"](#usage-which-provides-a-path-to-the-error)<br>
+[Usage which supports debugging](#usage-which-supports-debugging)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 
@@ -62,8 +61,8 @@ See the [Debugging](#debugging) for one of the benefits of it.
 - Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx)
 - Import _fMsg.frm_ 
 - in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
-### Usage
-#### Basic usage
+
+### Basic usage
  ```vbscript
  Public/Private Sub/Function Any()
    Const PROC = "the name of the procedure" ' for the identification of the error source
@@ -84,8 +83,8 @@ displays:
 
 when the **Alternative  MsgBox** is used
 
-#### With a "path to the error"
-#### Debug supporting usage 
+### Usage which provides a "path to the error"
+#### Usage which supports debugging 
 The combination _mErrHndlr_ module plus _fMsg_ UserForm offers an elegant way to identify the code line which caused the error. When the Conditional Compile Argument `Debugging = 1` the error message is displayed with an additional Resume button
 ![image](../Assets/ErrrorMessageWithResumeButton.png)
 of which the xaption is returned when clicked. This return can be used as follows:
