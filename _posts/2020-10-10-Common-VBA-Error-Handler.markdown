@@ -12,9 +12,10 @@ In this post<br>
 [Syntax](#syntax)<br>
 [Installation of the Error Handler](#installation-of-the-error-handler)<br>
 [Installation of the Alternative VBA MsgBox](#installation-of-the-alternative-vba-msgbox)<br>
-[Basic usage](#basic-usage)
+[Basic usage](#basic-usage)<br>
 [Usage which provides a "path to the error"](#usage-which-provides-a-path-to-the-error)<br>
 [Usage which supports debugging](#usage-which-supports-debugging)<br>
+[Usage which supports regression testing](#usage-which-supports-regression-testing)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 
@@ -90,7 +91,7 @@ when the **Alternative  MsgBox** is used
 
 ### Usage which provides a "path to the error"
 
-### Usage which supports debugging 
+### Usage which supports **debugging** 
 The combination _mErrHndlr_ module plus _fMsg_ UserForm offers an elegant way to identify the code line which caused the error. When the Conditional Compile Argument `Debugging = 1` the error message is displayed with an additional Resume button
 ![image](../Assets/ErrrorMessageWithResumeButton.png)
 of which the xaption is returned when clicked. This return can be used as follows:
@@ -101,6 +102,15 @@ on_error:
 Exit Sub/Function
 ```
 With the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm) there may be other additionally specified buttons for a  user's choice.
+
+### Usage which supports **regression testing**
+
+When a number of test procedures are to be executed one after the other an expected behaviour or result may be asserted by means of `Debug.Assert <expression returning true or false>`.<br> An error condition however would stop the execution. Using a specific "Resume Next" and/or "Continue with next test" allows to perform a `Resume Next` or `Goto exit_proc`. The _ErrHndlr_ has these extra buttons built in which are displayed only when the Conditional Compile Argument `Regression = 1`. The following is an example of the regression test for the _ErrHndlr_ function:
+
+
+```vbs
+' still to be included here!
+```
 
 #### Difference in display of the error message
 ##### Using the VB MsgBox
