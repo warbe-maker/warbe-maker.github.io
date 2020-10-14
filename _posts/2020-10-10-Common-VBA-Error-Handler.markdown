@@ -23,16 +23,21 @@ Only 4 additional code lines in a procedure make the difference (see [Basic usag
 The _ErrHndlr_ functions appearance and behaviour is pretty similar to the VBA MsgBox as it by default displays an OK button only for example. Of course it  provides a lot more than just displaying a message and returning a clicked button's value. 
 
 #### 1. Path to the error
-A major advantage of the _ErrHndlr_ function: When there is no choice for the user, i.e. only the default  OK button is displayed, and the _Entry Procedure_ is known the error is passed on back up to the _Entry Procedure_ by which the path to the error is assembled and finally displayed. On the other hand, when there is more than one button to choose the error message is displayed immediately and the users choice is returned. This can perfectly be used for an optional [usage which supports debugging](#a-usage-which-supports-debugging).
+A major advantage of the _ErrHndlr_ function: When there is no choice for the user, i.e. only one - usually the default OK - button is displayed, and [the _Entry Procedure_](#the-entry-procedure) is known the error is passed on back up to the _Entry Procedure_ by which the path to the error is assembled and finally displayed.
+
 #### 2. Error type discrimination
 The error message discriminates between _VB Runtime Error_, _Application Error_, and _Database-Error_
+
 #### 3. Clear indication of the Error source
 The source of the error is displayed in the form <module>.<procedure> (see [_Entry Procedure_](#entry-procedure))
+
 #### 4. Display of an [Optional execution time trace](#optional-execution-time-trace)
 
 Whenever an [_Entry Procedure_](#entry-procedure) is reached during execution, optionally an execution time trace is displayed in the VBE immediate window
+
 #### 5. Free buttons specification
-The error message may be displayed with (nearly) any number of buttons. Despite the (maximum three) VBA MsgBox _buttons_ values any desired caption string may be specified and the function returns the value of the clicked one. I.e. the VBA MsgBox button value or the specified button's caption string.
+When the _Alternative VBA MsgBox_ (UserForm _fMsg_) is used the error message may be displayed with (nearly) any number of _buttons_ with a desired caption string, even in combination with the _VBA MsgBox_ buttons value (vbYesNo, etc.). This offers a very elegant way for a  [usage which supports debugging](#a-usage-which-supports-debugging).
+
 #### 6. Optional error log
 Yet not implemented
 
@@ -84,7 +89,8 @@ displays:
 when the **Alternative  MsgBox** is used
 
 ### Usage which provides a "path to the error"
-#### Usage which supports debugging 
+
+### Usage which supports debugging 
 The combination _mErrHndlr_ module plus _fMsg_ UserForm offers an elegant way to identify the code line which caused the error. When the Conditional Compile Argument `Debugging = 1` the error message is displayed with an additional Resume button
 ![image](../Assets/ErrrorMessageWithResumeButton.png)
 of which the xaption is returned when clicked. This return can be used as follows:
