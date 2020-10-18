@@ -37,7 +37,7 @@ The source of the error is displayed in the form <module>.<procedure> (see [_Ent
 Whenever an [_Entry Procedure_](#entry-procedure) is reached during execution, optionally an execution time trace is displayed in the VBE immediate window
 
 #### 5. Free buttons specification
-When the _Alternative VBA MsgBox_ (UserForm _fMsg_) is used the error message may be displayed with (nearly) any number of _buttons_ with a desired caption string, even in combination with the _VBA MsgBox_ buttons value (vbYesNo, etc.). This offers a very elegant way for a  [usage which supports debugging](#a-usage-which-supports-debugging).
+The use of the  _Alternative VBA MsgBox_ (UserForm _fMsg_) is used the error message may be displayed with (nearly) any number of _buttons_ with a desired caption string, even in combination with the _VBA MsgBox_ buttons value (vbYesNo, etc.). This offers a very elegant way for a  [usage which supports debugging](#a-usage-which-supports-debugging).
 
 #### 6. Optional error log
 Yet not implemented
@@ -58,20 +58,15 @@ The procedure has these named arguments:
 
 ### Installation of the Error Handler
 - Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
-- Download and import [_clsCallStack_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStack.cls)
-- Download and import [_clsCallStackItem_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStackItem.cls)
-
-### Installation of the Alternative VBA MsgBox
-See the [Debugging](#debugging) for one of the benefits of it.
-- Download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
-- Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx)
+This error handler uses an _Alternative VBA MsgBox_ to provide a maximum flexibility in displaying buttons (see the [Usage which supports **debugging**](usage-which-supports-debugging) and [Usage which supports regression testing](#usage-which-supports-regression-testing)) 
+- Download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx)
 - Import _fMsg.frm_ 
 - in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
 
-### Basic usage
+### Basic usage 
  ```vbscript
  Public/Private Sub/Function Any()
-   Const PROC = "the name of the procedure" ' for the identification of the error source
+   Const PROC = "Any" ' for the identification of the error source
    On Error Goto on_error ' obligatory anyway
    
    .... any code
@@ -80,12 +75,7 @@ exit_proc:
    Exit Sub/Function
    
 on_error:
-   ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl
-End Sub/Function
-```
-displays:
-
-**without** the use of the **Alternative  MsgBox**
+without** the use of the **Alternative  MsgBox**
 
 when the **Alternative  MsgBox** is used
 
