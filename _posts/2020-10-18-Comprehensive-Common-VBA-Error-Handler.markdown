@@ -8,7 +8,7 @@ categories: vba common
 
 
 In this post<br>
-[Function](#function)<br>
+[Services](#services)<br>
 [Syntax](#syntax)<br>
 [Installation of the Error Handler](#installation-of-the-error-handler)<br>
 [Installation of the Alternative VBA MsgBox](#installation-of-the-alternative-vba-msgbox)<br>
@@ -16,26 +16,18 @@ In this post<br>
 &nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
 &nbsp;&nbsp;&nbsp;[With a "path to the error"](#with-a-path-to-the-error)<br>
 &nbsp;&nbsp;&nbsp;[Debug supporting usage](#debug-supporting-usage)<br>
+[Usage supporting test](#usage-supportingtest)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 
-### Function
-Only 4 additional code lines in a procedure make the difference (see [Basic usage](#basic-usage)).<br>
-The _ErrHndlr_ functions appearance and behaviour is pretty similar to the VBA MsgBox as it by default displays an OK button only for example. Of course it  provides a lot more than just displaying a message and returning a clicked button's value. 
-
-#### 1. Path to the error
-A major advantage of the _ErrHndlr_ function: When there is no choice for the user, i.e. only the default  OK button is displayed, and the _Entry Procedure_ is known the error is passed on back up to the _Entry Procedure_ by which the path to the error is assembled and finally displayed. On the other hand, when there is more than one button to choose the error message is displayed immediately and the users choice is returned. This can perfectly be used for an optional [usage which supports debugging](#a-usage-which-supports-debugging).
-#### 2. Error type discrimination
-The error message discriminates between _VB Runtime Error_, _Application Error_, and _Database-Error_
-#### 3. Clear indication of the Error source
-The source of the error is displayed in the form <module>.<procedure> (see [_Entry Procedure_](#entry-procedure))
-#### 4. Display of an [Optional execution time trace](#optional-execution-time-trace)
-
-Whenever an [_Entry Procedure_](#entry-procedure) is reached during execution, optionally an execution time trace is displayed in the VBE immediate window
-#### 5. Free buttons specification
-The error message may be displayed with (nearly) any number of buttons. Despite the (maximum three) VBA MsgBox _buttons_ values any desired caption string may be specified and the function returns the value of the clicked one. I.e. the VBA MsgBox button value or the specified button's caption string.
-#### 6. Optional error log
-Yet not implemented
+### Services
+Only a few additional code lines in a procedure unfold the provided services:
+- **Path to the error**<br>One advantage of the _ErrHndlr_ is the display of the path to the error built/assembled when the error is passed on from the error source procedure back up to [the Entry Procedure](#the-entry-procedure)
+- **Free buttons specification**<br>[Free specified buttons](#free-specified-buttons) displayed with the error message allow an eeror processing based on a user's choice.<br>The [usage which supports debugging](#a-usage-which-supports-debugging) is one already built-in example, another one is the [Usage supporting test](#usage-supportingtest)
+- **Error type distinction**<br>The error message distincts between _VB Runtime Error_, _Application Error_, and _Database-Error_
+- **Error source and error line**<br>The error message displays the source of the error plus the error line when available
+- **Execution time trace**<br>Each time when the processing has returned to an [_Entry Procedure_](#the-entry-procedure) an [optional execution time trace](#optional-execution-time-trace) with the precise execution time of each [traced procedure](#) and/or [traced number of code lines](#traced-number-of-code-lines) is displayed in the VBE immediate window
+- **Error log**<br>The implementation of an optional error log is a still pending issue
 
 ### Syntax
 ```vbs
@@ -109,12 +101,13 @@ The error message is displayed with an additional button
 which is returned when clicked (one of the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm). When in production the Conditional Compile Argument is set 0 the error message appears with the usual OK only button.
 Of course, there may be other additionally specified buttons for a regular user choice (with any multiline free caption text!
 
+#### Usage supporting test
 
 #### Difference in display of the error message
 ##### Using the VB MsgBox
-![](Assets/ErrorMsgMsgBox.png)
+![](../Assets/ErrorMsgMsgBox.png)
 ##### Using the Alternative VB MsgBox
-![](Assets/ErrMsgAlternativeMsgBox.png)
+![](../Assets/ErrMsgAlternativeMsgBox.png)
 
 ### Development, test, maintenance
 - The dedicated _Common Component Workbook_ ErrHndlr.xlsm is the development, test, and maintenance environment (see the Guthub repo [Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler).
@@ -146,3 +139,8 @@ Private Function ErrSrcByVal s As String) As String
    ErrSrc = "modile-name." & s
 End Function
 ```
+### Traced procedure
+
+### Traced number of code lines
+
+### Free specified buttons
