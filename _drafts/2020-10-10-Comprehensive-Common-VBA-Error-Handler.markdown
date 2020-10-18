@@ -1,11 +1,12 @@
 ---
 layout: post
-title: Common VBA Error Handler
-subtitle: An Error Handler assembled from the best which can be found in foruns
+title: A Comprehensive Common VBA Error Handler
+subtitle: An Error Handler inspired by the best of the web
 date: 2020-10-02 16:00 +0200
 categories: vba common
 ---
 
+An error handler inspired by the best of the web.
 
 In this post<br>
 [Function](#function)<br>
@@ -53,11 +54,8 @@ The procedure has these named arguments:
 
 ### Installation of the Error Handler
 - Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
-- Download and import [_clsCallStack_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStack.cls)
-- Download and import [_clsCallStackItem_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/clsCallStackItem.cls)
 
-### Installation of the Alternative VBA MsgBox
-See the [Debugging](#debugging) for one of the benefits of it.
+Since the error handler only unfolds all its advantages the installation of the Alternative VBA MsgBox is very recommended:
 - Download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
 - Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx)
 - Import _fMsg.frm_ 
