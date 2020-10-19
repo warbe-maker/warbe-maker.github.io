@@ -6,6 +6,7 @@ date: 2020-10-02 16:00 +0200
 categories: vba common
 ---
 
+**This is not a tutorial about error handling** but the description of a full featured ready to use error handler module.
 
 In this post<br>
 [Services of the Error Handler](#services-of-the-error-handler)<br>
