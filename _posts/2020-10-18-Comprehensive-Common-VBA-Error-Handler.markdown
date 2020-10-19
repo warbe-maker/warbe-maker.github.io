@@ -16,7 +16,11 @@ In this post<br>
 &nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
 &nbsp;&nbsp;&nbsp;[With a "path to the error"](#with-a-path-to-the-error)<br>
 &nbsp;&nbsp;&nbsp;[Debug supporting usage](#debug-supporting-usage)<br>
-[Usage supporting test](#usage-supportingtest)<br>
+&nbsp;&nbsp;&nbsp;[Usage supporting test](#usage-supportingtest)<br>
+[Usage details](#usage details)<br>
+&nbsp;&nbsp;&nbsp;[Tracing procedure execution](#tracing-procedure-execution)<br>
+&nbsp;&nbsp;&nbsp;[Tracing a number of code lines](#tracing-a-number-of-code-lines)<br>
+&nbsp;&nbsp;&nbsp;[Making use of the free buttons](#making-use-of-the-free-buttons)<br>
 [Development, test, maintenance](#development-test-maintenance)
 
 
@@ -109,10 +113,6 @@ Of course, there may be other additionally specified buttons for a regular user 
 ##### Using the Alternative VB MsgBox
 ![](../Assets/ErrMsgAlternativeMsgBox.png)
 
-### Development, test, maintenance
-- The dedicated _Common Component Workbook_ ErrHndlr.xlsm is the development, test, and maintenance environment (see the Guthub repo [Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler).
-- The module _mTest_ contains all test procedures
-
 ### Optional execution time trace
 When the Conditional Compile Argument `ExecTrace =1` and the [_Entry Procedure_](#entry-procedure) is reached the below kind of execution trace is displayed in the VBE immediate window
 ![image](../Assets/ExectionTrace.png)
@@ -139,8 +139,15 @@ Private Function ErrSrcByVal s As String) As String
    ErrSrc = "modile-name." & s
 End Function
 ```
-### Traced procedure
+### Tracing procedure execution
 
-### Traced number of code lines
+### Tracing a number of code lines
+When it comes to performance issues tracing a number of code lines may help to find which part of the code causes how much execution time.
 
-### Free specified buttons
+### Making use of the free buttons
+
+### Development, test, maintenance
+- The dedicated _Common Component Workbook_ ErrHndlr.xlsm is the development, test, and maintenance environment. It can be found in the [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler).
+- The module _mTest_ contains all test procedures
+
+Those interested not only in using it but also modify it may fork it in Github and clone it to their computer e.g. by using the GitHub Windows client. That's what I am doing for a continues improvement.
