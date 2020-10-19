@@ -8,25 +8,24 @@ categories: vba common
 
 
 In this post<br>
-[Services](#services)<br>
+[Services of the Error Handler](#services-of-the-error-handler)<br>
 [Syntax](#syntax)<br>
 [Installation of the Error Handler](#installation-of-the-error-handler)<br>
 [Installation of the Alternative VBA MsgBox](#installation-of-the-alternative-vba-msgbox)<br>
 [Usage](#usage)<br>
 &nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
-&nbsp;&nbsp;&nbsp;[With a "path to the error"](#with-a-path-to-the-error)<br>
+&nbsp;&nbsp;&nbsp;[Usage providing a "path to the error" with the error message](#usage-providing-a-path-to-the-error-with-the-error-message)<br>
 &nbsp;&nbsp;&nbsp;[Debug supporting usage](#debug-supporting-usage)<br>
-&nbsp;&nbsp;&nbsp;[Usage supporting test](#usage-supportingtest)<br>
-[Usage details](#usage details)<br>
-&nbsp;&nbsp;&nbsp;[Tracing procedure execution](#tracing-procedure-execution)<br>
-&nbsp;&nbsp;&nbsp;[Tracing a number of code lines](#tracing-a-number-of-code-lines)<br>
+&nbsp;&nbsp;&nbsp;[Usage supporting test](#usage-supporting-test)<br>
+[Usage details](#usage-details)<br>
+&nbsp;&nbsp;&nbsp;[Tracing procedure and code execution](#tracing-procedure-and-code-execution)<br>
+&nbsp;&nbsp;&nbsp;[The _Entry Procedure_](#the-entry-procedure)<br>
 &nbsp;&nbsp;&nbsp;[Making use of the free buttons](#making-use-of-the-free-buttons)<br>
-[Development, test, maintenance](#development-test-maintenance)
+[Contribution, development, test, maintenance](#contribution-development-test-maintenance)
 
-
-### Services
+### Services of the Error Handler
 Only a few additional code lines in a procedure unfold the provided services:
-- **Path to the error**<br>One advantage of the _ErrHndlr_ is the display of the path to the error built/assembled when the error is passed on from the error source procedure back up to [the Entry Procedure](#the-entry-procedure)
+- **Path to the error**<br>One advantage of the _ErrHndlr_ is the display of the path to the error built/assembled when the error is passed on from the error source procedure back up to [the Entry Procedure](#the-entry-procedure) (provided it is known)
 - **Free buttons specification**<br>[Free specified buttons](#free-specified-buttons) displayed with the error message allow an eeror processing based on a user's choice.<br>The [usage which supports debugging](#a-usage-which-supports-debugging) is one already built-in example, another one is the [Usage supporting test](#usage-supportingtest)
 - **Error type distinction**<br>The error message distincts between _VB Runtime Error_, _Application Error_, and _Database-Error_
 - **Error source and error line**<br>The error message displays the source of the error plus the error line when available
@@ -77,7 +76,8 @@ displays:
 
 when the **Alternative  MsgBox** is used
 
-#### With a "path to the error"
+#### Usage providing a "path to the error" with the error message
+When the 
 #### Debug supporting usage 
 Specifically those who are familiar with the "trick"
 ```vbs
@@ -113,20 +113,16 @@ Of course, there may be other additionally specified buttons for a regular user 
 ##### Using the Alternative VB MsgBox
 ![](../Assets/ErrMsgAlternativeMsgBox.png)
 
-### Optional execution time trace
-When the Conditional Compile Argument `ExecTrace =1` and the [_Entry Procedure_](#entry-procedure) is reached the below kind of execution trace is displayed in the VBE immediate window
-![image](../Assets/ExectionTrace.png)
 
 ### The _Entry Procedure_
-In a call hierarchy the topmost procedure with a BoP/EoP code line (see below) is called the _Entry Procedure_. Usually it is the procedure which is directly or indirectly initiated by a user's  action or an event like Workbook_Open or Workbook_Change.<br>
-The indication of the _Entry Procedure_ is essential for the display of the path to the error and the optional display of the execution trace.
+In a call hierarchy the topmost procedure with a BoP/EoP code line (see below) is called the _Entry Procedure_. Usually it is the procedure which is directly or indirectly initiated by a user's  action or an event. The indication of the _Entry Procedure_ is essential for the display of the path to the error as for the optional display of the [execution trace](#tracing-procedure-and-or-code-execution) .
 ```vbs
 Private/Public Sub/Function
    Const PROC = "procedure-name"
    ...
-   BoP ErrSrc(PROC) ' Begin of Procedure
+   BoP ErrSrc(PROC) ' Begin of procedure
    ....
-   EoP ErrSrc(PROC)
+   EoP ErrSrc(PROC) ' End of procedure
    Exit Sub)Function
    
 on_error:
@@ -139,15 +135,41 @@ Private Function ErrSrcByVal s As String) As String
    ErrSrc = "modile-name." & s
 End Function
 ```
-### Tracing procedure execution
-
-### Tracing a number of code lines
-When it comes to performance issues tracing a number of code lines may help to find which part of the code causes how much execution time.
+### Tracing procedure and code execution
+Provided the Conditional Compile Argument `ExecTrace =1`, whenever the processing reaches an [_Entry Procedure_](#entry-procedure) the execution trace is displayed in the VBE immediate window. Performance issues may require a more detailed execution tracing than just complete procedures. A pair of BoT/EoT statements may surround any number of code lines within a procedure as follows:
+```vbs
+    BoT "my code lines" ' Begin of trace
+    .... ' any code lines
+    EoT "my code lines" ' End of trace (string must mathc with BoT statement)
+```
+Example:
+![](../Assets/ExecTraceOfCodeLines.png)
 
 ### Making use of the free buttons
+The use of the _fMsg_ UserForm in general provides an enormous flexibility regarding the display of buttons. This can be used with the display of an error message to provide the user with any number of choices. Because the error message is fixed it is an advantage that the displayed buttons may have any free multi-line caption text, returned when the button is clicked. Example: The ErrHndlr statement:<br>
+```vbs
+Private Sub Demo_7_Free_Button_Display()
 
-### Development, test, maintenance
-- The dedicated _Common Component Workbook_ ErrHndlr.xlsm is the development, test, and maintenance environment. It can be found in the [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler).
-- The module _mTest_ contains all test procedures
+    On Error GoTo on_error
+    Const PROC = "Demo_7_Free_Button_Display"
 
-Those interested not only in using it but also modify it may fork it in Github and clone it to their computer e.g. by using the GitHub Windows client. That's what I am doing for a continues improvement.
+    Err.Raise AppErr(1), ErrSrc(PROC), "Display of a free defined button in addition to the usual Ok button (resumes the error when clicked)"
+    Exit Sub
+
+on_error:
+    Select Case mErrHndlr.ErrHndlr(Err.Number, ErrSrc(PROC), Err.Description, Erl, buttons:=vbOKOnly & "," & vbLf & ",My button")
+        Case "My button": Resume
+    End Select
+End Sub
+```
+displays:
+
+![](../Assets/FreeButtonSpecification.png)<br>
+<small>Note that the additional button is displayed in a second row due to the vbLf in the buttons argument.</small>
+
+See also the [Alternative VBA MsgBox](https://github.com/warbe-maker/VBA-MsgBox-Alternative) for more details on how to use it and its advantages (not yet available as post).
+
+### Contribution, development, test, maintenance
+It had become a habit: A dedicated _Common Component Workbook_ **ErrHndlr.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler). The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErrHndlr_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
+
+Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows](https://desktop.github.com). That's my environment for a continuous improvement process.
