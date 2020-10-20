@@ -6,6 +6,7 @@ date: 2020-10-02 16:00 +0200
 categories: vba common
 ---
 
+**This is not a tutorial about error handling** but the description of a full featured ready to use error handler module.
 
 In this post<br>
 [Services of the Error Handler](#services-of-the-error-handler)<br>
@@ -96,14 +97,9 @@ on_error:
 Exit Sub/Function
 ```
 The error message is displayed with an additional button
-```
-+--------------+
-| Resume error |
-|  code line   |
-+--------------+
-```
-which is returned when clicked (one of the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm). When in production the Conditional Compile Argument is set 0 the error message appears with the usual OK only button.
-Of course, there may be other additionally specified buttons for a regular user choice (with any multiline free caption text!
+![image](../Assets/ErrrorMessageWithResumeButton.png)<br>
+which is returned when clicked (one of the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm). When in production the Conditional Compile Argument `Debuggin = 0` the error message is displayed without this button.
+Of course, there may be other additionally specified buttons for a regular user choice (with any multiline free caption text!).
 
 #### Usage supporting test
 
@@ -115,7 +111,7 @@ Of course, there may be other additionally specified buttons for a regular user 
 
 
 ### The _Entry Procedure_
-In a call hierarchy the topmost procedure with a BoP/EoP code line (see below) is called the _Entry Procedure_. Usually it is the procedure which is directly or indirectly initiated by a user's  action or an event. The indication of the _Entry Procedure_ is essential for the display of the path to the error as for the optional display of the [execution trace](#tracing-procedure-and-or-code-execution) .
+In a call hierarchy the topmost procedure with a BoP/EoP code line (see code sample below) is called the _Entry Procedure_. Usually it is the procedure which is directly or indirectly initiated by a user's  action or an event. The indication of an _Entry Procedure_ is essential for the display of the **path to the error** as for the optional display of the [execution trace](#tracing-procedure-and-or-code-execution) .
 ```vbs
 Private/Public Sub/Function
    Const PROC = "procedure-name"
