@@ -9,7 +9,7 @@ categories: vba common
 In this post
 
 [Service](#service)<br>
-[Why an alternative MsgBox](#why-an-alternative-msgbox)<br>[Installation](#installation)<br>[Properties of the _fMsg_ UserForm](#properties-of-the-fmsg-userform)<br>[Usage](#usage)<br>[Interfaces](#interfaces)
+[Why just another, alternative MsgBox](#why-just-another-alternative-msgbox)<br>[Installation](#installation)<br>[Properties of the _fMsg_ UserForm](#properties-of-the-fmsg-userform)<br>[Usage](#usage)<br>[Interfaces](#interfaces)
 
 ### Service
 A message box which intelligently considers the space required for the displayed elements title, message, and buttons, waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.
