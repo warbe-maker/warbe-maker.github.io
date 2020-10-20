@@ -71,11 +71,14 @@ on_error:
    ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl
 End Sub/Function
 ```
+
 displays:
 
 **without** the use of the **Alternative  MsgBox**
+![](../Assets/ErrorMsgMsgBox.png)
 
 when the **Alternative  MsgBox** is used
+![](../Assets/ErrMsgAlternativeMsgBox.png)
 
 #### Usage providing a "path to the error" with the error message
 When the 
