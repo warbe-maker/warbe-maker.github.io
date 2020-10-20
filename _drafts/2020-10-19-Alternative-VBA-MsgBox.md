@@ -8,16 +8,16 @@ categories: vba common
 
 In this post
 
-[Abstract](#abstract)<br>
+[Service](#service)<br>
 [Why an alternative MsgBox](#why-an-alternative-msgbox)<br>[Installation](#installation)<br>[Properties of the _fMsg_ UserForm](#properties-of-the-fmsg-userform)<br>[Usage](#usage)<br>[Interfaces](#interfaces)
 
-### Abstract
-A UserForm to display a MsgBox like  message, waiting for the user to click a button, and obtaining a variant indicating which button the user had  clicked.
+### Service
+A message box which intelligently considers the space required for the displayed elements title, message, and buttons, waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.
 
-### Why an alternative MsgBox?
-The alternative implementation addresses many of the contracts of the VBA MsgBox - without re-implementing it to 100%.
+### Why just another, alternative MsgBox?
+The alternative implementation  addresses many of the constraints of the VBA MsgBox - without re-implementing it to 100%.
 
-|The VBA MsgBox|THE Alternative|
+|The VBA MsgBox|The Alternative|
 |--------------|---------------|
 | The message width and height is limited and cannot be altered | The&nbsp;maximum&nbsp;width and&nbsp;height&nbsp;is&nbsp;specified as&nbsp;a percentage of the screen&nbsp;size&nbsp; which&nbsp;defaults&nbsp;to: 80%&nbsp;width and  90%&nbsp;height (hardly ever used)|
 | When a message exceeds the (hard to tell) size limit it is truncated | When the maximum size is exceeded a vertical and/or a horizontal scroll bar is applied
