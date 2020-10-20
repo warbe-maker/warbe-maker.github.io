@@ -55,9 +55,10 @@ Since the error handler only unfolds all its advantages the installation of the 
 - Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx)
 - Import _fMsg.frm_ 
 - in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
+
 ### Usage
 #### Basic usage
- ```vbscript
+```vbs
  Public/Private Sub/Function Any()
    Const PROC = "the name of the procedure" ' for the identification of the error source
    On Error Goto on_error ' obligatory anyway
@@ -90,6 +91,7 @@ on_error:
     Debug.Print Err.Description: Stop: Resume
 #End If
 ```
+
 the combination _mErrHndlr_ module plus _fMsg_ UserForm offers an elegant equivalent to this when the Conditional Compile Argument<br>
 `Debugging = 1`
 
@@ -99,6 +101,7 @@ on_error:
    Then Stop: Resume ' F8 leads to the error line
 Exit Sub/Function
 ```
+
 The error message is displayed with an additional button
 ![image](../Assets/ErrrorMessageWithResumeButton.png)<br>
 which is returned when clicked (one of the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm). When in production the Conditional Compile Argument `Debuggin = 0` the error message is displayed without this button.
