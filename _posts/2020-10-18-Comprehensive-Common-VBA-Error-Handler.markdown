@@ -79,7 +79,7 @@ displays:
 ![](../Assets/ErrorMsgMsgBox.png)
 
 when the **Alternative  MsgBox** is used
-![](../Assets/ErrMsgAlternativeMsgBox.png)
+![](../Assets/ErrMsgAlternativeMsgBox.png?raw=true)
 
 #### Usage providing a "path to the error" with the error message
 When the 
