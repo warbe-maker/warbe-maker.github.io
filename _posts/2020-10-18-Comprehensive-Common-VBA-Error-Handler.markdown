@@ -49,13 +49,12 @@ The procedure has these named arguments:
 
 ### Installation of the Error Handler
 - Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
-
-Since the error handler only unfolds all its advantages the installation of the Alternative VBA MsgBox is very recommended:
 - Download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
-- Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsf.frx)
+- Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
 - Import _fMsg.frm_ 
-- in the module _mErrHndlr_ set the local Conditional Compile Argument:<br>`#Const AlternateMsgBox = 1`
 
+Note: This error handler only unfolds all its advantages with the _Alternative VBA MsgBox_. Effort spent to allow a usage merely based on the VBA MsgBox has been stopped.
+ 
 ### Usage
 #### Basic usage
 ```vbs
