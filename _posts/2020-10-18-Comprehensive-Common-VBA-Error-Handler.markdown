@@ -12,7 +12,6 @@ In this post<br>
 [Services of the Error Handler](#services-of-the-error-handler)<br>
 [Syntax](#syntax)<br>
 [Installation of the Error Handler](#installation-of-the-error-handler)<br>
-[Installation of the Alternative VBA MsgBox](#installation-of-the-alternative-vba-msgbox)<br>
 [Usage](#usage)<br>
 &nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
 &nbsp;&nbsp;&nbsp;[Usage providing a "path to the error" with the error message](#usage-providing-a-path-to-the-error-with-the-error-message)<br>
@@ -39,13 +38,13 @@ ErrHndlr error-number, error-source, error-description, error-line[, buttons]
 ```
 The procedure has these named arguments:
 
-|  Argument  | Description |
-| ---------- | ----------- |
-| errnumber  |             |
-| errsource  |             |
-| errdscrptn |             |
-| errline    |             |
-| buttons    | Optional. Variant. Defaults to vbOkOnly when omitted.<br>May be  [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) or - in case the Alternative VBA MsgBox (_fMsg_) is used - descriptive button caption strings, including line breaks, delimited by a comma. |
+|  Argument  |   Description   |
+| ---------- | --------------- |
+| errnumber  | Err.Number      |
+| errsource  | ErrSrc(PROC).   |
+| errdscrptn | Err.Description |
+| errline    | Erl             |
+| buttons    | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
 ### Installation of the Error Handler
 - Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
@@ -53,10 +52,12 @@ The procedure has these named arguments:
 - Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
 - Import _fMsg.frm_ 
 
-Note: This error handler only unfolds all its advantages with the _Alternative VBA MsgBox_. Effort spent to allow a usage merely based on the VBA MsgBox has been stopped.
+Note: This error handler only unfolds all its advantages with the _Alternative VBA MsgBox_. Effort spent in allowing a usage merely based on the VBA MsgBox has been stopped because of it's constraints.
  
 ### Usage
 #### Basic usage
+The below code works but does not provide a path to the error.
+
 ```vbs
  Public/Private Sub/Function Any()
    Const PROC = "the name of the procedure" ' for the identification of the error source
@@ -68,31 +69,34 @@ exit_proc:
    Exit Sub/Function
    
 on_error:
-   ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl
+   mErrHndlr.ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl
 End Sub/Function
 ```
 
 displays:
-
-**without** the use of the **Alternative  MsgBox**
-![](/Assets/ErrorMsgMsgBox.png)
-
-when the **Alternative  MsgBox** is used
-![](/Assets/ErrMsgAlternativeMsgBox.png?raw=true)
+![](/Assets/ErrMsgAlternativeMsgBox.png)
 
 #### Usage providing a "path to the error" with the error message
-When the 
-#### Debug supporting usage 
-Specifically those who are familiar with the "trick"
+When the user has no choice because just the default button is displayed with the error message an error is passed on to [the _Entry Procedure](#the-entry-procedure) and thereby the path to the error is assembled.
+ 
+
+#### Debug supporting usage
+One of the most common problems in identifying the code line which caused an error. Without line numbers, the mir lines a procedure has the more difficult. Those familiar with the "trick"
+
 ```vbs
 on_error:
 #If Debugging Then
     Debug.Print Err.Description: Stop: Resume
 #End If
+    mErrHndlr.ErrHndlr ....
+End Sub/Function
 ```
 
-the combination _mErrHndlr_ module plus _fMsg_ UserForm offers an elegant equivalent to this when the Conditional Compile Argument<br>
-`Debugging = 1`
+may appreciate that this is integrated in the _mErrHndlr_ module. When the Conditional Compile Argument<br>
+`Debugging = 1` an additional button is displayed with the error message:
+![](/Assets/ErrrorMessageWithResumeButton.png)
+
+and when the button is clicked ...
 
 ```vbs
 on_error:
@@ -101,19 +105,20 @@ on_error:
 Exit Sub/Function
 ```
 
-The error message is displayed with an additional button
-![image](../Assets/ErrrorMessageWithResumeButton.png)<br>
-which is returned when clicked (one of the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ UserForm). When in production the Conditional Compile Argument `Debuggin = 0` the error message is displayed without this button.
-Of course, there may be other additionally specified buttons for a regular user choice (with any multiline free caption text!).
+does the job. In production the Conditional Compile Argument `Debuggin = 0` prevents the display of this button.
 
 #### Usage supporting test
+For _Common Components_ like this error handler I regard a regression test obligatory before a code modification is published. However, any test of an error condition stops the test process when there is only the default button displayed.
 
-#### Difference in display of the error message
-##### Using the VB MsgBox
-![](../Assets/ErrorMsgMsgBox.png)
-##### Using the Alternative VB MsgBox
-![](../Assets/ErrMsgAlternativeMsgBox.png)
+With the Conditional Compile Argument `Test = 1` two additional buttons are displayed: **Continue with next code line** and **Continue with next procedure**
 
+image still missing
+
+and the following can be for a test continuation
+
+```vbs
+
+```
 
 ### The _Entry Procedure_
 In a call hierarchy the topmost procedure with a BoP/EoP code line (see code sample below) is called the _Entry Procedure_. Usually it is the procedure which is directly or indirectly initiated by a user's  action or an event. The indication of an _Entry Procedure_ is essential for the display of the **path to the error** as for the optional display of the [execution trace](#tracing-procedure-and-or-code-execution) .
