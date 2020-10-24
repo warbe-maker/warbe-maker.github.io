@@ -47,13 +47,13 @@ The procedure has these named arguments:
 | buttons    | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
 ### Installation of the Error Handler
-- Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
-- Download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
-- Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
-- Import _fMsg.frm_ 
-
 Note: This error handler only unfolds all its advantages with the _Alternative VBA MsgBox_. Effort spent in allowing a usage merely based on the VBA MsgBox has been stopped because of it's constraints.
- 
+- Download and import the module  [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
+- Download the UserForm  [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx) and import _fMsg.frm_
+
+Optionally, when an execution trace is desired (will only become active when the Conditional Compile Argument `ExecTrace = 1`):
+- Download and import the module  [_mTrace_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mTrace.bas)
+
 ### Usage
 #### Basic usage
 The below code works but does not provide a path to the error.
@@ -74,6 +74,7 @@ End Sub/Function
 ```
 
 displays:
+![](../Assets/ErrMsgAlternativeMsgBox.png)
 ![](/Assets/ErrMsgAlternativeMsgBox.png)
 
 #### Usage providing a "path to the error" with the error message
@@ -94,6 +95,7 @@ End Sub/Function
 
 may appreciate that this is integrated in the _mErrHndlr_ module. When the Conditional Compile Argument<br>
 `Debugging = 1` an additional button is displayed with the error message:
+![](../Assets/ErrrorMessageWithResumeButton.png)
 ![](/Assets/ErrrorMessageWithResumeButton.png)
 
 and when the button is clicked ...
@@ -150,7 +152,7 @@ Provided the Conditional Compile Argument `ExecTrace =1`, whenever the processin
 ```
 Example:
 ![](../Assets/ExecTraceOfCodeLines.png)
-
+![](/Assets/ExecTraceOfCodeLines.png)
 ### Making use of the free buttons
 The use of the _fMsg_ UserForm in general provides an enormous flexibility regarding the display of buttons. This can be used with the display of an error message to provide the user with any number of choices. Because the error message is fixed it is an advantage that the displayed buttons may have any free multi-line caption text, returned when the button is clicked. Example: The ErrHndlr statement:<br>
 ```vbs
