@@ -9,21 +9,27 @@ categories: vba common
 **This is not a tutorial about error handling** but the description of a full featured ready to use error handler module.
 
 In this post<br>
-[Services of the Error Handler](#services-of-the-error-handler)<br>
-[Syntax](#syntax)<br>
-[Installation of the Error Handler](#installation-of-the-error-handler)<br>
-[Usage](#usage)<br>
-&nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
-&nbsp;&nbsp;&nbsp;[Usage providing a "path to the error" with the error message](#usage-providing-a-path-to-the-error-with-the-error-message)<br>
-&nbsp;&nbsp;&nbsp;[Debug supporting usage](#debug-supporting-usage)<br>
-&nbsp;&nbsp;&nbsp;[Usage supporting test](#usage-supporting-test)<br>
+[Error Handler](#error-handler)<br>
+&nbsp;&nbsp;&nbsp;[Services](#error-handler-services)<br>
+&nbsp;&nbsp;&nbsp;[Syntax](#error-handler-syntax)<br>
+&nbsp;&nbsp;&nbsp;[Installation](#error-handler-installation)<br>
+&nbsp;&nbsp;&nbsp;[Usage](#error-handler-usage)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Usage providing a "path to the error" with the error message](#usage-providing-a-path-to-the-error-with-the-error-message)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Debug supporting usage](#debug-supporting-usage)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Usage supporting test](#usage-supporting-test)<br>
 [Usage details](#usage-details)<br>
-&nbsp;&nbsp;&nbsp;[Tracing procedure and code execution](#tracing-procedure-and-code-execution)<br>
-&nbsp;&nbsp;&nbsp;[The _Entry Procedure_](#the-entry-procedure)<br>
-&nbsp;&nbsp;&nbsp;[Making use of the free buttons](#making-use-of-the-free-buttons)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Tracing procedure and code execution](#tracing-procedure-and-code-execution)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[The _Entry Procedure_](#the-entry-procedure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Making use of the free buttons](#making-use-of-the-free-buttons)<br>
+[Execution Trace](#execution-trace)<br>
+&nbsp;&nbsp;&nbsp;[Service](#execution-trace-service)<br>
+&nbsp;&nbsp;&nbsp;[Installation](#execution-trace-installation)<br>
+&nbsp;&nbsp;&nbsp;[Usage](#execution-trace-usage)<br>
 [Contribution, development, test, maintenance](#contribution-development-test-maintenance)
 
-### Services of the Error Handler
+## Error Handler
+### Error Handler Services
 Only a few additional code lines in a procedure unfold the provided services:
 - **Path to the error**<br>One advantage of the _ErrHndlr_ is the display of the path to the error built/assembled when the error is passed on from the error source procedure back up to [the Entry Procedure](#the-entry-procedure) (provided it is known)
 - **Free buttons specification**<br>[Free specified buttons](#free-specified-buttons) displayed with the error message allow an eeror processing based on a user's choice.<br>The [usage which supports debugging](#a-usage-which-supports-debugging) is one already built-in example, another one is the [Usage supporting test](#usage-supportingtest)
@@ -32,7 +38,7 @@ Only a few additional code lines in a procedure unfold the provided services:
 - **Execution time trace**<br>Each time when the processing has returned to an [_Entry Procedure_](#the-entry-procedure) an [optional execution time trace](#optional-execution-time-trace) with the precise execution time of each [traced procedure](#) and/or [traced number of code lines](#traced-number-of-code-lines) is displayed in the VBE immediate window
 - **Error log**<br>The implementation of an optional error log is a still pending issue
 
-### Syntax
+### Error Handler Syntax
 ```vbs
 ErrHndlr error-number, error-source, error-description, error-line[, buttons]
 ```
@@ -46,7 +52,7 @@ The procedure has these named arguments:
 | errline    | Erl             |
 | buttons    | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
-### Installation of the Error Handler
+### Error Handler Installation
 - Download and import [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
 - Download [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
 - Download  [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
@@ -54,7 +60,7 @@ The procedure has these named arguments:
 
 Note: This error handler only unfolds all its advantages with the _Alternative VBA MsgBox_. Effort spent in allowing a usage merely based on the VBA MsgBox has been stopped because of it's constraints.
  
-### Usage
+### Error Handler Usage
 #### Basic usage
 The below code works but does not provide a path to the error.
 
@@ -75,6 +81,7 @@ End Sub/Function
 
 displays:
 ![](/Assets/ErrMsgAlternativeMsgBox.png)
+![](../Assets/ErrMsgAlternativeMsgBox.png)
 
 #### Usage providing a "path to the error" with the error message
 When the user has no choice because just the default button is displayed with the error message an error is passed on to [the _Entry Procedure](#the-entry-procedure) and thereby the path to the error is assembled.
@@ -94,6 +101,7 @@ End Sub/Function
 
 may appreciate that this is integrated in the _mErrHndlr_ module. When the Conditional Compile Argument<br>
 `Debugging = 1` an additional button is displayed with the error message:
+![](../Assets/ErrrorMessageWithResumeButton.png)
 ![](/Assets/ErrrorMessageWithResumeButton.png)
 
 and when the button is clicked ...
@@ -150,6 +158,7 @@ Provided the Conditional Compile Argument `ExecTrace =1`, whenever the processin
 ```
 Example:
 ![](../Assets/ExecTraceOfCodeLines.png)
+![](/Assets/ExecTraceOfCodeLines.png)
 
 ### Making use of the free buttons
 The use of the _fMsg_ UserForm in general provides an enormous flexibility regarding the display of buttons. This can be used with the display of an error message to provide the user with any number of choices. Because the error message is fixed it is an advantage that the displayed buttons may have any free multi-line caption text, returned when the button is clicked. Example: The ErrHndlr statement:<br>
@@ -170,7 +179,8 @@ End Sub
 ```
 displays:
 
-![](../Assets/FreeButtonSpecification.png)<br>
+![](../Assets/FreeButtonSpecification.png)
+![](/Assets/FreeButtonSpecification.png)<br>
 <small>Note that the additional button is displayed in a second row due to the vbLf in the buttons argument.</small>
 
 See also the [Alternative VBA MsgBox](https://github.com/warbe-maker/VBA-MsgBox-Alternative) for more details on how to use it and its advantages (not yet available as post).
@@ -179,3 +189,14 @@ See also the [Alternative VBA MsgBox](https://github.com/warbe-maker/VBA-MsgBox-
 It had become a habit: A dedicated _Common Component Workbook_ **ErrHndlr.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler). The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErrHndlr_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
 
 Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows](https://desktop.github.com). That's my environment for a continuous improvement process.
+
+## Execution Trace
+### Execution Trace Service
+The execution trace is an optional component of the error handler.
+### Execution Trace Installation
+### Execution Trace Usage
+### Execution Trace Properties
+### Precision Property
+### Display Property
+#### Compact DisplaY (default)
+#### Detailed Display
