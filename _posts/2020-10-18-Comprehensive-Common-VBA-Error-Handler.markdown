@@ -77,7 +77,7 @@ End Sub/Function
 displays:
 ![](../Assets/ErrMsgAlternativeMsgBox.png)
 ![](/Assets/ErrMsgAlternativeMsgBox.png)
-![](../Assets/ErrMsgAlternativeMsgBox.png)
+
 
 #### Usage providing a "path to the error" with the error message
 When the user has no choice because just the default button is displayed with the error message an error is passed on to [the _Entry Procedure](#the-entry-procedure) and thereby the path to the error is assembled.
