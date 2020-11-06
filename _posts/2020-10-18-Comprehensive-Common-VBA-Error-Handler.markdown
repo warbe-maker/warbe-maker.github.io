@@ -23,23 +23,24 @@ In this post<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Making use of the free buttons](#making-use-of-the-free-buttons)<br><br>
 [Execution Trace](#execution-trace)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Service](#execution-trace-service)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Installation](#installation)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Usage](#execution-trace-usage)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Default compact or optional detailed trace information](#default-compact-or-optional-detailed-trace-information)<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[_Compact_ (default) or _Detailed_ trace result](#compact-default-or-detailed-trace-result)<br><br>
 [Contribution, development, test, maintenance](#contribution-development-test-maintenance)
 
 ## Error Handler
 ### Error Handler Services
 Only a few additional code lines in a procedure unfold the provided services:
-- **Path to the error**<br>One advantage of the _ErrHndlr_ is the display of the path to the error built/assembled when the error is passed on from the error source procedure back up to [the Entry Procedure](#the-entry-procedure) (provided it is known)
+- **Path to the error**<br>One advantage of this error handler is the display of the path to the error built/assembled when the error is passed on from the error source procedure back up to [the Entry Procedure](#the-entry-procedure) (provided it is known)
 - **Free buttons specification**<br>[Free specified buttons](#free-specified-buttons) displayed with the error message allow an eeror processing based on a user's choice.<br>The [usage which supports debugging](#a-usage-which-supports-debugging) is one already built-in example, another one is the [Usage supporting test](#usage-supportingtest)
 - **Error type distinction**<br>The error message distincts between _VB Runtime Error_, _Application Error_, and _Database-Error_
 - **Error source and error line**<br>The error message displays the source of the error plus the error line when available
-- **Execution time trace**<br>Each time when the processing has returned to an [_Entry Procedure_](#the-entry-procedure) an [optional execution time trace](#optional-execution-time-trace) with the precise execution time of each [traced procedure](#) and/or [traced number of code lines](#traced-number-of-code-lines) is displayed in the VBE immediate window
+- **Execution time trace (optional module)**<br>Each time when the processing has returned to an [_Entry Procedure_](#the-entry-procedure) an [optional execution time trace](#optional-execution-time-trace) with the precise execution time of each [traced procedure](#) and/or [traced number of code lines](#traced-number-of-code-lines) is displayed in the VBE immediate window
 - **Error log**<br>The implementation of an optional error log is a still pending issue
 
 ### Error Handler Syntax
 ```vbs
-ErrHndlr error-number, error-source, error-description, error-line[, buttons]
+   mErH.ErrMsg error-number, error-source, error-description, error-line[, buttons]
 ```
 The procedure has these named arguments:
 
@@ -52,7 +53,7 @@ The procedure has these named arguments:
 | buttons    | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
 ### Error Handler Installation
-- Download and import the module  [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErrHndlr.bas)
+- Download and import the module  [_mErrHndlr_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErH.bas)
 - Download the UserForm  [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx) and import _fMsg.frm_
 
 ### Error Handler Usage
@@ -61,16 +62,14 @@ The below code works but does not provide a path to the error.
 
 ```vbs
  Public/Private Sub/Function Any()
-   Const PROC = "the name of the procedure" ' for the identification of the error source
-   On Error Goto on_error ' obligatory anyway
+   Const PROC = "Any" ' identification of the error source and (if used) the execution trace
+   On Error Goto eh ' obligatory anyway
    
    .... any code
 
-exit_proc:
-   Exit Sub/Function
+xt: Exit Sub/Function
    
-on_error:
-   mErrHndlr.ErrHndlr Err.Number, ErrSrc(PROC), Err.Description, Erl
+eh: mErH.ErrMsg Err.Number, ErrSrc(PROC), Err.Description, Erl
 End Sub/Function
 ```
 
@@ -87,15 +86,15 @@ When the user has no choice because just the default button is displayed with th
 One of the most common problems in identifying the code line which caused an error. Without line numbers, the mir lines a procedure has the more difficult. Those familiar with the "trick"
 
 ```vbs
-on_error:
+eh:
 #If Debugging Then
     Debug.Print Err.Description: Stop: Resume
 #End If
-    mErrHndlr.ErrHndlr ....
+    mErH.ErrMsg ....
 End Sub/Function
 ```
 
-may appreciate that this is integrated in the _mErrHndlr_ module. When the Conditional Compile Argument<br>
+may appreciate that this is integrated in the _mErH_ module. When the Conditional Compile Argument<br>
 `Debugging = 1` an additional button is displayed with the error message:
 ![](../Assets/ErrrorMessageWithResumeButton.png)
 ![](/Assets/ErrrorMessageWithResumeButton.png)
@@ -103,9 +102,9 @@ may appreciate that this is integrated in the _mErrHndlr_ module. When the Condi
 and when the button is clicked ...
 
 ```vbs
-on_error:
-   If ErrHndlr(Err.Number, ErrSrc(PROC), Err.Description, Erl) = ResumeButton _
-   Then Stop: Resume ' F8 leads to the error line
+
+eh: If ErrHndlr(Err.Number, ErrSrc(PROC), Err.Description, Erl) = ResumeButton _
+    Then Stop: Resume ' F8 leads to the error line
 Exit Sub/Function
 ```
 
@@ -125,18 +124,20 @@ and the following can be for a test continuation
 ```
 #### Usage details
 ##### The _Entry Procedure_
-In a call hierarchy the topmost procedure with a BoP/EoP code line (see code sample below) is called the _Entry Procedure_. Usually it is the procedure which is directly or indirectly initiated by a user's  action or an event. The indication of an _Entry Procedure_ is essential for the display of the **path to the error** as for the optional display of the [execution trace](#tracing-procedure-and-or-code-execution) .
+The _Entry Procedure_ is the one the error handler recognizes as the begin of the execution of VBA code. I.e. it is the first procedure in a call hierarchy with a pair of BoP/EoP statements. Provided at least one such a procedure has been passed, an error is passed on back up to this _Entry Procedure_ while the _Path to the error_ is assembled. The following is an example code for an _Entry Procedure_ or any procedure which, in case of an error is contained in the [path to the error](#path-to-the-error)
+
 ```vbs
-Private/Public Sub/Function
-   Const PROC = "procedure-name"
-   ...
-   BoP ErrSrc(PROC) ' Begin of procedure
+Private/Public Sub/Function Any
+    On Error Goto eh
+    Const PROC = "Any"
+    mErH.BoP ErrSrc(PROC) ' Begin of procedure
    ....
-   EoP ErrSrc(PROC) ' End of procedure
-   Exit Sub)Function
+   If ... Then Goto xt ' never use Exit! It will bypass the EoP execution
+   ....
+xt: mErH.EoP ErrSrc(PROC) ' End of procedure
+    Exit Sub)Function
    
-on_error:
-   .....
+eh: mErH.ErrMsg .....
 End Sub/Function
 ```
 and the function (obligatory in each module):
@@ -145,19 +146,27 @@ Private Function ErrSrcByVal s As String) As String
    ErrSrc = "modile-name." & s
 End Function
 ```
+
+##### The _Path to the error_
+
+  
 ##### Making use of the free buttons
 The use of the _fMsg_ UserForm in general provides an enormous flexibility regarding the display of buttons. This can be used with the display of an error message to provide the user with any number of choices. Because the error message is fixed it is an advantage that the displayed buttons may have any free multi-line caption text, returned when the button is clicked. Example: The ErrHndlr statement:<br>
 ```vbs
-Private Sub Demo_7_Free_Button_Display()
-
-    On Error GoTo on_error
-    Const PROC = "Demo_7_Free_Button_Display"
-
+Private Sub Any()
+    Const PROC = "Any"
+    On Error Goto eh
+    ' .... any code, declarations etc.
+    mErH.BoP ErrSrc(PROC)
+    ' .... any code   
     Err.Raise AppErr(1), ErrSrc(PROC), "Display of a free defined button in addition to the usual Ok button (resumes the error when clicked)"
+    Goto xt
+    ' .... any code    
+
+xt: mErH.EoP ErrSrc(PROC)
     Exit Sub
 
-on_error:
-    Select Case mErrHndlr.ErrHndlr(Err.Number, ErrSrc(PROC), Err.Description, Erl, buttons:=vbOKOnly & "," & vbLf & ",My button")
+eh: Select Case mErH.ErrMsg(Err.Number, ErrSrc(PROC), Err.Description, Erl, buttons:=vbOKOnly & "," & vbLf & ",My button")
         Case "My button": Resume
     End Select
 End Sub
@@ -172,22 +181,21 @@ See also the [Alternative VBA MsgBox](https://github.com/warbe-maker/VBA-MsgBox-
 
 ## Execution Trace
 ### Execution Trace Service
-The additional module mTrace installed provides an execution trace whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure). 
+When the optional module _mTrc_ is installed it provides an execution trace whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure).
+
+### Installation
+Download and import the module  [_mTrc_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mTrc.bas) 
 
 ### Execution Trace Usage
-Download and import the module  [_mTrace_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mTrace.bas) and set the Conditional Compile Argument `ExecTrace = 1`. There is no other effort required. Any procedure with a pair of BoP/EoP code lines at the beginning and the end of a procedure will be included in the trace when executed. When performance issues require an even more detailed execution trace, a pair of BoT/EoT statements may surround any number of code lines within a procedure as follows:
-```vbs
-    BoT ErrSrc(PROC) &  " my code lines" ' Begin of trace
-    .... ' any code lines
-    EoT ErrSrc(PROC) &  " my code lines" ' End of trace (string must mathc with BoT statement)
-```
-For a maximum transparent trace the ErrSrc(PROC) with BoT/EoT code line is recommendable.
-#### Default compact or optional detailed trace information
+The execution trace module _mTrc_ may be used without the error handler in which case the usage differs slightly (see []())
+Set the Conditional Compile Argument `ExecTrace = 1` and make sure all BoP/EoP are qualified with `mErH.` That's it. Any executed procedure with an<br> `mErH.BoP ErrSrc(PROC)`<br>at the beginning and an<br> `mErH.EoP ErrSrc(PROC)` <br>code lines at the end of a procedure will be included in the displayed trace result.
+
+#### _Compact_ (default) or _Detailed_ trace result
 The default is a trace display like the following:
 ![](../Assets/ExecutionTrace.png)
 ![](/Assets/ExecutionTrace.png)<br>
 
-However, for those who do not believe in the displayed figures a detailed view may be of interest. With `mTrace.DisplayedInfo = Detailed` (yes, standard modules may have properties but they are not auto-sensed) the following kind of trace information is displayed:
+However, for those who do not believe in the displayed figures a detailed view may be of interest. With `mTrc.DisplayedInfo = Detailed` (yes, standard modules may have properties but they are just not auto-sensed) the following kind of trace information is displayed:
 ![](../Assets/ExecutionTraceDetailed.png)
 ![](/Assets/ExecutionTraceDetailed.png)<br>
 
@@ -195,6 +203,6 @@ However, for those who do not believe in the displayed figures a detailed view m
 still to be completed
 
 ### Contribution, development, test, maintenance
-It had become a habit: A dedicated _Common Component Workbook_ **ErrHndlr.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler). The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErrHndlr_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
+It had become a habit: A dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler). The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErH_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
 
 Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows](https://desktop.github.com). That's my environment for a continuous improvement process.
