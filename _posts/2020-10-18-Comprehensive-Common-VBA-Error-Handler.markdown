@@ -2,11 +2,11 @@
 layout: post
 title: A comprehensive common VBA Error Handler inspired by the best of the web
 subtitle: An Error Handler inspired by the best of the web
-date: 2020-10-02 16:00 +0200
+date: 2020-11-07
 categories: vba common
 ---
 
-**This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an option execution trace component.
+**This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
 
 In this post<br>
 [Error Handler](#error-handler)<br>
