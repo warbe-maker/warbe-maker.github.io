@@ -2,8 +2,9 @@
 layout: post
 title: Err.Number, vbObjectError, and Err.Source
 subtitle: Error numbers and error source in VBA projects
+
 ---
-<small>All aspects of this post are part of  the public [Common VBA Error Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler)</small>. 
+<small>All aspects of this post are part of the [Common VBA Error Handler](https://warbe-maker.github.io/vba/common/2020/11/07/Comprehensive-Common-VBA-Error-Handler.html)</small>
 
 ### vbObjectError and Err.Number
 - Microsoft documentation says, the error number raised by means of ```Err.Raise``` should be the sum of n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_
@@ -12,68 +13,68 @@ subtitle: Error numbers and error source in VBA projects
 What does this mean for an error handling?
 
 1. A negative Err.Number can be identified as an _Application Error_ and thus can be displayed in the title of the error message as<br>```Application Error n in <error source> at line m```
-2. Because a huge negative number is pretty inappropriate when displayed vbObjectErr should be subtracted which translates it back to the original _Application Error_ number.
+2. Because a huge negative number is pretty inappropriate when displayed in an error message the vbObjectErr should be subtracted from the Err.Number when it is negative which translates it back to the original positive _Application Error_ number.
 
 ### _Err.Source_
-The _Source_ property of the _Err_ object unfortunately not provides what it's pretending. The only way to get the source of the error as \<module>.\<procedure> is to do it "manually" (see [Error handling in any procedure](#error-handling-in-any-procedure)
+The _Source_ property of the _Err_ object unfortunately does not provide what it's name promises. The only way to get the source of the error as \<module>.\<procedure> is to do it "manually"
 
-### _Err.Number_ and _Err.Source_ wrapped up in an ErrHndlr Module
-In fact the Err.Source may only be used to identify a _Database Error_ so that it is not used for the "pretended" purpose.
-```vbscript
-Public Function AppErr(ByVal lNo As Long) As Long
-    If lNo < 0 _
-    Then AppErr = lNo - vbObjectError _
-    Else AppErr = lNo + vbObjectError lNo
-End Function
+### All matter for an error message
 
-Private Function ErrMsgTitle( _
-                 ByVal errornumber As Long, _
-                 ByVal errorsource As String, _ 
-        Optional ByVal errorline As Long = 0) As String
-        
-   If Err.Number < 0 _
-   Then ErrMsgTitle = "Application Error " & Err.Number + vbObjectError _
-   Else ErrMsgTitle = "VB Runtime Error " & Err.Number
-   ErrMsgTitle = ErrMsgTitle & " in " & errorsource
-   If errorline <> 0 _
-   Then ErrMsgTitle = ErrMsgTitle & " at line " & errorline
+The below procedure returns everything potentially usefully to display a proper error message:
+
+```vbs
+
+Private Sub ErrMsgMatter(ByVal err_source As String, _
+                         ByVal err_no As Long, _
+                         ByVal err_line As Long, _
+                         ByVal err_dscrptn As String, _
+                Optional ByRef msg_title As String, _
+                Optional ByRef msg_type As String, _
+                Optional ByRef msg_line As String, _
+                Optional ByRef msg_no As Long, _
+                Optional ByRef msg_details As String, _
+                Optional ByRef msg_dscrptn As String, _
+                Optional ByRef msg_info As String)
+' -------------------------------------------------------
+' Returns all the matter to build a proper error message.
+' -------------------------------------------------------
+                
+    If InStr(1, err_source, "DAO") <> 0 _
+    Or InStr(1, err_source, "ODBC Teradata Driver") <> 0 _
+    Or InStr(1, err_source, "ODBC") <> 0 _
+    Or InStr(1, err_source, "Oracle") <> 0 Then
+        msg_type = "Database Error "
+    Else
+      msg_type = IIf(err_no > 0, "VB-Runtime Error ", "Application Error ")
+    End If
    
-End Function
+    msg_line = IIf(err_line <> 0, "at line " & err_line, vbNullString)     ' Message error line
+    msg_no = IIf(err_no < 0, err_no - vbObjectError, err_no)                ' Message error number
+    msg_title = msg_type & msg_no & " in " & err_source & " " & msg_line             ' Message title
+    msg_details = IIf(err_line <> 0, msg_type & msg_no & " in " & err_source & " (at line " & err_line & ")", msg_type & msg_no & " in " & err_source)
+    msg_dscrptn = IIf(InStr(err_dscrptn, CONCAT) <> 0, Split(err_dscrptn, CONCAT)(0), err_dscrptn)
+    If InStr(err_dscrptn, CONCAT) <> 0 Then msg_info = Split(err_dscrptn, CONCAT)(1)
 
-Public Function ErrDisplay( _
-                ByVal errornumber As Long, _
-                ByVal errorsource As String, _
-                ByVal errordescription As String Long _
-       Optional ByVal continue As Variant = vbOkOnly) As Variant
-
-   ErrDisplay = _
-      MsgBox(title:=ErrMsgTitle(errornumber,errorsource, errorline, continue), prompt:=errordescription, buttons:=replies)
-   
-End Function
-```
-#### Error handling in any procedure
-```vbscript
-Private Sub Any
-   Const PROC = "Any"
-   On Error Goto on_error
-   ...
-   If ... _
-   Then Err.Raise AppErr(1), "Error description" ' example of an "Application Error"
-   ...
-
-end_proc:
-   Exit Sub
-   
-on_error:
-   ErrDisplay Err.Number, ErrSrc(PROC), Err.Description, Erl, vbOkOnly
-   ' or in case of a continue option
-   ' Select Case ErrDisplay(...., continue:=vbYesNo)
-   '    Case vbYes
-   '    Case vbNo
-   ' End Select
 End Sub
+```
 
-Private Property ErrSrc(Optional ByVal s As String) As String
-    ErrSrc = "<module name>" & "." & s
-End Function
+Used in a procedure which displays an error message will look as follows:
+
+```vbs
+Private Sub ErrMsg(ByVal err_no As Long, _
+                   ByVal err_source As String, _
+                   ByVal err_dscrptn As String, _
+                   ByVal err_line As Long)
+
+    Dim sTitle As String
+    
+    ErrMsgMatter err_source:=err_source, err_no:=err_no, err_line:=err_line, err_dscrptn:=err_dscrptn, msg_title:=sTitle
+    
+    MsgBox Prompt:="Error description:" & vbLf & _
+                    err_dscrptn & vbLf & vbLf & _
+                   "Error source:" & vbLf & _
+                   err_source, _
+           buttons:=vbOKOnly, _
+           Title:=sTitle
+End Sub
 ```
