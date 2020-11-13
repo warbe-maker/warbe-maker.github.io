@@ -1,22 +1,51 @@
 ---
 layout: post
-title: Err.Number, vbObjectError, and Err.Source
+title: The error message matter
 subtitle: Error numbers and error source in VBA projects
 
 ---
 <small>All aspects of this post are part of the [Common VBA Error Handler](https://warbe-maker.github.io/vba/common/2020/11/07/Comprehensive-Common-VBA-Error-Handler.html)</small>
 
-### vbObjectError and Err.Number
-- Microsoft documentation says, the error number raised by means of ```Err.Raise``` should be the sum of n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_
-- When the source of the error is known, i.e. the module and the procedure application errors can be source specific and range from number 1 to n
+### Err.Number
+The number of a VB Runtime, a Database, or an Application error. The latter explicitly raised by `Err Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
+```vbs
+Public Function AppErr(ByVal errno As Long) As Long
+' -------------------------------------------------
+' Used with Err.Raise AppErr(n) to translate the 
+' number into a negative 'Application Error Number'
+' and in reverse, when the error number is negative
+' translate it back into the original positive 
+' 'Application Error Number'.
+' -------------------------------------------------
+    If errno < 0 Then
+        AppErr = errno - vbObjectError
+    Else
+        AppErr = vbObjectError + errno
+    End If
+End Function
+```
 
-What does this mean for an error handling?
+The error handling may investigate the number as follows:
+```vbs
+   Select Case err.Number
+       Case AppErr(n) ' an error eased by err Raise
+       Case n ' errors raised by VB
+   End Select
+```
 
-1. A negative Err.Number can be identified as an _Application Error_ and thus can be displayed in the title of the error message as<br>```Application Error n in <error source> at line m```
-2. Because a huge negative number is pretty inappropriate when displayed in an error message the vbObjectErr should be subtracted from the Err.Number when it is negative which translates it back to the original positive _Application Error_ number.
+### Error source
+Application errors may range in any procedure from 1 to n provided the source of the error is known and displayed with the error message. Because the _Source_ property of the _Err_ object  (`err.Source`) unfortunately does not deliver what it's name promises we require the following function in each module:
+```vbs
+Private Function ErrSrc(ByVal s As String) As String
+    ErrSrc = "module-name." & s
+End Function
+```
 
-### _Err.Source_
-The _Source_ property of the _Err_ object unfortunately does not provide what it's name promises. The only way to get the source of the error as \<module>.\<procedure> is to do it "manually"
+### Error type
+A proper error message will display the type of error with the number as<br>
+\<error type> \<error number><br>
+whereby the error type may be _Application error_, _VB Runtime error_, or _Database error_.
+
 
 ### All matter for an error message
 
