@@ -49,16 +49,14 @@ End Type                            ' -------------------
 ' ----------------------------------------------------------------------
 ```
 
-
-
 ### Usage
 Set the Conditional Compile Argument `ExecTrace = 1` and make sure any BoP/EoP, BoC/EoC statements are fully qualified with `mTrc.` That's it. Any executed procedure with an<br> `mErH.BoP ErrSrc(PROC)`<br>at the beginning and an<br> `mErH.EoP ErrSrc(PROC)` <br>code line at the end of a procedure plus any code lines with a BoC at the beginning and EoC at the end will be included in the displayed trace result. The trace result is automatically displayed whenever the execution has returned to the _Entry Procedure_.
 #### Usage example
 ```vbscript
-Private Sub Any()
+Private Sub Any(ByVal anyarg As String)
     Const PROC = "Any"
     On Error Goto eh
-    BoP ErrSrc(PROC)
+    BoP ErrSrc(PROC), anyarg ' Begin trace with value of the argument
     '               ! Use Goto xt instead of Exit Sub !
     ' .... any code ! in order not to                 !
     '               ! bypass the EoP statement        !
