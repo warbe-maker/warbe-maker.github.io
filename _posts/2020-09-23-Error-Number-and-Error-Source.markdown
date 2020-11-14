@@ -1,8 +1,8 @@
 ---
 layout: post
-title: The error message matter
-subtitle: Error numbers and error source in VBA projects
-
+title: All the matter if a VB error message
+subtitle: Error number, Error type, Error source, etc.
+date: 2020-11-13
 ---
 <small>All aspects of this post are part of the [Common VBA Error Handler](https://warbe-maker.github.io/vba/common/2020/11/07/Comprehensive-Common-VBA-Error-Handler.html)</small>
 
