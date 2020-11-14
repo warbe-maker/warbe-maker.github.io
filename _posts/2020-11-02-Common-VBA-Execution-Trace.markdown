@@ -2,7 +2,7 @@
 layout: post
 title: Common VBA Execution Trace
 subtitle: When performance has become an issue
-date: 2020-10-02 16:00 +0200
+date: 2020-11-14
 categories: vba common
 ---
 
@@ -79,8 +79,8 @@ However, for those who do not believe in the displayed figures a detailed view m
 ![](../Assets/ExecutionTraceDetailed.png)
 ![](/Assets/ExecutionTraceDetailed.png)<br>
 
-#### The Seconds Precision Property
-The precision of the seconds defaults to 6 decimals which should be far enough since results will differ from trace to trace due to system conditions. The property _Precision_ may be used to change the default however.
+#### Precision
+The seconds precision defaults to 6 decimals which should be far enough since results will differ anyway from trace to trace due to system conditions. The property _Precision_ may be used to change the default however.
 
 ### Contribution, development, test, maintenance
 The dedicated _Common Component Workbook_ **Trc.xlsm** is used for development, test, and maintenance of the _mTrc_ module. This Workbook is kept in a dedicated folder which is [GitHub's public repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler) clone folder. The module **_mTest_** contains all test procedures of which the execution is obligatory when the code is modified. The module **_fMsg_** is used to display the trace results without any limit in the width (a vertical scroll bar is displayed when the maximum message window width is exceeded). Any changes are preferably managed by means of a branch which is merged to the master once the change/modification has successfully passed the regression test.
