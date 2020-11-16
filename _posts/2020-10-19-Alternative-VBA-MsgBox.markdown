@@ -9,6 +9,7 @@ categories: vba common
 In this post
 
 [Service](#service)<br>
+<<<<<<< Updated upstream
 [Why just another, alternative MsgBox](#why-just-another-alternative-msgbox)<br>
 [Installation](#installation)<br>
 [Properties of the _fMsg_ UserForm](#properties-of-the-fmsg-userform)<br>
@@ -22,14 +23,32 @@ In this post
 A message box which intelligently considers the width and height required for the displayed elements title, message, and buttons, waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.
 
 ## Why just another, alternative MsgBox?
+=======
+[Why just another, alternative MsgBox](#why-just-another-alternative-msgbox)<br>[Installation](#installation)<br>[Properties of the _fMsg_ UserForm](#properties-of-the-fmsg-userform)<br>[Usage](#usage)<br>[Interfaces](#interfaces)
+
+### Service
+A message box which intelligently considers the space required for the displayed elements title, message, and buttons, waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.
+![Example of an error message using an additional free text reply button](../Assets/ErrrorMessageWithResumeButton.png)
+![Example of an error message using an additional free text reply button](/Assets/ErrrorMessageWithResumeButton.png)
+
+![Example for a text wich spans mor than the specified maximum message window width](../Assets/ExecutionTraceDetailed.png)
+![Example for a text wich spans mor than the specified maximum message window width](/Assets/ExecutionTraceDetailed.png)
+
+### Why just another, alternative MsgBox?
+>>>>>>> Stashed changes
 The alternative implementation  addresses many of the constraints of the VBA MsgBox - without re-implementing it to 100%.
 
 |The VBA MsgBox|The Alternative|
 |--------------|---------------|
 | The message width and height is limited and cannot be altered | The&nbsp;maximum&nbsp;width and&nbsp;height&nbsp;is&nbsp;specified as&nbsp;a percentage of the screen&nbsp;size&nbsp; which&nbsp;defaults&nbsp;to: 80%&nbsp;width and  90%&nbsp;height (hardly ever used)|
 | When a message exceeds the (hard to tell) size limit it is truncated | When the maximum size is exceeded a vertical and/or a horizontal scroll bar is applied
+<<<<<<< Updated upstream
 | The message is displayed with a proportional font | A message may (or part of it may) be displayed mono-spaced |
 | Composing a fair designed message is time consuming and it is difficult to come up with a satisfying result | Up&nbsp;to&nbsp;3&nbsp; _Message&nbsp;Sections_ \*) each with an optional _Message Text Label_ and a _Monospaced_ option allow an appealing design without any extra  effort<br>\*) Adding an additional section is just a matter of the design and does not require any code change in the UserForm.  |
+=======
+| The message is displayed with a proportional font | A message may (or part of it) may be displayed mono-spaced |
+| Composing a fair designed message is time consuming and it is difficult to come up with a satisfying result | Up&nbsp;to&nbsp;4&nbsp; _Message&nbsp;Sections_ each with an optional _Message Text Label_ and a _Monospaced_ option allow an appealing design without any extra  effort |
+>>>>>>> Stashed changes
 | The maximum reply _Buttons_ is 3 | Up to 7 reply _Buttons_ may be displayed in up to 7 reply _Button Rows_ in any order (=49 buttons in total) |
 | The caption of the reply _Buttons_ is specified by a [value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) which results in 1 to 3 reply _Buttons_ with corresponding untranslated! native English captions | The caption of the reply _Buttons_ may be specified by the [VB MsgBox values](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) **and** additionally by any multi-line text (see [Syntax of the _buttons_ argument](#syntax-of-the-buttons-argument) |
 | Specifying the default button | (yet) not implemented |
@@ -55,7 +74,7 @@ Public Type tSection
 End Type
 
 Public Type tMessage
-    section(1 To 3) As tSection
+    section(1 To 4) As tSection
 End Type
 
 ```
@@ -65,10 +84,17 @@ End Type
 | Property | Meaning |
 |----------|---------|
 | _MsgTitle_| Mandatory. String expression. Applied in the message window's handle bar|
+<<<<<<< Updated upstream
 | _Msg_     | Optional. User defined type _tMessage_. Structure of the UserForm's message area. May alternatively be used to the below properties _MsgLabel_, _MsgText_, and _MsgMonoSpaced_ be used to pass a complete message.<br>See .... |
 | _MsgLabel(n)_ | Optional. String expression with _n__ as a numeric expression 1 to 3. Applied as a descriptive label above a below message text. Not displayed (even when provided) when no corresponding _MsgText_ is provided |
 | _MsgText(n)_ | Optional.String expression with _n__ as a numeric expression 1 to 3). Applied as message text of section _n_.|
 | _MsgMonospaced(n)_ | Optional. Boolean expression. Defaults to False when omitted. When True, the text in section _n_ is displayed mono-spaced.<br>(see [Proportional versus Mono-Spaced](#proportional-versus-mono-spaced))|
+=======
+| _Msg_     | Optional. User defined type. Structure of the UserForm's message area. May alternatively to the properties _MsgLable_, _MsgText_, and _MsgMonoSpaced_ be used to pass a complete message.<br>See .... |
+| _MsgLabel(n)_ | Optional. String expression with _n__ as a numeric expression 1 to 4. Applied as a descriptive label above a below message text. Not displayed (even when provided) when no corresponding _MsgText_ is provided |
+| _MsgText(n)_ | Optional.String expression with _n__ as a numeric expression 1 to 4). Applied as message text of section _n_.|
+| _MsgMonospaced(n)_ | Optional. Boolean expression with _n__ as a numeric expression 1 to 4). Defaults to False when omitted. When True, the text in section _n_ is displayed mono-spaced.|
+>>>>>>> Stashed changes
 | _MsgButtons_ | Optional. Defaults to vbOkOnly.<br>A MsgBox buttons value,<br>a comma delimited String expression,<br>a Collection,<br>or a dictionary,<br>with each item specifying a displayed command button's caption or a button row break (vbLf, vbCr, or vbCrLf)|
 | _ReplyValue_ | Read only. The clicked button's caption string or [value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>). When there is more than one button the form is unloaded when the clicked buttons value is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click.|
 | _ReplyIndex_ | Read only. The clicked button's index. When there is more than one button the form is unloaded when the clicked button's index is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click. |
@@ -98,12 +124,21 @@ Public Sub DemoDirect()
    End With
 End Sub
 ```
+<<<<<<< Updated upstream
 This example seems not being worth using the alternative message form.
 However, when encapsulated in a function things look much better.
 
 ### Usage via a general purpose _Msg_ function
 When the _fMsg_ UserForm ist used directly the properties and methods for its dedicated use are difficult to find among all the "internal" stuff.
 Copy the following into a standard module exposes only the arguments which matter:
+=======
+Displays:
+![](../Assets/AlternativeMsgBoxFirstStepMessage.png)
+![](/Assets/AlternativeMsgBoxFirstStepMessage.png)
+
+This example seems not being worth using the alternative.
+However, when encapsulated in a function things look much better. Copy the following into a standard module:
+>>>>>>> Stashed changes
 ```
 Public Function Msg(ByVal msg-title As String, _
                     ByRef msg_message As tMessage, _
