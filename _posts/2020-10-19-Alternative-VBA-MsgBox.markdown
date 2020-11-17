@@ -1,15 +1,15 @@
 ---
 layout: post
-title: An "Alternative VBA MsgBox"
+title: A common VBA message form as VBA MsgBox alternative
 subtitle: Less constraints, more options, better display
-date: 2020-10-19 16:00 +0200
+date: 2020-11-17
 categories: vba common
 ---
 
 In this post
 
 [Service](#service)<br>
-[Why just another, alternative MsgBox](#why-just-another-alternative-msgbox)<br>
+[Why this alternative to the VBA MsgBox](#why-this-alternative-to-the-vba-msgbox)<br>
 [Installation](#installation)<br>
 [Properties of the _fMsg_ UserForm](#properties-of-the-fmsg-userform)<br>
 [Usage](#usage)<br>
@@ -20,14 +20,14 @@ In this post
 
 
 ### Service
-A message box which intelligently considers the space required for the displayed elements title, message, and buttons, waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.
+Display of any kind of message or content by intelligently considering the space required for the displayed elements: title, message, and buttons. Waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.
 ![Example of an error message using an additional free text reply button](../Assets/ErrrorMessageWithResumeButton.png)
 ![Example of an error message using an additional free text reply button](/Assets/ErrrorMessageWithResumeButton.png)
 
 ![Example for a text wich spans mor than the specified maximum message window width](../Assets/ExecutionTraceDetailed.png)
 ![Example for a text wich spans mor than the specified maximum message window width](/Assets/ExecutionTraceDetailed.png)
 
-### Why just another, alternative MsgBox?
+### Why this alternative to the VBA MsgBox?
 The alternative implementation  addresses many of the constraints of the VBA MsgBox - without re-implementing it to 100%.
 
 |The VBA MsgBox|The Alternative|
