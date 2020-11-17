@@ -45,24 +45,23 @@ The alternative implementation  addresses many of the constraints of the VBA Msg
 1. Download the UserForm  [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
 2. Import _fMsg.frm_
 3. In the VBE add a Reference to "Microsoft Scripting Runtime"
-5. Copy the following into a standard module:<br>
+5. Copy the following into a standard module or alternatively [download the _mMsg_ module](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas) and import it. It has all the required resources on board:<br>
 ```
-Public Enum StartupPosition
-    Manual         ' Used to position
-    CenterOwner    ' the message window
-    CenterScreen   ' horizontally and
-    WindowsDefault ' vertically centered
-End Enum
+Public Enum StartupPosition             ' --------------------
+    Manual                              ' Used to position
+    CenterOwner                         ' the message window
+    CenterScreen                        ' horizontally and
+    WindowsDefault                      ' vertically centered
+End Enum                                ' -------------------
 
-Public Type tSection
-    sLabel As String      ' Structure of
-    sText As String       ' a UserForm's
-    bMonspaced As Boolean ' message section
-End Type
-
-Public Type tMessage
-    section(1 To 4) As tSection
-End Type
+Public Type tMsgSection                 ' ---------------------
+       sLabel As String                 ' Structure of the
+       sText As String                  ' UserForm's message
+       bMonspaced As Boolean            ' area which consists
+End Type                                ' of 4 message sections
+Public Type tMsg                        ' Attention: 4 is a
+       section(1 To 4) As tMsgSection   ' design constant!
+End Type                                ' ---------------------
 
 ```
 
@@ -109,30 +108,53 @@ Displays:
 ![](../Assets/AlternativeMsgBoxFirstStepMessage.png)
 ![](/Assets/AlternativeMsgBoxFirstStepMessage.png)
 
-This example seems not being worth using the alternative.
-However, when encapsulated in a function things look much better. Copy the following into a standard module:
+The above example seems not being worth using the alternative. However, when encapsulated in a function which exposes all relevant matter via arguments things look much better. Copy the following may be copied into a standard module or [download the _mMsg_ module](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas) and import it. It has all the required resources on board:
 ```vbs
-> Public Function Msg(ByVal msg_title As String, _
->                     ByRef msg_message As tMessage, _
->            Optional ByVal msg_buttons As Variant = vbOKOnly, _
->            Optional ByVal msg_returnindex As Boolean = False) As Variant
-> 
->    With fMsg
->       .MsgTitle = msg_title
->       .Msg = msg_message
->       .MsgButtons = msg_buttons
->       .Setup
->       .Show
->       '~~ Obtaining the reply value or index unloads the form !
->       If msg_returnindex _
->       Then Msg = .ReplyIndex _
->       Else Msg = .ReplyValue
->    End With
-> 
-> End Function
+Public Function Dsply(ByVal dsply_title As String, _
+                      ByRef dsply_message As tMsg, _
+             Optional ByVal dsply_buttons As Variant = vbOKOnly, _
+             Optional ByVal dsply_returnindex As Boolean = False, _
+             Optional ByVal dsply_min_width As Long = 300, _
+             Optional ByVal dsply_max_width As Long = 80, _
+             Optional ByVal dsply_max_height As Long = 70, _
+             Optional ByVal dsply_min_button_width = 30) As Variant
+' ------------------------------------------------------------------------------------
+' Common VBA Message Display: A service using the Common VBA (alternative) MsgBox.
+' See: https://warbe-maker.github.io/vba/common/2020/10/19/Alternative-VBA-MsgBox.html
+'
+' W. Rauschenberger, Berlin, Nov 2020
+' ------------------------------------------------------------------------------------
+
+    With fMsg
+        .MaxFormHeightPrcntgOfScreenSize = dsply_max_height ' percentage of screen size
+        .MaxFormWidthPrcntgOfScreenSize = dsply_max_width   ' percentage of screen size
+        .MinFormWidth = dsply_min_width                     ' defaults to 300 pt. the absolute minimum is 200 pt
+        .MinButtonWidth = dsply_min_button_width
+        .MsgTitle = dsply_title
+        .Msg = dsply_message
+        .MsgButtons = dsply_buttons
+        '+------------------------------------------------------------------------+
+        '|| Setup prior showing the form improves the performance significantly  ||
+        '|| and avoids any flickering message window with its setup.             ||
+        '|| For testing purpose it may be appropriate to out-comment the Setup.  ||
+        .Setup '                                                                 ||
+        '+------------------------------------------------------------------------+
+        .show
+    End With
+    
+    ' -----------------------------------------------------------------------------
+    ' Obtaining the reply value/index is only possible when more than one button is
+    ' displayed! When the user had a choice the form is hidden when the button is
+    ' pressed and the UserForm is unloade when the return value/index (either of
+    ' the two) is obtained!
+    ' -----------------------------------------------------------------------------
+    If dsply_returnindex Then Dsply = fMsg.ReplyIndex Else Dsply = fMsg.ReplyValue
+
+End Function
+
 
 ```
-The _Msg_ function syntax has these named arguments:
+The _Dsply_ function syntax has these named arguments:
 
 |    Part    | Description|
 | ---------- |----------- |
