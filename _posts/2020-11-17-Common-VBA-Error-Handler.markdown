@@ -41,16 +41,10 @@ Displays an structured error message with
 waits for the user's button clicked and returns its value to the caller.
 
 ### Service for debugging and test
-- When the Conditional Compile Argument `Test = 1`
-  - Two additional [test option buttons](#the-test-option-buttons) are displayed allowing to ...
-  - 
-displayed with the error message allow an eeror processing based on a user's choice.<br>The [usage which supports debugging](#a-usage-which-supports-debugging) is one already built-in example, another one is the `Test = 1  - ...
+When the Conditional Compile Argument `Test = 1` two additional [test option buttons](#the-test-option-buttons) are displayed<br>![image](../Assets/ErrMsgWithTestOption.png)<br>
+When the Conditional Compile Argument `Debuggig = 1` two additional buttons support identifying the error line<br>
+![image](../Assets/ErrMsgWithDebuggingOption.png)
 
-Usage supporting test](#usage-supportingtest)
-- **Error type distinction**<br>The error message distincts between _VB Runtime Error_, _Application Error_, and _Database-Error_
-- **Error source and error line**<br>The error message displays the source of the error plus the error line when available
-- **Execution time trace (optional module)**<br>Each time when the processing has returned to an [_Entry Procedure_](#the-entry-procedure) an [optional execution time trace](#optional-execution-time-trace) with the precise execution time of each [traced procedure](#) and/or [traced number of code lines](#traced-number-of-code-lines) is displayed in the VBE immediate window
-- **Error log**<br>The implementation of an optional error log is a still pending issue
 
 ## Syntax of the _ErrMsg_ function
 ```vbs
