@@ -110,31 +110,32 @@ With the advantages of the **Alternative VBA MsgBox** provided by the _fMsg_ Use
 
 ### Development, test, maintenance
 - The dedicated _Common Component Workbook_ ErrHndlr.xlsm is the development, test, and maintenance environment (see the Guthub repo [Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler).
-- The module _mTest_ contains all test procedures
+- The module _mTest_ contains all procedures obligatory for a regression test when the code in the _mErrHndlr_ module has been modified.
 
 ### Optional execution time trace
-When the Conditional Compile Argument `ExecTrace =1` and the [_Entry Procedure_](#entry-procedure) is reached the below kind of execution trace is displayed in the VBE immediate window
+When the Conditional Compile Argument `ExecTrace =1` and the [_Entry Procedure_](#the-entry-procedure) is known and reached the below kind of a trace of the execution time is displayed in the VBE immediate window
 ![image](../Assets/ExectionTrace.png)
 
 ### The _Entry Procedure_
-In a call hierarchy the topmost procedure with a BoP/EoP code line (see below) is called the _Entry Procedure_. Usually it is the procedure which is directly or indirectly initiated by a user's  action or an event like Workbook_Open or Workbook_Change.<br>
-The indication of the _Entry Procedure_ is essential for the display of the path to the error and the optional display of the execution trace.
+Only when the _Entry Procedure_ is known by the ErrHndlr all features which make a difference are available. The _Entry Procedure_ is in a call hierarchy the topmost procedure with the following additional code lines: 
 ```vbs
 Private/Public Sub/Function
    Const PROC = "procedure-name"
    ...
    BoP ErrSrc(PROC) ' Begin of Procedure
    ....
-   EoP ErrSrc(PROC)
+   EoP ErrSrc(PROC) ' End of Procedure
    Exit Sub)Function
    
 on_error:
-   .....
+   ErrHndlr .....
 End Sub/Function
 ```
 and the function (obligatory in each module):
 ```vbs
-Private Function ErrSrcByVal s As String) As String
-   ErrSrc = "modile-name." & s
+Private Function ErrSrc(ByVal s As String) As String
+   ErrSrc = "module-name." & s
 End Function
 ```
+
+Note: The more procedures in a call hierarchy have the two BoP/EoP code lines the more details about the used execution time is provided in the execution trace result.
