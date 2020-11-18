@@ -30,9 +30,23 @@ In this post<br>
 [Contribution, development, test, maintenance](#contribution-development-test-maintenance)
 
 ## Services
-Only a few additional code lines in a procedure unfold the provided services:
-- **Path to the error**<br>One advantage of this error handler is the display of the path to the error built/assembled when the error is passed on from the error source procedure back up to [the Entry Procedure](#the-entry-procedure) (provided it is known)
-- **Free buttons specification**<br>[Free specified buttons](#free-specified-buttons) displayed with the error message allow an eeror processing based on a user's choice.<br>The [usage which supports debugging](#a-usage-which-supports-debugging) is one already built-in example, another one is the [Usage supporting test](#usage-supportingtest)
+### Common service
+Displays an structured error message with
+- **[the type of the error](#type-of-error), 
+- the description of the error,
+- the error source,
+- the **[Path to the error](#the-path-to-the-error)**, 
+- an optional **[additional information about the error](#additional-information-about-the-error)**,
+- any number of - **Free buttons specification**<br>[Free specified buttons](#free-specified-buttons)
+waits for the user's button clicked and returns its value to the caller.
+
+### Service for debugging and test
+- When the Conditional Compile Argument `Test = 1`
+  - Two additional [test option buttons](#the-test-option-buttons) are displayed allowing to ...
+  - 
+displayed with the error message allow an eeror processing based on a user's choice.<br>The [usage which supports debugging](#a-usage-which-supports-debugging) is one already built-in example, another one is the `Test = 1  - ...
+
+Usage supporting test](#usage-supportingtest)
 - **Error type distinction**<br>The error message distincts between _VB Runtime Error_, _Application Error_, and _Database-Error_
 - **Error source and error line**<br>The error message displays the source of the error plus the error line when available
 - **Execution time trace (optional module)**<br>Each time when the processing has returned to an [_Entry Procedure_](#the-entry-procedure) an [optional execution time trace](#optional-execution-time-trace) with the precise execution time of each [traced procedure](#) and/or [traced number of code lines](#traced-number-of-code-lines) is displayed in the VBE immediate window
@@ -149,6 +163,25 @@ End Function
 
 ##### The _Path to the error_
 
+##### The test option buttons
+When the Conditional Compile Argument `Test = 1` the error message looks as follows:
+![](/Assets/ErrMsgWithTestOption.png)
+![](../Assets/ErrMsgWithTestOption.png)
+
+##### The debugging option buttons
+When the Conditional Compile Argument `Debugging = 1` the error message looks as follows:
+![](/Assets/ErrMsgWithDebuggingOption.png)
+![](../Assets/ErrMsgWithDebuggingOption.png)
+The additional button have an advantage over the equivalent:
+```
+#If Debugging Then
+    Debug.Print Err.Description: Stop: Resume
+#End If
+```
+because this cannot be altered which means it loops until the reason for the error has been eliminated which may lead to an emergency code change just to continue without an error.
+
+With both Conditional Compile Arguments `Test = 1` and `Debugging = 1` four additional buttons are displayed.
+
 ##### Making use of the free buttons
 The _fMsg_ UserForm provides a great flexibility/varyity for the displayed buttons.<br>
 Example: The ErrHndlr statement:<br>
@@ -199,8 +232,6 @@ However, for those who do not believe in the displayed figures a detailed view m
 ![](../Assets/ExecutionTraceDetailed.png)
 ![](/Assets/ExecutionTraceDetailed.png)<br>
 
-### The Seconds Precision Property
-still to be completed
 
 ## Contribution, development, test, maintenance
 The dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler). The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErH_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
