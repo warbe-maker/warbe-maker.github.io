@@ -1,18 +1,20 @@
 ---
 layout: post
 title: Common Components Management
-date:   2020-09-30 09:11:20 +0200
-categories: vba excel management
+subtitle: Keeping Common Components up-to-date in Vb-Projects using them
+date:   2020-09-30
+categories: vba excel common component management
 ---
 <small>The matter of this post is available on [GitHub.com](<https://github.com/warbe-maker/Common-Component-Management>)</small>
 
-[Basics](#basics)<br>
+In this post
+[Background](#background)<br>
 [Administration of _Common Components_](#administration-of-common-components)<br>
 [VB-Projects and GitHub](#vb-projects-and-github)
 
 
-### Basics
-_Component_ is the term for any kind of module in a _VB-Project_. A _Component_ which potentially may be used in many VB-Projects is what I call a _Common Component_. As a consequence of this property solid implementation and testing is absolutely essential - and that's why each of them should be hosted in a dedicated _Common Component Workbook_ which resides in a dedicated _Common Component Workbook Folder_.
+### Background
+_Component_ is the generic _VB-Project_ term for UserForm, Standard Module, Class Module and Data Module. I call a  _Component_ which potentially may be used in (m)any VB-Projects a _Common Component_. The consequence of this _Common_ property is a demand on solid implementation and careful testing. This is facilitated by a dedicated _Common Component Workbook_ which resides in a dedicated _Common Component Workbook Folder_. The later is the 
 
 Example: The module _mErrHndlr_ is _hosted_ in the _Common Component Workbook_ ErrHndlr.xlsm which contains all means required/usefull for development and test.
 
