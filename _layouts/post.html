@@ -28,6 +28,7 @@ layout: default
 
   <div class="post-content e-content" itemprop="articleBody">
     {{ content }}
+    {% include toc.html html=content %}
   </div>
 
 <script src="https://utteranc.es/client.js"
