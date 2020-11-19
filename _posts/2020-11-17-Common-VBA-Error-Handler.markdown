@@ -5,12 +5,15 @@ subtitle: An Error Handler inspired by the best of the web
 date: 2020-11-07
 categories: vba common
 comments: true
+toc: In this post
 ---
 
 **This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
 
 In this post<br>
 [Services](#services)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Common services](#common-services)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Debugging and test support](#debugging-and-test-support)<br>
 [Syntax of the _ErrMsg_ function](#syntax-of-the-errmsg-function)<br>
 [Installation](#installation)<br>
 [Usage](#usage)<br>
@@ -24,20 +27,20 @@ In this post<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Free buttons specification](#free-buttons-specification)<br>
 [Optional Execution Trace Service](#optional-execution-trace-service)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Installation of the Execution Trace](#installation-of-the-execution-trace)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Usage of the Execution Trace](#usage-of-the-execution-trace)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Using the Execution Trace](#using-the-execution-trace)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[_Compact_ (default) versus _Detailed_ trace result](#compact-default-versus-detailed-trace-result)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[The Seconds Precision Property](#the-seconds-precision-property)<br><br>
 [Contribution, development, test, maintenance](#contribution-development-test-maintenance)
 
 ## Services
-### Common service
+### Common services
 The main services are provided by the _ErrMsg_ function of the mErH_ module which
 - displays an structured error message with
   - **[the type of the error](#the-type-of-the-error)**, 
   - the description of the error,
-  - the error source,
+  - **[the error source](#the-error-source)**,
   - the **[path to the error](#the-path-to-the-error)** provided **[the _Entry Procedure_](#the-entry-procedure)** is known, 
-  - an optional **[additional information about the error](#additional-information-about-the-error)**,
+  - an optional **[additional information about an error](#additional-information-about-an-error)**,
   - (almost) any number of **[Free specified buttons](#free-buttons-specification)**
 - waits for the user's button clicked and provides/returns [the reply buttons value](#processing-the-returned-reply) to the caller.
 
@@ -66,6 +69,7 @@ The procedure has these named arguments:
 ## Installation
 - Download and import the module  [_mErH_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErH.bas)
 - Download the UserForm  [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx) and import _fMsg.frm_
+- Because at least some effort is the same intalling the Common VBA Execution Trace is worth being concidered: Download [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mTrc.bas) and import it.
 
 ## Usage
 ### Basic usage
@@ -140,13 +144,19 @@ The error handler distinguishes between
 - VB Runtime error
 - Database error
 
+#### The _error source_
+Since the err.Source only provides the Application name we have to care ourselves for this information:<br>
+Copy the following in any module the error handler (mErH.ErrMsg) is used
+```
+Private Function ErrSrc(ByVal s As String) As String
+   ErrSrc = "module-name." & s
+End Function
+```
+
 #### The _Entry Procedure_
-The procedure which the error handler has recognized as the top level procedure of a call hierarchy by means of a pair of BoP/EoP statements. Provided at least one such procedure has been passed and the user has no reply choices since only one button is
+The procedure which the error handler has recognized as the top level procedure of a call hierarchy by means of a pair of BoP/EoP statements is considered the _Entry Procedures_.
 
-
-, an error is passed on back up to this _Entry Procedure_ while the _Path to the error_ is assembled. The following is an example code for an _Entry Procedure_ or any procedure which, in case of an error is contained in the [path to the error](#path-to-the-error)
-
-```vbs
+```
 Private/Public Sub/Function Any
     On Error Goto eh
     Const PROC = "Any"
@@ -162,17 +172,52 @@ End Sub/Function
 ```
 and the function (obligatory in each module):
 ```vbs
-Private Function ErrSrcByVal s As String) As String
-   ErrSrc = "modile-name." & s
+Private Function ErrSrc(ByVal s As String) As String
+   ErrSrc = "module-name." & s
 End Function
 ```
 
 ##### The _Path to the error_
+For the display of the path to the error at least one procedure must have been regognized as an/the  [_Entry Procedure_](#the-entry-procedure).<br>
+When the user has no reply choices since only one button is displayed with the error message, the path to the error is composed when the error passed on to the _Entry Procedure_ where the error is displayed when reached. This is the reason why in this particular case there is no need to have BoP/EoP statements in every procedure.
 
-##### The test option buttons
-When the Conditional Compile Argument `Test = 1` the error message looks as follows:
+When the user has choices because more than one button is displayed with the error message the error is displayed immediately with the procedure which caused the error. In this case there is only one source for the path to the error which is the stack maintained by the error handler with each BoP/EoP statement. I.e. the path to the error depends on procedures which provide a BoP/EoP information.
+
+#### Additional information about an error
+The displayed error description is what is provided by the err.Description property. However, in case of an _Application Error_ the description is provided with the err.Raise command. When the error description looks like "This is a serious error.||This error may be avoided by ...." the string concatenated with || is regarded an additional information and will be displayed in the error message as such.
+
+#### The test option buttons
+With the Conditional Compile Argument `Test = 1` the error message will be displayed with two additional buttons which may be used when the [return value of the _ErrMsg_ is processed](#processing-the-return-value) further.
 ![](/Assets/ErrMsgWithTestOption.png)
 ![](../Assets/ErrMsgWithTestOption.png)
+
+#### Processing the return value
+The return value is the value of the button when provided by vbYesNo, vbIgnoreRetryCancel, etc. or the caption string of the displayed button (including any vbLf). It may be processed in either of the following ways:
+```
+eh: Select Case mErH.ErrMsg(ErrSrc(PROC)
+        Case ....
+        Case ...
+    End Select
+```
+
+or
+```
+eh: mErH.ErrMsg ErrSrc(PROC)
+    Select Case mErH.ErrReply
+        Case ....
+        Case ...
+    End Select
+```
+or
+```
+    Dim vReply As Variant
+    
+eh: mErH.ErrMsg ErrSrc(PROC), err_reply:=vReply
+    Select Case vReply
+        Case ....
+        Case ...
+    End Select
+```
 
 ##### The debugging option buttons
 When the Conditional Compile Argument `Debugging = 1` the error message looks as follows:
@@ -184,9 +229,15 @@ The additional button have an advantage over the equivalent:
     Debug.Print Err.Description: Stop: Resume
 #End If
 ```
-because this cannot be altered which means it loops until the reason for the error has been eliminated which may lead to an emergency code change just to continue without an error.
+because this cannot be altered which means it loops until the reason for the error has been eliminated which may result in an unwanted code change just to continue without an error. The two buttons may be processed as return values as follows:
+```
+eh: Select Case ErrMsg(ErrSrc(PROC))
+        Case mErH.DebugOpt1ResumeError: Stop: Resume
+        Case mErH.DebugOpt1ResumeNext: Resume Next
+    End Select
+```
 
-With both Conditional Compile Arguments `Test = 1` and `Debugging = 1` four additional buttons are displayed.
+With both Conditional Compile Arguments `Test = 1` and `Debugging = 1` four additional buttons are displayed and may be processed accordingly.
 
 ##### Free buttons specification
 Buttons can be provided as a comma delimited string, an array, a Collection or a Dictionary whereby the items are a VBA MsgBox value, a button's caption string, or a vbLf indicating the following buttons are displayed in a new row. This free buttons specification is a service provided by the used fMsg UserForm, a Common VBA Message Form.
@@ -225,9 +276,9 @@ When the optional module _mTrc_ is installed it provides an execution trace when
 ## Installation of the Execution Trace
 Download and import the module  [_mTrc_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mTrc.bas) 
 
-## Usage of the Execution Trace
-The execution trace module _mTrc_ may be used without the error handler in which case the usage differs slightly (see []())
-Set the Conditional Compile Argument `ExecTrace = 1` and make sure all BoP/EoP are qualified with `mErH.` That's it. Any executed procedure with an<br> `mErH.BoP ErrSrc(PROC)`<br>at the beginning and an<br> `mErH.EoP ErrSrc(PROC)` <br>code lines at the end of a procedure will be included in the displayed trace result.
+## Using the Execution Trace
+When the execution trace module _mTrc_ is used with the error handler it requires only the Conditional Compile Argument `ExecTrace = 1` to activate the trace. That's it. Any executed procedure with an<br> `mErH.BoP ErrSrc(PROC)`<br>at the beginning and an<br> `mErH.EoP ErrSrc(PROC)` <br>code lines at the end of a procedure will be included in the displayed trace result.<br>
+Note: When the Common VBA Execution Trace had already been used before the mErH module had been installed all mTrc.BoP/mTrc.EoP have to be changed to mErH.BoP/mErH.EoP. Any mTrc.BoC/mTrc.EoC are ok.
 
 ### _Compact_ (default) versus _Detailed_ trace result
 The default is a trace display like the following:
