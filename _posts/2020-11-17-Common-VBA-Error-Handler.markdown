@@ -16,12 +16,12 @@ In this post<br>
 [Usage](#usage)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Usage providing a "path to the error" with the error message](#usage-providing-a-path-to-the-error-with-the-error-message)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Debug supporting usage](#debug-supporting-usage)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Usage supporting test](#usage-supporting-test)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Usage details](#usage-details)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[The Path to the error](#the-path-to-the-error)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[The _Entry Procedure_](#the-entry-procedure)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Making use of the free buttons](#making-use-of-the-free-buttons)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Debugging and  test support](#debugging-and-test-support)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Test supporting](#test-support)<br>
+[Usage/services details](#usage-services-details)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[The Path to the error](#the-path-to-the-error)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[The _Entry Procedure_](#the-entry-procedure)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;[Free buttons specification](#free-buttons-specification)<br>
 [Optional Execution Trace Service](#optional-execution-trace-service)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Installation of the Execution Trace](#installation-of-the-execution-trace)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;[Usage of the Execution Trace](#usage-of-the-execution-trace)<br>
@@ -31,18 +31,21 @@ In this post<br>
 
 ## Services
 ### Common service
-Displays an structured error message with
-- **[the type of the error](#type-of-error), 
-- the description of the error,
-- the error source,
-- the **[Path to the error](#the-path-to-the-error)**, 
-- an optional **[additional information about the error](#additional-information-about-the-error)**,
-- any number of - **Free buttons specification**<br>[Free specified buttons](#free-specified-buttons)
-waits for the user's button clicked and returns its value to the caller.
+The main services are provided by the _ErrMsg_ function of the mErH_ module which
+- displays an structured error message with
+  - **[the type of the error](#the-type-of-the-error)**, 
+  - the description of the error,
+  - the error source,
+  - the **[path to the error](#the-path-to-the-error)** provided **[the _Entry Procedure_](#the-entry-procedure)** is known, 
+  - an optional **[additional information about the error](#additional-information-about-the-error)**,
+  - (almost) any number of **[Free specified buttons](#free-buttons-specification)**
+- waits for the user's button clicked and provides/returns [the reply buttons value](#processing-the-returned-reply) to the caller.
 
-### Service for debugging and test
-When the Conditional Compile Argument `Test = 1` two additional [test option buttons](#the-test-option-buttons) are displayed<br>![image](../Assets/ErrMsgWithTestOption.png)<br>
-When the Conditional Compile Argument `Debuggig = 1` two additional buttons support identifying the error line<br>
+### Debugging and test support
+- When the Conditional Compile Argument `Test = 1`:
+  - two additional [test option buttons](#the-test-option-buttons) are displayed<br>![image](../Assets/ErrMsgWithTestOption.png)
+  - When _asserted error numbers are specified for a test procedure the corresponding error messages are not displayed but processing continues which perfectly supports testing of error conditions within a regression test.
+- When the Conditional Compile Argument `Debuggig = 1` two additional buttons support identifying the error line or continue<br>
 ![image](../Assets/ErrMsgWithDebuggingOption.png)
 
 
@@ -52,13 +55,13 @@ When the Conditional Compile Argument `Debuggig = 1` two additional buttons supp
 ```
 The procedure has these named arguments:
 
-|  Argument  |   Description   |
-| ---------- | --------------- |
-| errnumber  | Err.Number      |
-| errsource  | ErrSrc(PROC).   |
-| errdscrptn | Err.Description |
-| errline    | Erl             |
-| buttons    | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
+|  Argument   |   Description   |
+| ----------- | --------------- |
+| err_number  | Optional, defaults to err.Number when omitted      |
+| err_source  | Obligatory, string expression providing <module>.<procedure>, e.g. ErrSrc(PROC).   |
+| err_dscrptn | Optional, defaults to err.Description when omitted |
+| err_line    | Optional, defaults to  Erl when omitted            |
+| err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
 ## Installation
 - Download and import the module  [_mErH_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErH.bas)
@@ -130,9 +133,18 @@ and the following can be for a test continuation
 ```vbs
 
 ```
-#### Usage details
-##### The _Entry Procedure_
-The _Entry Procedure_ is the one the error handler recognizes as the begin of the execution of VBA code. I.e. it is the first procedure in a call hierarchy with a pair of BoP/EoP statements. Provided at least one such a procedure has been passed, an error is passed on back up to this _Entry Procedure_ while the _Path to the error_ is assembled. The following is an example code for an _Entry Procedure_ or any procedure which, in case of an error is contained in the [path to the error](#path-to-the-error)
+### Usage/services details
+#### The type of the error
+The error handler distinguishes between
+- Application error
+- VB Runtime error
+- Database error
+
+#### The _Entry Procedure_
+The procedure which the error handler has recognized as the top level procedure of a call hierarchy by means of a pair of BoP/EoP statements. Provided at least one such procedure has been passed and the user has no reply choices since only one button is
+
+
+, an error is passed on back up to this _Entry Procedure_ while the _Path to the error_ is assembled. The following is an example code for an _Entry Procedure_ or any procedure which, in case of an error is contained in the [path to the error](#path-to-the-error)
 
 ```vbs
 Private/Public Sub/Function Any
@@ -176,9 +188,9 @@ because this cannot be altered which means it loops until the reason for the err
 
 With both Conditional Compile Arguments `Test = 1` and `Debugging = 1` four additional buttons are displayed.
 
-##### Making use of the free buttons
-The _fMsg_ UserForm provides a great flexibility/varyity for the displayed buttons.<br>
-Example: The ErrHndlr statement:<br>
+##### Free buttons specification
+Buttons can be provided as a comma delimited string, an array, a Collection or a Dictionary whereby the items are a VBA MsgBox value, a button's caption string, or a vbLf indicating the following buttons are displayed in a new row. This free buttons specification is a service provided by the used fMsg UserForm, a Common VBA Message Form.
+The below example of an _ErrMsg_:
 ```vbs
 Private Sub Any()
     Const PROC = "Any"
@@ -195,7 +207,7 @@ xt: mErH.EoP ErrSrc(PROC)
     Exit Sub
 
 eh: Select Case mErH.ErrMsg(err_source:=ErrSrc(PROC) err_buttons:=vbOKOnly & "," & vbLf & ",Resume Error")
-        Case "Resume Error": Resume
+        Case "Resume Error": Stop: Resume
     End Select
 End Sub
 ```
