@@ -10,28 +10,6 @@ toc: In this post
 
 **This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
 
-In this post<br>
-[Services](#services)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Common services](#common-services)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Debugging and test support](#debugging-and-test-support)<br>
-[Syntax of the _ErrMsg_ function](#syntax-of-the-errmsg-function)<br>
-[Installation](#installation)<br>
-[Usage](#usage)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Basic usage](#basic-usage)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Usage providing a "path to the error" with the error message](#usage-providing-a-path-to-the-error-with-the-error-message)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Debugging and  test support](#debugging-and-test-support)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Test supporting](#test-support)<br>
-[Usage/services details](#usage-services-details)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[The Path to the error](#the-path-to-the-error)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[The _Entry Procedure_](#the-entry-procedure)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Free buttons specification](#free-buttons-specification)<br>
-[Optional Execution Trace Service](#optional-execution-trace-service)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Installation of the Execution Trace](#installation-of-the-execution-trace)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[Using the Execution Trace](#using-the-execution-trace)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[_Compact_ (default) versus _Detailed_ trace result](#compact-default-versus-detailed-trace-result)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;[The Seconds Precision Property](#the-seconds-precision-property)<br><br>
-[Contribution, development, test, maintenance](#contribution-development-test-maintenance)
-
 ## Services
 ### Common services
 The main services are provided by the _ErrMsg_ function of the mErH_ module which
