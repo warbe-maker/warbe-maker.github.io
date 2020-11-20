@@ -35,7 +35,7 @@ layout: default
     <div id="side-toc-title">On this page:</div> 
     {%- include toc_pure_liquid.html html=content sanitize=true class="inline_toc" id="my_toc" toc_min=my_min toc_max=my_max page_name=my_name -%}
     {%- endunless -%}
-    {{content | inline_toc }}
+    {{content}}
   </div>
 
 <script src="https://utteranc.es/client.js"
