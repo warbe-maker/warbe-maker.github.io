@@ -11,7 +11,7 @@ comments: true
 
 ## Common services of the Error Handler
 The main services are provided by the _ErrMsg_ function of the mErH_ module which
-- displays an structured error message with
+- displays a well structured error message with
   - **[the type of the error](#the-type-of-the-error)**, 
   - the description of the error,
   - **[the error source](#the-error-source)**,
