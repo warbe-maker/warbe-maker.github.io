@@ -115,9 +115,10 @@ and the following can be for a test continuation
 ## Usage/services details
 ### The type of the error
 The error handler distinguishes between
-- Application error
+- [**Application error**](#the-application-error) provided the error had been raised by `err.Raise mErH.AppErr(n) ...` with n = 1 to .... 
 - VB Runtime error
 - Database error
+
 
 ### The _error source_
 Since the err.Source only provides the Application name we have to care ourselves for this information:<br>
@@ -127,6 +128,8 @@ Private Function ErrSrc(ByVal s As String) As String
    ErrSrc = "module-name." & s
 End Function
 ```
+### The _Application Error_ service
+The error Handler provides the function _AppErr_ which turns a positive number into a negative by adding the constant [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) when the error is raised with `err.Raise mErH.AppErr(n). The error handler (the _ErrMsg_ function) recognizes the negative number as an _Application Error_ and turns it back into the original postive number for display.
 
 ### The _Entry Procedure_
 The procedure which the error handler has recognized as the top level procedure of a call hierarchy by means of a pair of BoP/EoP statements is considered the _Entry Procedures_.
