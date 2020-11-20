@@ -37,7 +37,7 @@ The procedure has these named arguments:
 |  Argument   |   Description   |
 | ----------- | --------------- |
 | err_number  | Optional, defaults to err.Number when omitted      |
-| err_source  | Obligatory, string expression providing <module>.<procedure>, e.g. ErrSrc(PROC).   |
+| err_source  | Obligatory, string expression providing \<module>.\<procedure>, see [ErrSrc(PROC)](#the-error-source).   |
 | err_dscrptn | Optional, defaults to err.Description when omitted |
 | err_line    | Optional, defaults to  Erl when omitted            |
 | err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
