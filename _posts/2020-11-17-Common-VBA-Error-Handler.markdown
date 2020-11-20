@@ -5,7 +5,6 @@ subtitle: An Error Handler inspired by the best of the web
 date: 2020-11-07
 categories: vba common
 comments: true
-notoc: true
 ---
 
 **This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
