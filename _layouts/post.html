@@ -26,9 +26,16 @@ layout: default
       {%- endif -%}</p>
   </header>
 
+   
   <div class="post-content e-content" itemprop="articleBody">
-    {% include toc.html html=content %}
-    {{content}}
+    {%- unless page.notoc -%}
+    {%- assign my_min = page.toc_min | default: site.toc_min | default: 2 -%}
+    {%- assign my_max = page.toc_max | default: site.toc_max | default: 3 -%} 
+    {%- assign my_name = page.url | default: "unnamed" -%}
+    <div id="side-toc-title">On this page:</div> 
+    {%- include toc_pure_liquid.html html=content sanitize=true class="inline_toc" id="my_toc" toc_min=my_min toc_max=my_max page_name=my_name -%}
+    {%- endunless -%}
+    {{content | inline_toc }}
   </div>
 
 <script src="https://utteranc.es/client.js"
