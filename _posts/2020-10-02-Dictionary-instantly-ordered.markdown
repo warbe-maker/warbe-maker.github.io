@@ -5,13 +5,6 @@ subtitle: Adding item to a Dictionary by any sequence order without extra sortin
 date: 2020-10-02 16:00 +0200
 categories: vba dictionary common
 ---
-In this post<br>
-[Method](#method)<br>
-[Syntax](#syntax)<br>
-[Settings](#settings)<br>
-[Usage examples](#usage-examples)<br>
-[Installation](#installation)<br>
-[Development, test, maintenance](#development-test-maintenance)
 
 ### Method
 In many cases, specifically when items to be collected in a Dictionary are not several hundreds, adding them instantly ordered is an option. The procedure _DctAdd_ in  module _mDct.bas_ provides:

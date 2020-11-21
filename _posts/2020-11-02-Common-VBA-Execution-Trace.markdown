@@ -6,12 +6,6 @@ date: 2020-11-14
 categories: vba common
 ---
 
-In this post<br>
-[Service](#service)<br>
-[Installation](#installation)<br>
-[Usage](#usage)<br>
-[Options, Properties](#options-properties)<br>
-
 ### Service
 When the optional module _mTrc_ is installed it provides an execution trace whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure).
 

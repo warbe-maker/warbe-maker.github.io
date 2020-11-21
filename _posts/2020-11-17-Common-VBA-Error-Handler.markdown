@@ -6,9 +6,6 @@ date: 2020-11-21
 categories: vba common
 ---
 
-In this post<br>
-(liquid toc still not working)
-
 **This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
 
 ## Common services of the Error Handler
