@@ -5,13 +5,6 @@ subtitle: Error number, Error type, Error source, etc.
 date: 2020-11-21
 ---
 
-In this post<br>
-[The error number (Err.Number)](#the-error-number)<br>
-[The source of the error (Err.Source)](#the-source-of-the-error)<br>
-[The error line](#the-error-line)<br>
-[The type of error](#the-type-of-error)<br>
-[All matter for an error message](#all-matter-for-an-error-message)
-
 <small>All aspects of this post are part of the [Common VBA Error Handler][1]</small>
 
 ## The error number
