@@ -6,7 +6,7 @@ date: 2020-11-17
 categories: vba common
 ---
 
-In this post
+In this post<br>
 [Service](#service)<br>
 [Why this alternative to the VBA MsgBox](#why-this-alternative-to-the-vba-msgbox)<br>
 [Installation](#installation)<br>
