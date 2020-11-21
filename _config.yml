@@ -20,11 +20,11 @@
 
 title: Excel Passion
 email: warbe@tutanota.com
-description: Focus on "common Excel modules" including their handling, such like an automated update in VBA projects using them.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+description: Focus on Common VBA Components. Development, test, a continuous improvement process, and last but not least the question how they are kept up-to-date in VB-Projects which do used them.
+baseurl: "/warbe-maker.github.io" # the subpath of your site, e.g. /blog
+url: "https://github.com/warbe-maker" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username:
-github_username: 
+github_username: warbe-maker 
 
 # Build settings
 theme: minima
