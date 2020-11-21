@@ -7,7 +7,6 @@ categories: vba common
 ---
 
 In this post
-
 [Service](#service)<br>
 [Why this alternative to the VBA MsgBox](#why-this-alternative-to-the-vba-msgbox)<br>
 [Installation](#installation)<br>
@@ -17,7 +16,6 @@ In this post
 &nbsp;&nbsp;&nbsp;[Usage via a general purpose _Msg_ function](#usage-via-a-general-purpose-msg-function)<br>
 &nbsp;&nbsp;&nbsp;[Proportional versus Mono-Spaced](#proportional-versus-mono-spaced)<br>
 &nbsp;&nbsp;&nbsp;[Additional properties for advanced usage](#additional-properties-for-advanced-usage)
-
 
 ### Service
 Displays any kind of message or content by intelligently considering the space required for the displayed elements: title, message, and buttons. Waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.

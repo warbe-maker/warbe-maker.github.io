@@ -1,19 +1,22 @@
 ---
 layout: post
-<<<<<<< HEAD
-title: All the matter if a VB error message
+title: All the matter for a VB error message
 subtitle: Error number, Error type, Error source, etc.
-=======
-title: The VBA error message matter
-subtitle: Error number, Error source, Error type, etc. in VB projects
->>>>>>> branch 'master' of https://github.com/warbe-maker/warbe-maker.github.io
-date: 2020-11-13
+date: 2020-11-21
 ---
-<small>All aspects of this post are part of the [Common VBA Error Handler](https://warbe-maker.github.io/vba/common/2020/11/07/Comprehensive-Common-VBA-Error-Handler.html)</small>
 
-### Err.Number
-The _Number_ property of the _Err_ object may indicate a VB Runtime, a Database, or an Application error. The latter is one explicitly raised by `Err Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of the application error n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
-```vbs
+In this post<br>
+[The error number (err.Number)](#the-error-number)<br>
+[The source of the error (err.Source)](#the-source-of-the-error)<br>
+[The error line](#the-error-line)<br>
+[The type of error](#the-type-of-error)<br>
+[All matter for an error message](#all-matter-for-an-error-message)
+
+<small>All aspects of this post are part of the [Common VBA Error Handler][1]</small>
+
+## The error number
+The _Number_ property of the _err_ object may indicate a VB Runtime, a Database, or an Application error. The latter is one explicitly raised by `Err Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of the application error n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
+```
 Public Function AppErr(ByVal err_no As Long) As Long
 ' --------------------------------------------------
 ' Used with Err.Raise AppErr(n), ...  to translate 
@@ -27,33 +30,42 @@ End Function
 ```
 
 The error handling may investigate the number as follows:
-```vbs
+```
    Select Case err.Number
        Case AppErr(n) ' an error erased by err.Raise
        Case n         ' a Database or VB runtime error
    End Select
 ```
 
-### Error source
-Provided the source of the error is known and displayed with the error message, Application Errors may range from 1 to n in each procedure which keeps the error number handling as simple as possible. Because the _Source_ property of the _Err_ object  (`err.Source`) unfortunately does not deliver what it's name promises we require the following function in each module:
-```vbs
+## The source of the error
+The source of the error is the most important information in a displayed error message. Unfortunately the _Source_ property of the _err_ object does not deliver what it's name promises but just the application name. Thus this information needs to be provided in each module via:
+```
 Private Function ErrSrc(ByVal s As String) As String
     ErrSrc = "module-name." & s
 End Function
 ```
+## The error line
+The more code lines in a procedure the more desired in case of an error. Unfortunately the _Erl_ provided by VBA only delivers the code line which caused the error when there are line numbers. In by far the most cases when they are desired they are missed. The following however does the trick:
+```
+    On error Goto eh
+    ...
+    
+eh:
+#If Debugging Then ' Debugging is the Conditional Compile Argument Debugging = 1
+    Debug.Print err.Description: Stop: Resume
+#End If
+    ErrMsg ....
+End Function/Sub
+```
 
-### Error type
-A proper error message will display the type of error with the number as<br>
-\<error type> \<error number><br>
-whereby the error type may be _Application error_, _VB Runtime error_, or _Database error_.
+Where I have found this the guy called it a godsend when needed. At that's what it is. The only disadvantage I found, it will loop until the error is eliminated or bypassed by any kind of code modification. Without a code modification the above may be achieved when the error message displayed comes with tow extra buttons: One called "Resume" and the other one called "Resume Next". This service is provided by my [Common VBA Error Handler][1].
 
+## The type of error
+An error message should preferably distinguish between _VB Runtime error_, _Application error_, and _Database error_. This distinction requires the analysis of the err.Number and the err.Description.
 
 ### All matter for an error message
-
-The below procedure returns everything potentially usefully to display a proper error message:
-
-```vbs
-
+The below procedure delivers/returns all the above mentioned in a way it can be used to build a proper error message:
+```
 Private Sub ErrMsgMatter(ByVal err_source As String, _
                          ByVal err_no As Long, _
                          ByVal err_line As Long, _
@@ -95,7 +107,7 @@ End Sub
 
 Used in a procedure which displays an error message will look as follows:
 
-```vbs
+```
 Private Sub ErrMsg(ByVal err_no As Long, _
                    ByVal err_source As String, _
                    ByVal err_dscrptn As String, _
@@ -116,3 +128,4 @@ Private Sub ErrMsg(ByVal err_no As Long, _
            Title:=sTitle
 End Sub
 ```
+[1]: https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/20/Common-VBA-Error-Handler.html

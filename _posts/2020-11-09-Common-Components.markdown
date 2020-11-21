@@ -1,16 +1,17 @@
 ---
 layout: post
-title: Common Components
+title: Common VBA Components
 subtitle: Ready for use, highly reusable, completely tested
 date: 2020-11-09
 categories: vba common
+notoc: true
 ---
 
-They had become a real passion - and an environment on their own. Free from any economic pressure (retired) I do spend most of my time on their development, test, improvement, and publication. Though already used for a long time the decision to publish them implicates a considerable effort required to ensure quality, completeness, and consistency.
+_Common VBA Components_ had become a real passion. Released from any economic pressure (retired) I do spend most of my time on their development, test, improvement, and (recently started) publication. Though already used for a long time for each of them the decision to publish them implicates a considerable effort required to ensure quality, completeness, and consistency.
 
-Each of these _Common Components_ is developed, maintained, tested, and finally published as an individual VB-Project hosted as repo on GitHub and locally represented as clone in a dedicated _Common Component Project Folder_. Any modification is done via a branch in order not to interfere with  productive VB-Projects using them.
+Ever since I've developed, maintained, and tested each _Common VBA Components_ an individual VB-Project in a dedicated _Common Component Workbook_ in a dedicated _Common Component Project Folder_. With the (late in life) move to Github the folder became the repo clone. Consequently I try to do any modification via a branch in order not to interfere with productive VB-Projects using them.
 
-A _Common Component Management_ Workbook used as Add-In provides the means to keep _Common Components_ up-to-date in all VB-Projects using them.
+Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In to keep used Common Components up-to-date in VB-Projects using them will be one of my future tasks.
 
 |Component|Module(s)|Status|Comment|
 |---------|---------|------|-------|
