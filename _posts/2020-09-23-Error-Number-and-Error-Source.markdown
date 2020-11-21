@@ -6,8 +6,8 @@ date: 2020-11-21
 ---
 
 In this post<br>
-[The error number (err.Number)](#the-error-number)<br>
-[The source of the error (err.Source)](#the-source-of-the-error)<br>
+[The error number (Err.Number)](#the-error-number)<br>
+[The source of the error (Err.Source)](#the-source-of-the-error)<br>
 [The error line](#the-error-line)<br>
 [The type of error](#the-type-of-error)<br>
 [All matter for an error message](#all-matter-for-an-error-message)
@@ -15,7 +15,7 @@ In this post<br>
 <small>All aspects of this post are part of the [Common VBA Error Handler][1]</small>
 
 ## The error number
-The _Number_ property of the _err_ object may indicate a VB Runtime, a Database, or an Application error. The latter is one explicitly raised by `Err Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of the application error n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
+The _Number_ property of the _Err_ object may indicate a VB Runtime, a Database, or an Application Error. The latter is one explicitly raised by `Err.Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of the application error n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
 ```
 Public Function AppErr(ByVal err_no As Long) As Long
 ' --------------------------------------------------
@@ -31,8 +31,8 @@ End Function
 
 The error handling may investigate the number as follows:
 ```
-   Select Case err.Number
-       Case AppErr(n) ' an error erased by err.Raise
+   Select Case Err.Number
+       Case AppErr(n) ' an error erased by Err.Raise
        Case n         ' a Database or VB runtime error
    End Select
 ```
@@ -52,7 +52,7 @@ The more code lines in a procedure the more desired in case of an error. Unfortu
     
 eh:
 #If Debugging Then ' Debugging is the Conditional Compile Argument Debugging = 1
-    Debug.Print err.Description: Stop: Resume
+    Debug.Print Err.Description: Stop: Resume
 #End If
     ErrMsg ....
 End Function/Sub
@@ -61,7 +61,7 @@ End Function/Sub
 Where I have found this the guy called it a godsend when needed. At that's what it is. The only disadvantage I found, it will loop until the error is eliminated or bypassed by any kind of code modification. Without a code modification the above may be achieved when the error message displayed comes with tow extra buttons: One called "Resume" and the other one called "Resume Next". This service is provided by my [Common VBA Error Handler][1].
 
 ## The type of error
-An error message should preferably distinguish between _VB Runtime error_, _Application error_, and _Database error_. This distinction requires the analysis of the err.Number and the err.Description.
+An error message should preferably distinguish between _VB Runtime error_, _Application error_, and _Database error_. This distinction requires the analysis of the Err.Number and the Err.Description.
 
 ### All matter for an error message
 The below procedure delivers/returns all the above mentioned in a way it can be used to build a proper error message:

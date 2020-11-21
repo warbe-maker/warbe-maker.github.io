@@ -2,9 +2,12 @@
 layout: post
 title: A comprehensive common VBA Error Handler inspired by the best of the web
 subtitle: An Error Handler inspired by the best of the web
-date: 2020-11-20
+date: 2020-11-21
 categories: vba common
 ---
+
+In this post<br>
+(liquid toc still not working)
 
 **This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
 
