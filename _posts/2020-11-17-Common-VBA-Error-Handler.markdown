@@ -8,30 +8,28 @@ categories: vba common
 
 **This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
 
-## Common services of the Error Handler
-The main services are provided by the _ErrMsg_ function of the mErH_ module which
+## Services of the Error Handler
+### The _ErrMsg_ service
 - displays a well structured error message with
-  - **[the type of the error](#the-type-of-the-error)**, 
-  - the description of the error,
-  - **[the error source](#the-error-source)**,
-  - the **[path to the error](#the-path-to-the-error)** provided **[the _Entry Procedure_](#the-entry-procedure)** is known, 
+  - the **[type of the error](#the-type-of-the-error)** (Application error, VB Runtime error, and Database error) 
+  - the description of the error (Err.Description,
+  - the **[error source](#the-error-source)**,
+  - the **[path to the error](#the-path-to-the-error)** provided the **[_Entry Procedure_](#the-entry-procedure)** is known, 
   - an optional **[additional information about an error](#additional-information-about-an-error)**,
-  - (almost) any number of **[Free specified buttons](#free-buttons-specification)**
-- waits for the user's button clicked and provides/returns [the reply buttons value](#processing-the-returned-reply) to the caller.
+  - (almost) any number of **[free specified buttons](#free-buttons-specification)**
+  - displays the error line when available
+  - displays specific buttons supporting test, provided the  Conditional Compile Argument `Test = 1` (see image below)
+  - displays specific buttons supporting debug provided the Conditional Compile Argument `Debuggig = 1`
+  - considers provided **asserted error numbers** to bypass the display the corresponding error message (regression test support)
+- waits for the user's button clicked and provides/returns [the reply button's value](#processing-the-returned-reply) to the caller.
 
-## Services supporting debugging and test
-- When the Conditional Compile Argument `Test = 1`:
-  - two additional [test option buttons](#the-test-option-buttons) are displayed<br>![image](../Assets/ErrMsgWithTestOption.png)
-  - When _asserted error numbers are specified for a test procedure the corresponding error messages are not displayed but processing continues which perfectly supports testing of error conditions within a regression test.
-- When the Conditional Compile Argument `Debuggig = 1` two additional buttons support identifying the error line or continue<br>
 ![image](../Assets/ErrMsgWithDebuggingOption.png)
 
-
-## Syntax of the _ErrMsg_ function
+The _ErrMsg_ service has the following syntax
 ```vbs
    mErH.ErrMsg error-number, error-source, error-description, error-line[, buttons]
 ```
-The procedure has these named arguments:
+The _ErrMsg_ service has these named arguments:
 
 |  Argument   |   Description   |
 | ----------- | --------------- |
@@ -39,7 +37,43 @@ The procedure has these named arguments:
 | err_source  | Obligatory, string expression providing \<module>.\<procedure>, see [ErrSrc(PROC)](#the-error-source).   |
 | err_dscrptn | Optional, defaults to err.Description when omitted |
 | err_line    | Optional, defaults to  Erl when omitted            |
-| err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a [value for the VBA MsgBox buttons argument](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
+| err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a value for the VBA MsgBoc [_Buttons_](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) argument and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
+
+### The Begin/End of Procedure services _BoP_, _EoP_
+Indicate the begin/end of a procedure. The information is used by the error handler to identify the [_Entry Procedure_](#the-entry-procedure) and to compose the path to the error.
+
+The _BoP_ services has the following syntax: `BoP procedure-id[, arguments]`, the _EoP_ service has the syntax `EoP procedure-id`. The _BoP_\/_EoP_ services have the following named arguments:
+
+| Service |   Argument   |   Description   |
+| ------- | ------------ | --------------- |
+| BoP     | bop_id       | Obligatory, Expression providing a unique name of the procedure, e.g.<br>[ErrSrc(PROC)](#the-error-source) |
+| BoP     | bop_arguments| Optional, ParamArray, a list of the procedures argument, optionally paired as name, value |
+| EoP     | eop_id       | Obligatory, Expression providing a unique name of the procedure, e.g.<br>[ErrSrc(PROC)](#the-error-source) |
+
+Example:
+```
+Private Sub Any(ByVal arg1 As String, ByVal arg2 as Single)
+    On Error Goto eh
+    Const PROC = "Any"
+    BoP ErrSrc(PROC), "arg1=", arg1, "arg2=", arg2
+    .... ' any code
+
+xt: EoP ErrSrc(PROC) ' never use Exit Sub but Goto xt instead
+    Exit Sub         ' in order not to bypass the EoP service
+
+eh: ErrMsg ....
+End Sub
+```
+
+### The Begin of Test-procedure service _BoTP_
+Indicates the begin of a test procedure.
+The _BoTP_ services has the following syntax: `BoTP procedure-id, asserted-errors`. The _BoTP_ service has the following named arguments:
+
+|      Argument     |   Description   |
+| ----------------- | --------------- |
+| botp_id           | Obligatory, Expression providing a unique name of the procedure, e.g.<br>[ErrSrc(PROC)](#the-error-source) |
+| botp_errs_asserted| Obligatory, ParamArray, type Long, list of error numbers regarded asserted by the _ErrMsg_ service for the executed procedure including any sub-procedures.<br>Note 1: In case there are no asserted errors because the test-procdure does not test nay error conditions the _BoP_ service will be used instead.<br>Note 2: The _ErrMsg_ service will bypass the display of the error message for any of the corresponding error numbers. By this the test procedure will run without any user interaction as long as no other error but the asserted ones occours. |
+
 
 ## Installation
 - Download and import the module  [_mErH_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErH.bas)
