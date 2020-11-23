@@ -7,9 +7,11 @@ categories: vba common
 notoc: true
 ---
 
-_Common VBA Components_ had become a real passion. Released from any economic pressure (retired) I do spend most of my time on their development, test, improvement, and (recently started) publication. Though already used for a long time for each of them the decision to publish them implicates a considerable effort required to ensure quality, completeness, and consistency.
+_Common VBA Components_ had become a real passion. Released from any economic pressure (retired) I do spend most of my time on their development, test, improvement, and (recently started) publication. Although they all had been used for a long time the decision to publish them adds a considerable effort to ensure quality, completeness, and consistency.
 
-Ever since I've developed, maintained, and tested each _Common VBA Components_ an individual VB-Project in a dedicated _Common Component Workbook_ in a dedicated _Common Component Project Folder_. With the (late in life) move to Github the folder became the repo clone. Consequently I try to do any modification via a branch in order not to interfere with productive VB-Projects using them.
+Ever since I've developed, maintained, and tested each _Common VBA Components_ as an individual VB-Project in a dedicated _Common Component Workbook_ in a dedicated _Common Component Project Folder_. With the (late in life) move to Github the folder became the repo clone. Consequently, now I try to do any modification via a branch in order not to interfere with productive VB-Projects using them.
+
+A _Common VBA Component_ is potentially used in many VB-Projects and thus deserves every managable testing effort. A properly setup egression test performing all individual test in one go is the most economic way which assures a desired quality. The setup is an effort but it's pretty satisfactory performing a regression test with all assertions automatically provided.
 
 Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In to keep used Common Components up-to-date in VB-Projects using them will be one of my future tasks.
 
