@@ -19,34 +19,34 @@ In many cases, specifically when items to be collected in a Dictionary are not s
 
 `DctAdd dct, key, item[, order][, seq][, sense][, target][, staywithfirst]`
 
-Note: Without any optional argument are the result is identical with<br>`dct.Add key, item`
+Note: Without any optional argument the result is identical with<br>`dct.Add key, item` which is entry sequence.
 
 The procedure has these named arguments:
 
-| Part | Description |
-| -------- | ----------- |
-| dct      |  	Required. Always the name of a Dictionary variable or object. When not an object a new Dictionary is established. Dictionary object  is returned by the method with the provided key/item pair added.|
-| key      | Required. The key associated with the item being added. May be numeric, string, or an object.<br><br>**Note:** When the key is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised.  |
-| item    | Required. The item associated with the key being added. May be numeric, string, or an object.<br><br>**Note:** When the item is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised. |
-| order | Optional. Defaults to _order\_bykey_ when omitted. |
-| seq    | Optional. Defaults to entry sequence (_seq\_entry_) when omitted. |
-| sense   | Optional. Defaults to _case\_sensitive_ when omitted.|
-| target | Optional. An existing key or item. When omitted:<br>-When the sequence is _seq\_beforekey_, or _seq\_beforeitem_, the sequence is changed to _seq\_descending_<br>- When the sequence  _seq\_afterkey_, _seq\_afteritem_ the sequence is changed to _seq\_ascending_ |
-| staywithfirst | Optional. Boolean. Defaults to False.<br>False:<br>- With _order\_bykey_ any add of an existing key updates the item<br>- With _order\_byitem_ any add if the same item is added provided it has a new key.<br>True:<br>- With _order\_bykey_ any add for an existing key is ignored<br>- With _order\_byitem_ Attention!!! Any add if an existing item is ignored - even when it has a new unique key !!!|
+|       Part       |              Description                 |
+| ---------------- | ---------------------------------------- |
+| add_dct          |  	Required. Always the name of a Dictionary variable or object. When not an object a new Dictionary is established. Dictionary object  is returned by the method with the provided key/item pair added.|
+| add_key          | Required. The key associated with the item being added. May be numeric, string, or an object.<br><br>**Note:** When the key is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised.  |
+| add_item          | Required. The item associated with the key being added. May be numeric, string, or an object.<br><br>**Note:** When the item is the order criteria and it is an object, the object must have a name property which is used as the sort value. If not an error is raised. |
+| add_order         | Optional. Defaults to _order\_bykey_ when omitted. |
+| add_seq           | Optional. Defaults to entry sequence (_seq\_entry_) when omitted. |
+| add_sense         | Optional. Defaults to _case\_sensitive_ when omitted.|
+| add_target        | Optional. An existing key or item. When omitted:<br>-When the sequence is _seq\_beforekey_, or _seq\_beforeitem_, the sequence is changed to _seq\_descending_<br>- When the sequence  _seq\_afterkey_, _seq\_afteritem_ the sequence is changed to _seq\_ascending_ |
+| add_staywithfirst | Optional. Boolean. Defaults to False.<br>False:<br>- With _order\_bykey_ any add of an existing key updates the item<br>- With _order\_byitem_ any add if the same item is added provided it has a new key.<br>True:<br>- With _order\_bykey_ any add for an existing key is ignored<br>- With _order\_byitem_ Attention!!! Any add if an existing item is ignored - even when it has a new unique key !!!|
 
 ### Settings
 
-| Argument | Constant   | Description |
-| -------- | ---------- | ----------- |
-| order    | order_bykey         | Items added are ordered by key (default for ascending or descending sequence)   |
-|          | order_byitem        | Items added are ordered by item                  |
-| seq      | seq_ascending       | Items are added in ascending sequence            |
-|          | seq_descending      | Items are added in descending sequence           |
-|          | seq_aftertarget     | The item is added after a specified target entry |
-|          | seq_beforetarget    | The item is added before a specified target entry|
-|          | seq_entry.          | Items are added in entry sequence (default)      | 
-| sense    | sense_caseignored   | Items are ordered with case ignored              |
-|          | sense_casesensitive | Items are ordered with case sensitive (default)  |
+|  Argument |      Constant       | Description                                      |
+| --------- | ------------------- | ------------------------------------------------ |
+| add_order | order_bykey         | Items added are ordered by key (default for ascending or descending sequence)|
+|           | order_byitem        | Items added are ordered by item                  |
+| add_seq   | seq_ascending       | Items are added in ascending sequence            |
+|           | seq_descending      | Items are added in descending sequence           |
+|           | seq_aftertarget     | The item is added after a specified target entry |
+|           | seq_beforetarget    | The item is added before a specified target entry|
+|           | seq_entry.          | Items are added in entry sequence (default)      | 
+| add_sense | sense_caseignored   | Items are ordered with case ignored              |
+|           | sense_casesensitive | Items are ordered with case sensitive (default)  |
 
 
 ### Usage examples
@@ -65,7 +65,7 @@ Private Sub DctAddExample()
 End Sub
 ```
 #### Ascending by key case sensitive
-In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in ascending sequence case sensitive. The order criteria is the name property of the key object:
+In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in ascending sequence case sensitive. The order criteria is the key which means the sort order is by the key object's name property.
 ```vbscript
 Private Sub DctAddExample()
 
@@ -73,8 +73,8 @@ Private Sub DctAddExample()
    Dim vbc As VBComponent
    
    For each vbc in ThisWorkbook.VBProject.VBComponents
-      ' order_bykey and case_sensitive are defaults
-      DctAdd dct, vbc, vbc.name, seq:=seq_ascending       
+      ' order by key and case sensitive are defaults
+      DctAdd add_dct:=dct, add_key:=vbc, add_item:=vbc.name, add_seq:=seq_ascending 
    Next vbc
    
 End Sub
