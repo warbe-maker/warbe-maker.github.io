@@ -7,14 +7,14 @@ categories: vba dictionary common
 ---
 
 ## Services
-### Adding items to a Dictionary instantly ordered _DctAdd_
+### Adding items to a Dictionary instantly ordered: _DctAdd_
 Adds an item to a Dictionary with the following options:
-- in ascending, descending, or entry sequence
+- ascending, descending, or entry sequence
 - ordered by key or by item
 - case sensitive and case ignored
-- add before or add after a specific target entry (by key or by item)
-- unique or duplicate items even when sort order is by item, provided the items have different keys
-- item update for duplicate keys when ordered by key
+- add before or add after a specific target entry identified by key or by item
+- avoid or keep duplicate items
+- update item
 
 The service has the following syntax
 
