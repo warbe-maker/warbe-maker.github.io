@@ -20,17 +20,17 @@ When agreed that _Common Components_ are fine the crucial question is how to kee
 Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In to keep used Common Components up-to-date in VB-Projects using them will be one of my future tasks.
 
 ## My Common Components
-|Component|Module(s)|Status|Comment|
+|Commmon VBA ... Services|GitHub repo|Services|
 |---------|---------|------|-------|
-|Common VBA Message Form|fMsg (mMsg)|public repo|Used by mErH, mTrc |
-|Common VBA Error Handler|mErH, fMsg|public repo|Optionally uses mTrc|
-|Common VBA Execution Trace|mTrc, fMsg|public repo|stand-alone or as optional component of mErH|
- |Common VBA Workbooks|mWrkbk, mErH, fMsg|private repo|Existence/open check over multiple Excel instances, open services and other|
- |Common VBA File|mFile, mErH, fMsg|private repo|Existence check, etc.|
- |Common VBA Worksheet|mWsh, mErH, fMsg|private repo|
- |Common VBA Excel Obstructions|mObstrctns|private repo||
- |Common VBA Excel Rows|mRows|private repo||
- |Common VBA Excel Range|mRng|private repo||
- |Common VB-Project|mVBP|private repo|| 
+|Message<br>-fMsg<br>-mMsg|public|Dsply |
+|Error Handling<br>mErH|public|ErrMsg<br>Bop<br>EoP<br>BoTP|
+|Execution Trace<br>mTrc|public|BOP<br>EoP<br>BoC<br>EoC|
+ |Workbook<br>mWbk|private| |
+ | File<br>mFile|private repo|Exists<br>sDiff<br>ToArray<br>FileSelect<br>|
+ |Worksheet<br>mWsh|private|
+ |Excel Obstructions<br>mObstrctns|private||
+ |Excel Rows<br>mRows|private||
+ |Excel Range<br>mRng|private||
+ |Project<br>mVBP|private|| 
 
 still to be continued.
