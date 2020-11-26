@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Common VBA Components Management
+title: Common VBA Components
 subtitle: Ready for use, highly reusable, completely tested
 date: 2020-11-09
 categories: vba common
@@ -20,17 +20,31 @@ When agreed that _Common Components_ are fine the crucial question is how to kee
 Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In to keep used Common Components up-to-date in VB-Projects using them will be one of my future tasks.
 
 ## My Common Components
-|Commmon VBA ... Services|GitHub repo|Services|
-|---------|---------|------|-------|
-|Message<br>-fMsg<br>-mMsg|public|Dsply |
-|Error Handling<br>mErH|public|ErrMsg<br>Bop<br>EoP<br>BoTP|
-|Execution Trace<br>mTrc|public|BOP<br>EoP<br>BoC<br>EoC|
- |Workbook<br>mWbk|private| |
- | File<br>mFile|private repo|Exists<br>sDiff<br>ToArray<br>FileSelect<br>|
- |Worksheet<br>mWsh|private|
- |Excel Obstructions<br>mObstrctns|private||
- |Excel Rows<br>mRows|private||
- |Excel Range<br>mRng|private||
- |Project<br>mVBP|private|| 
+|Commmon| Download|GitHub repo|Service| Description |
+|---------|---------|------|-------|----|
+|Common VBA Message Service|fMsg<br>mMsg|[public][3]|Dsply | Display a message|
+|Common VBA Error Handling Services|mErH<br>fMsg<br>mMsg|[public][1]|[ErrMsg][1a]|Processing the error message|
+||||BoP| Indicate Begin of Procedure|
+||||EoP| Indicate End of Procedure|
+||||BoTP| Indicate Begin of Test Procedure|
+|Common VBA Execution Trace Srvices|mTrc<br>fMsg<br>mMsg|[public][2]|BOP | Indicate Begin of Procedure |
+||||EoP | Indicate End of Procedure|
+||||BoC | Indicate Begin of Code|
+||||EoC| Indicate End of Code|
+|Workbook|mWbk|private| | |
+|Common Vba File Services|mFile|private|- Exists|File existence check|
+||||sDiff| Compare Files|
+||||ToArray| File to array|
+||||FileSelect| File select dialog|
+|Worksheet|mWsh|private| | |
+|Excel Obstructions|mObstrctns|private|| |
+|Excel Rows|mRows|private| | |
+|Excel Range|mRng|private| | |
+|Project|mVBP<br>clsVBP|private| | | 
 
 still to be continued.
+
+[1]: https://github.com/warbe-maker/Common-VBA-Error-Handler-Services
+[2]: https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
+[3]: https://github.com/warbe-maker/Common-VBA-Message-Service
+[1a]: https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-errmsg-service
