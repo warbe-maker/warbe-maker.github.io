@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A comprehensive common VBA Error Handler inspired by the best of the web
+title: Common VBA Error Handling Services (inspired by the best of the web)
 subtitle: An Error Handler inspired by the best of the web
 date: 2020-11-21
 categories: vba common
@@ -76,9 +76,10 @@ The _BoTP_ services has the following syntax: `BoTP procedure-id, asserted-error
 
 
 ## Installation
-- Download and import the module  [_mErH_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErH.bas)
-- Download the UserForm  [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx) and import _fMsg.frm_
-- Because at least some effort is the same intalling the Common VBA Execution Trace is worth being concidered: Download [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mTrc.bas) and import it.
+- Download and import the module  [_mErH_][1]
+- Download the UserForm [fMsg.frm][2] and [fMsg.frx][3] and import _fMsg.frm_
+- Download and import [mMsg.bas][4]
+- Because at least some effort is the same intalling the Common VBA Execution Trace Service is worth being concidered: Download [mTrc.bas][5] and import it.
 
 ## Basic usage
 The below code works but does not provide a path to the error.
@@ -306,3 +307,9 @@ However, for those who do not believe in the displayed figures a detailed view m
 The dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler). The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErH_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
 
 Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows](https://desktop.github.com). That's my environment for a continuous improvement process.
+
+[1]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErH.bas)
+[2]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
+[3]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
+[4]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas)
+[5]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mTrc.bas)
