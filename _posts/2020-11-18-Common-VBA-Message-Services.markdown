@@ -9,8 +9,8 @@ categories: vba common
 ## Why this alternative to the VBA MsgBox?
 The alternative implementation  addresses many of the constraints of the VBA MsgBox - without re-implementing it yet to 100% however.
 
-|The VBA MsgBox|The Alternative|
-|--------------|---------------|
+|The VBA MsgBox|The Common VBA Message Service|
+|--------------|------------------------------|
 | The message width and height is limited and cannot be altered | The&nbsp;maximum&nbsp;width and&nbsp;height&nbsp;is&nbsp;specified as&nbsp;a percentage of the screen&nbsp;size&nbsp; which&nbsp;defaults&nbsp;to: 80%&nbsp;width and  90%&nbsp;height (hardly ever used)|
 | When a message exceeds the (hard to tell) size limit it is truncated | When the maximum size is exceeded a vertical and/or a horizontal scroll bar is applied
 | The message is displayed with a proportional font | A message may (or part of it may) be displayed mono-spaced |
@@ -21,7 +21,12 @@ The alternative implementation  addresses many of the constraints of the VBA Msg
 | Display of an alert image (?, !, etc.) | (yet) not implemented |
 
 ## The display service _mMsg.Dsply_
-Displays any kind of message or content by intelligently considering the space required for the displayed elements: title, message, and buttons. Waiting for the user to click a button, and providing a variant indicating which button the user had  clicked.
+The service
+- Displays a message which may consist of 4 sections, each with an optional label
+- Displays up to 49 free configurable return buttons in up to 7 rows
+- Intelligently considers the space required for the displayed elements: title, message, and buttons
+- Displays a horizontal and/or vertical scroll-bar when applicable/required
+- Waits for the user to click a button, and provides a return variant indicating which button the user had  clicked.
 ![Example of an error message using an additional free text reply button](../Assets/ErrrorMessageWithResumeButton.png)
 
 ![Example of an error message using an additional free text reply button](/Assets/ErrrorMessageWithResumeButton.png)
@@ -34,7 +39,7 @@ The _Dsply_ service has these named arguments:
 |    Part                | Description                    |
 | ---------------------- |------------------------------- |
 | dsply_title            | Obligatory. String expression displayed in the title bar of the dialog box. |
-| dsply_message_type          | Optional, User defined type _tMsg_, no length limit. When the maximum height or width is exceeded a vertical and/or horizontal scroll-bars is displayed. Lines may be separated by using a carriage return character (vbCr or Chr(13), a linefeed character (vbLf or Chr(10)), or carriage return - linefeed character combination (vbCrLf or Chr(13) & Chr(10)) between each line.  |
+| dsply_msg              | Obligatory, User defined type _tMsg_, no message length limit. When the argument remains empty, i.e. a type tMsg variable is provided without any content, only the buttons are displayed. Message lines may be separated by using a carriage return character (vbCr or Chr(13), a linefeed character (vbLf or Chr(10)), or carriage return - linefeed character combination (vbCrLf or Chr(13) & Chr(10)) between each line.  |
 | dsply_msg_string | Optional, String expression, confirms with the _Prompt_ argument of the VBA MsgBox, may be used when only one message string with no label is to be displayed|
 | dsply_msg_string_monospaced| Optional, Boolean expression, defaults to False, displays the message monospaced when True|
 | dsply_buttons          | Optional. Defaults to vbOkOnly when omitted. Variant expression, either a [VB MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>), a comma delimited string, a collection of string expressions, or a dictionary of string expressions. In case of a string, a collection, or a dictionary, each item either specifies a button's caption (up to 7) or a reply button row break (vbLf, vbCr, or vbCrLf). |
@@ -44,15 +49,65 @@ The _Dsply_ service has these named arguments:
 | dsply_max_height       | Optional, Long, defaults to 70% of the screen size when omitted |
 | dsply_min_button_width | Optional, Long, defaults to 70 pt when omitted   |
 
-#### Syntax of the _buttons_ argument
-```
-dsply_buttons:=string|value[, rowbreak][, button2][, rowbreak][, button3][, rowbreak][, button4][, rowbreak][, button5][, rowbreak][, button6][, rowbreak][, button7]
-```
+## The Box service _mMsg.Box_
+The service
+- Displays a one-string message (analogous to the VBA MsgBox Prompt argument) of any length
+- Displays up to 49 free configurable return buttons in up to 7 rows
+- Intelligently considers the space required for the displayed elements: title, message, and buttons
+- Displays a horizontal and/or vertical scroll-bar when applicable/required
+- Waits for the user to click a button, and provides a return variant indicating which button the user had  clicked.
 
-**string**, **button2** ... **button7**: captions for the buttons 1 to 7<br>
-value: the VB MsgBox argument for 1 to 3 buttons all in one row<br>
-rowbreak: vbLf or Chr(10). Indicates that the next button is displayed in the row below
+The _Box_ service has these named arguments:
 
+|    Part                | Description                    |
+| ---------------------- |------------------------------- |
+| dsply_title            | Obligatory. String expression displayed in the title bar of the dialog box. |
+| dsply_msg              | Optional, String expression of any length (up to 1 GB), when not provided only the specified buttons are displayed. The message string may consist of any number of lines, separated by means of: vbCr or Chr(13), vbLf or Chr(10), or vbCrLf Chr(13) & Chr(10)).  |
+| dsply_msg_monospaced| Optional, Boolean expression, defaults to False, when True the message is displayed mon-spaced.|
+| dsply_buttons          | Optional. Variant expression, defaults to vbOkOnly when omitted. |
+| dsply_returnindex      | Optional, Boolean, False when omitted                                |
+| dsply_min_width        | Optional, Long, defaults to 300 pt when omitted, cannot be less than 200 pt |
+| dsply_max_width        | Optional, Long, defaults to 80% of the screen size when omitted |
+| dsply_max_height       | Optional, Long, defaults to 70% of the screen size when omitted |
+| dsply_min_button_width | Optional, Long, defaults to 70 pt when omitted   |
+
+## The Buttons service
+The _mMsg.Buttons_ service returns a Collection of items provided via a ParamArray argument. each of the items may be:
+- a string expression
+- a valid [VBA MsgBox Buttons argument value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>)
+- a row break indication (vbLf, vbCr, or vbCrLf). 
+
+When more than 7 items are provided without a row break indicator one is in inserted by the service. Any invalid item is ignored and any specification which exceeds 7 rows or 47 buttons is ignored.
+
+## The _dsply\_buttons_ argument
+
+This argument of the Box, the Dsply, and the Buttons service is a variant expression which may be:
+- a string of comma delimited items, 
+- a collection of variant items as provided by the [Buttons](#the-buttons-service) service, 
+- a dictionary of variant items
+
+Each item may be :
+- a button's caption string
+- a valid [VBA MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>)
+- a row break indication (vbLf, vbCr, or vbCrLf). 
+
+## The UserForm service _fMsg_
+The UserForm may be used [directly](#direct-usage-of-the-fmsg-userform)  but with significant less comfort compared with the _Dsply_ and the _Box_ service.
+
+The UserForm service has the following Properties:
+
+| Property      | Meaning |
+|---------------|---------|
+| _MsgTitle_    | Mandatory. String expression. Applied in the message window's handle bar|
+| _Msg_         | Optional. User defined type _tMsg_. Structure of the UserForm's message area. May alternatively be used to the below properties _MsgLabel_, _MsgText_, and _MsgMonoSpaced_ to pass a complete message.<br>See .... |
+| _MsgLabel(n)_ | Optional. String expression with _n__ as a numeric expression 1 to 4. Applied as a descriptive label above a below message text. Not displayed (even when provided) when no corresponding _MsgText_ is provided |
+| _MsgText(n)_  | Optional.String expression with _n__ as a numeric expression 1 to 4). Applied as message text of section _n_.|
+| _MsgMonospaced(n)_ | Optional. Boolean expression with _n__ as a numeric expression 1 to 4). Defaults to False when omitted. When True, the text in section _n_ is displayed mono-spaced.|
+| _MsgButtons_  | Optional. Defaults to vbOkOnly when not provided (see [The Buttons service](#the-buttons-service) and the [_dsply\_buttons_](#the-dsply-buttons-argument) argument.|
+| _ReplyValue_  | Read only. The clicked button's caption string or [value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>). When there is more than one button the form is unloaded when the clicked buttons value is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click.|
+| _ReplyIndex_  | Read only. The clicked button's index. When there is more than one button the form is unloaded when the clicked button's index is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click. |
+
+See [Additional properties for advanced usage](<Implementation.md#public-properties-for-advanced-usage-of-the-message-form>) to create application specific messages.
 
 ## Installation
 1. Download the UserForm  [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
@@ -60,20 +115,6 @@ rowbreak: vbLf or Chr(10). Indicates that the next button is displayed in the ro
 3. In the VBE add a Reference to "Microsoft Scripting Runtime"
 4. Download and import [mMsg.bas](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas)
 
-### Properties of the _fMsg_ UserForm
-
-| Property      | Meaning |
-|---------------|---------|
-| _MsgTitle_    | Mandatory. String expression. Applied in the message window's handle bar|
-| _Msg_         | Optional. User defined type _tMessage_. Structure of the UserForm's message area. May alternatively be used to the below properties _MsgLabel_, _MsgText_, and _MsgMonoSpaced_ be used to pass a complete message.<br>See .... |
-| _MsgLabel(n)_ | Optional. String expression with _n__ as a numeric expression 1 to 4. Applied as a descriptive label above a below message text. Not displayed (even when provided) when no corresponding _MsgText_ is provided |
-| _MsgText(n)_  | Optional.String expression with _n__ as a numeric expression 1 to 4). Applied as message text of section _n_.|
-| _MsgMonospaced(n)_ | Optional. Boolean expression with _n__ as a numeric expression 1 to 4). Defaults to False when omitted. When True, the text in section _n_ is displayed mono-spaced.|
-| _MsgButtons_  | Optional. Defaults to vbOkOnly.<br>A MsgBox buttons value,<br>a comma delimited String expression,<br>a Collection,<br>or a dictionary,<br>with each item specifying a displayed command button's caption or a button row break (vbLf, vbCr, or vbCrLf)|
-| _ReplyValue_  | Read only. The clicked button's caption string or [value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>). When there is more than one button the form is unloaded when the clicked buttons value is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click.|
-| _ReplyIndex_  | Read only. The clicked button's index. When there is more than one button the form is unloaded when the clicked button's index is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click. |
-
-See [Additional properties for advanced usage](<Implementation.md#public-properties-for-advanced-usage-of-the-message-form>) to create application specific messages.
 
 ## Usage
 Before start using the message form have a look at the [UserForm's properties](#properties-of-the-fmsg-userform).
