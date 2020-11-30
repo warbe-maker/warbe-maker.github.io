@@ -20,12 +20,15 @@ The alternative implementation  addresses many of the constraints of the VBA Msg
 | Specifying the default button | (yet) not implemented |
 | Display of an alert image (?, !, etc.) | (yet) not implemented |
 
-## The display service _mMsg.Dsply_
+## The _Dsply_ and the _Box_ service
 The service
-- Displays a message which may consist of 4 sections, each with an optional label
-- Displays up to 49 free configurable return buttons in up to 7 rows
-- Intelligently considers the space required for the displayed elements: title, message, and buttons
-- Displays a horizontal and/or vertical scroll-bar when applicable/required
+- _Dsply_ displays a message which may consist of 4 sections, each with an optional label
+- _Box_ displays a message analogously to the VBA MsgBox Prompt argument, i.e. a single string message of any length (up to 1GB respectively)
+
+Both services
+- displays up to 49 free configurable return buttons in up to 7 rows
+- intelligently considers the space required for the displayed elements: title, message, and buttons
+- displays a horizontal and/or vertical scroll-bar when applicable/required
 - Waits for the user to click a button, and provides a return variant indicating which button the user had  clicked.
 ![Example of an error message using an additional free text reply button](../Assets/ErrrorMessageWithResumeButton.png)
 
@@ -34,14 +37,14 @@ The service
 ![Example for a text wich spans mor than the specified maximum message window width](../Assets/ExecutionTraceDetailed.png)
 ![Example for a text wich spans mor than the specified maximum message window width](/Assets/ExecutionTraceDetailed.png)
 
-The _Dsply_ service has these named arguments:
+The _Dsply_ and the Box service have these named arguments:
 
 |    Part                | Description                    |
 | ---------------------- |------------------------------- |
 | dsply_title            | Obligatory. String expression displayed in the title bar of the dialog box. |
-| dsply_msg              | Obligatory, User defined type _tMsg_, no message length limit. When the argument remains empty, i.e. a type tMsg variable is provided without any content, only the buttons are displayed. Message lines may be separated by using a carriage return character (vbCr or Chr(13), a linefeed character (vbLf or Chr(10)), or carriage return - linefeed character combination (vbCrLf or Chr(13) & Chr(10)) between each line.  |
-| dsply_msg_string | Optional, String expression, confirms with the _Prompt_ argument of the VBA MsgBox, may be used when only one message string with no label is to be displayed|
-| dsply_msg_string_monospaced| Optional, Boolean expression, defaults to False, displays the message monospaced when True|
+| dsply_msg              | _Dsply_ service:<br>Obligatory, User defined type _tMsg_, no message length limit. When the argument remains empty, i.e. a type tMsg variable is provided without any content, only the buttons are displayed. Message lines may be separated by using a carriage return character (vbCr or Chr(13), a linefeed character (vbLf or Chr(10)), or carriage return - linefeed character combination (vbCrLf or Chr(13) & Chr(10)) between each line.<br>_Box_ service:<br>Optional, String expression of any length (up to 1 GB), when not provided only the specified buttons are displayed. The message string may consist of any number of lines, separated by means of: vbCr or Chr(13), vbLf or Chr(10), or vbCrLf Chr(13) & Chr(10)).
+ |
+| dsply_msg_monospaced| _Box_ service only, Optional, Boolean expression, defaults to False, displays the message monospaced when True, adjusts the message window width to the longest line, displays a horizontal Scroll-Bart when exceeded|
 | dsply_buttons          | Optional. Defaults to vbOkOnly when omitted. Variant expression, either a [VB MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>), a comma delimited string, a collection of string expressions, or a dictionary of string expressions. In case of a string, a collection, or a dictionary, each item either specifies a button's caption (up to 7) or a reply button row break (vbLf, vbCr, or vbCrLf). |
 | dsply_returnindex      | Optional, Boolean, False when omitted                                |
 | dsply_min_width        | Optional, Long, defaults to 300 pt when omitted, cannot be less than 200 pt |
@@ -111,9 +114,9 @@ See [Additional properties for advanced usage](<Implementation.md#public-propert
 
 ## Installation
 1. Download the UserForm  [fMsg.frm](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm) and   [fMsg.frx](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
-2. Import _fMsg.frm_
-3. In the VBE add a Reference to "Microsoft Scripting Runtime"
-4. Download and import [mMsg.bas](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas)
+1. Import _fMsg.frm_
+1. Download and import [mMsg.bas](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas)
+1. In the VBE add a Reference to "Microsoft Scripting Runtime"
 
 
 ## Usage
@@ -123,7 +126,7 @@ Either continue with [Usage step by step](#usage-step-by-step) or go directly to
 ### Direct usage of the _fMsg_ UserForm
 It's not as comfortable as possible but appropriate to understand its use 
 ```vbs
-Public Sub DemoDirect()
+Public Sub DemoUserForm()
           
     With fMsg
         .MsgTitle = "Any title"
@@ -131,12 +134,12 @@ Public Sub DemoDirect()
         .MsgButtons = vbYesNoCancel
         .Setup
         .Show
-        Select Case .ReplyValue ' obtaining it unloads the form !
+    End With
+    Select Case fMsg.ReplyValue ' obtaining it unloads the form !
             Case vbYes:     MsgBox "Button ""Yes"" clicked"
             Case vbNo:      MsgBox "Button ""No"" clicked"
             Case vbCancel:  MsgBox "Button ""Cancel"" clicked"
-        End Select
-   End With
+    End Select
 End Sub
 ```
 
@@ -144,92 +147,10 @@ Displays:
 ![](../Assets/AlternativeMsgBoxFirstStepMessage.png)
 ![](/Assets/AlternativeMsgBoxFirstStepMessage.png)
 
-The above example seems not being worth using the alternative. Above all when using the _fMsg_ UserForm directly one may not see the forest for the trees because the UserForm exposes an enormous amount od inwards. The following is an appropriate interface which has only thos arguments which matter. The function may be copied to any standard module. [Downloading the _mMsg_ module](https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas) and importing it is an option. It has all the required resources on board:
+The above example may not look very attractive because _rMsg exposes an enormous amount of inwards. Using the _Dsply_ or the _Box_ service is probably more attractive:
 
-```vbs
-Attribute VB_Name = "mMsg"
-Option Explicit
-' -----------------------------------------------------------------------------------------
-' Standard Module mMsg Interface for the Common VBA "Alternative" MsgBox (fMsg UserForm)
-'
-' Methods: Dsply  Exposes all properties and methods for the display of any kind of message
-'
-' W. Rauschenberger, Berlin Nov 2020
-' -----------------------------------------------------------------------------------------
-Public Type tMsgSection                 ' ---------------------
-       sLabel As String                 ' Structure of the
-       sText As String                  ' UserForm's message
-       bMonspaced As Boolean            ' area which consists
-End Type                                ' of 4 message sections
-Public Type tMsg                        ' Attention: 4 is a
-       section(1 To 4) As tMsgSection   ' design constant!
-End Type                                ' ---------------------
-
-Public Function Dsply(ByVal dsply_title As String, _
-                      ByRef dsply_msg_type As tMsg, _
-             Optional ByVal dsply_msg_strng As String = vbNullString, _
-             Optional ByVal dsply_msg_strng_monospaced As Boolean = False, _
-             Optional ByVal dsply_buttons As Variant = vbOKOnly, _
-             Optional ByVal dsply_returnindex As Boolean = False, _
-             Optional ByVal dsply_min_width As Long = 300, _
-             Optional ByVal dsply_max_width As Long = 80, _
-             Optional ByVal dsply_max_height As Long = 70, _
-             Optional ByVal dsply_min_button_width = 70) As Variant
-' -------------------------------------------------------------------------------------
-' Common VBA Message Display: A service using the Common VBA Message Form as an
-' alternative MsgBox.
-' Note: In case there is only one single string to be displayed the argument
-'       dsply_msg_type will remain unused while the messag is provided via the
-'       dsply_msg_strng and dsply_msg_strng_monospaced arguments instead.
-'
-' See: https://warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Form.html
-'
-' W. Rauschenberger, Berlin, Nov 2020
-' -------------------------------------------------------------------------------------
-    Dim i As Long
-    
-    With fMsg
-        .MaxFormHeightPrcntgOfScreenSize = dsply_max_height ' percentage of screen size
-        .MaxFormWidthPrcntgOfScreenSize = dsply_max_width   ' percentage of screen size
-        .MinFormWidth = dsply_min_width                     ' defaults to 300 pt. the absolute minimum is 200 pt
-        .MinButtonWidth = dsply_min_button_width
-        .MsgTitle = dsply_title
-        If dsply_msg_strng <> vbNullString Then
-            '~~ The message os provided as a simple string
-            .MsgText(1) = dsply_msg_strng
-        Else
-            For i = 1 To fMsg.NoOfDesignedMsgSections
-                .MsgLabel(i) = dsply_msg_type.section(i).sLabel
-                .MsgText(i) = dsply_msg_type.section(i).sText
-                .MsgMonoSpaced(i) = dsply_msg_type.section(i).bMonspaced
-            Next i
-        End If
-        
-        .MsgButtons = dsply_buttons
-        '+------------------------------------------------------------------------+
-        '|| Setup prior showing the form improves the performance significantly  ||
-        '|| and avoids any flickering message window with its setup.             ||
-        '|| For testing purpose it may be appropriate to out-comment the Setup.  ||
-        .Setup '                                                                 ||
-        '+------------------------------------------------------------------------+
-        .show
-    End With
-    
-    ' -----------------------------------------------------------------------------
-    ' Obtaining the reply value/index is only possible when more than one button is
-    ' displayed! When the user had a choice the form is hidden when the button is
-    ' pressed and the UserForm is unloade when the return value/index (either of
-    ' the two) is obtained!
-    ' -----------------------------------------------------------------------------
-    If dsply_returnindex Then Dsply = fMsg.ReplyIndex Else Dsply = fMsg.ReplyValue
-
-End Function
 ```
-
-
-Using the Dsply function may look as follows:
-```
-Public Sub Test_Dsply()
+Public Sub Test_DsplyService()
 ' ---------------------------------------------------------
 ' Displays a message with 3 sections, each with a label and
 ' 7 reply buttons ordered in rows 3-3-1
@@ -244,29 +165,24 @@ Public Sub Test_Dsply()
     Dim tMsg    As tMessage                         ' structure of the message
     Dim cll     As New Collection                   ' specification of the displayed buttons
     
-    ' Preparing for the buttons
-    cll.Add B1: cll.Add B2: cll.Add B3: cll.Add vbLf ' 3 buttons in row 1
-    cll.Add B4: cll.Add B5: cll.Add B6: cll.Add vbLf ' 3 buttons in row 2
-    cll.Add B7                                       ' 1 button in row 3
-       
+    ' Preparing the buttons
+    Set cll = mMsg.Buttons(B1, B2, B3, vbLf, B4, B5, B6, vbLf, B7)
+                                   
     ' Preparing for the message
-    With tMsg.Section(1)
-        .sLabel = "Any label 1"
-        .sText = "Any section text 1"
-    End With
-    With tMsg.Section(2)
-        .sLabel = "Any label 2"
-        .sText = "Any section 2 text"
-        .bMonspaced = True ' Just to demonstrate
-    End With
-    With tMsg.Section(3)
-        .sLabel = "Any label 3"
-        .sText = "Any section text 3"
+    With tMsg
+       .Section(1).sLabel = "Any label 1"
+       .Section(1).sText = "Any section text 1"
+       .Section(2).sLabel = "Any label 2"
+       .Section(2).sText = "Any section 2 text"
+       .Section(2).bMonspaced = True ' Just to demonstrate
+       .Section(3).sLabel = "Any label 3"
+       .Section(3).sText = "Any section text 3"
    End With
        
-   Select Case Dsply(dsply_title:="Any title", _
-                     dsply_message:=tMsg, _
-                     dsply_buttons:=cll)
+   Select Case Dsply(dsply_title:="Any title" _
+                   , dsply_msg:=tMsg, _
+                   , dsply_buttons:=cll _
+                    )
         Case B1: Debug.Print "Button with caption """ & B1 & """ clicked"
         Case B2: Debug.Print "Button with caption """ & B2 & """ clicked"
         Case B3: Debug.Print "Button with caption """ & B3 & """ clicked"
