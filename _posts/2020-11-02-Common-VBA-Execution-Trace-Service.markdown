@@ -64,10 +64,12 @@ End Sub
 #### _Compact_ (default) or _Detailed_ trace result
 The default is a trace display like the following:
 ![](../Assets/ExecutionTrace.png)
+
 ![](/Assets/ExecutionTrace.png)<br>
 
 However, for those who do not believe in the displayed figures a detailed view may be of interest. With `mTrc.DisplayedInfo = Detailed` (yes, standard modules may have properties but they are just not auto-sensed) the following kind of trace information is displayed:
 ![](../Assets/ExecutionTraceDetailed.png)
+
 ![](/Assets/ExecutionTraceDetailed.png)<br>
 
 #### Precision
