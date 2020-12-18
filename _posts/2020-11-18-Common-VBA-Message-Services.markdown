@@ -21,7 +21,6 @@ The alternative implementation  addresses many of the constraints of the VBA Msg
 | Display of an alert image (?, !, etc.) | (yet) not implemented |
 
 ## The _Dsply_ and the _Box_ service
-The service
 - _Dsply_ displays a message which may consist of 4 sections, each with an optional label
 - _Box_ displays a message analogously to the VBA MsgBox Prompt argument, i.e. a single string message of any length (up to 1GB respectively)
 
@@ -37,42 +36,21 @@ Both services
 ![Example for a text wich spans mor than the specified maximum message window width](../Assets/ExecutionTraceDetailed.png)
 ![Example for a text wich spans mor than the specified maximum message window width](/Assets/ExecutionTraceDetailed.png)
 
-The _Dsply_ and the Box service have these named arguments:
+The _Dsply_ and the _Box_ service have these named arguments:
 
-|    Part                | Description                    |
-| ---------------------- |------------------------------- |
-| dsply_title            | Obligatory. String expression displayed in the title bar of the dialog box. |
-| dsply_msg              | _Dsply_ service:<br>Obligatory, User defined type _tMsg_, no message length limit. When the argument remains empty, i.e. a type tMsg variable is provided without any content, only the buttons are displayed. Message lines may be separated by using a carriage return character (vbCr or Chr(13), a linefeed character (vbLf or Chr(10)), or carriage return - linefeed character combination (vbCrLf or Chr(13) & Chr(10)) between each line.<br>_Box_ service:<br>Optional, String expression of any length (up to 1 GB), when not provided only the specified buttons are displayed. The message string may consist of any number of lines, separated by means of: vbCr or Chr(13), vbLf or Chr(10), or vbCrLf Chr(13) & Chr(10)).
+|    Part              | Description                    |
+| -------------------- |------------------------------- |
+| msg_title            | Obligatory. String expression displayed in the title bar of the dialog box. |
+| msg_text             | _Box_ service only:<br>Optional string expression, when omitted only the button(s) are displayed.| 
+| msg_sections         | _Dsply_ service only:<br>Obligatory, User defined type _tMsg_, no message length limit. When the argument remains empty, i.e. a type tMsg variable is provided without any content, only the buttons are displayed. Message lines may be separated by using a carriage return character (vbCr or Chr(13), a linefeed character (vbLf or Chr(10)), or carriage return - linefeed character combination (vbCrLf or Chr(13) & Chr(10)) between each line.<br>_Box_ service:<br>Optional, String expression of any length (up to 1 GB), when not provided only the specified buttons are displayed. The message string may consist of any number of lines, separated by means of: vbCr or Chr(13), vbLf or Chr(10), or vbCrLf Chr(13) & Chr(10)).
  |
-| dsply_msg_monospaced| _Box_ service only, Optional, Boolean expression, defaults to False, displays the message monospaced when True, adjusts the message window width to the longest line, displays a horizontal Scroll-Bart when exceeded|
-| dsply_buttons          | Optional. Defaults to vbOkOnly when omitted. Variant expression, either a [VB MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>), a comma delimited string, a collection of string expressions, or a dictionary of string expressions. In case of a string, a collection, or a dictionary, each item either specifies a button's caption (up to 7) or a reply button row break (vbLf, vbCr, or vbCrLf). |
-| dsply_returnindex      | Optional, Boolean, False when omitted                                |
-| dsply_min_width        | Optional, Long, defaults to 300 pt when omitted, cannot be less than 200 pt |
-| dsply_max_width        | Optional, Long, defaults to 80% of the screen size when omitted |
-| dsply_max_height       | Optional, Long, defaults to 70% of the screen size when omitted |
-| dsply_min_button_width | Optional, Long, defaults to 70 pt when omitted   |
-
-## The Box service _mMsg.Box_
-The service
-- Displays a one-string message (analogous to the VBA MsgBox Prompt argument) of any length
-- Displays up to 49 free configurable return buttons in up to 7 rows
-- Intelligently considers the space required for the displayed elements: title, message, and buttons
-- Displays a horizontal and/or vertical scroll-bar when applicable/required
-- Waits for the user to click a button, and provides a return variant indicating which button the user had  clicked.
-
-The _Box_ service has these named arguments:
-
-|    Part                | Description                    |
-| ---------------------- |------------------------------- |
-| dsply_title            | Obligatory. String expression displayed in the title bar of the dialog box. |
-| dsply_msg              | Optional, String expression of any length (up to 1 GB), when not provided only the specified buttons are displayed. The message string may consist of any number of lines, separated by means of: vbCr or Chr(13), vbLf or Chr(10), or vbCrLf Chr(13) & Chr(10)).  |
-| dsply_msg_monospaced| Optional, Boolean expression, defaults to False, when True the message is displayed mon-spaced.|
-| dsply_buttons          | Optional. Variant expression, defaults to vbOkOnly when omitted. |
-| dsply_returnindex      | Optional, Boolean, False when omitted                                |
-| dsply_min_width        | Optional, Long, defaults to 300 pt when omitted, cannot be less than 200 pt |
-| dsply_max_width        | Optional, Long, defaults to 80% of the screen size when omitted |
-| dsply_max_height       | Optional, Long, defaults to 70% of the screen size when omitted |
-| dsply_min_button_width | Optional, Long, defaults to 70 pt when omitted   |
+| msg_text_monospaced  | _Box_ service only, Optional, Boolean expression, defaults to False, displays the message monospaced when True, adjusts the message window width to the longest line, displays a horizontal Scroll-Bart when exceeded|
+| msg_buttons          | Optional. Defaults to vbOkOnly when omitted. Variant expression, either a [VB MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>), a comma delimited string, a collection of string expressions, or a dictionary of string expressions. In case of a string, a collection, or a dictionary, each item either specifies a button's caption (up to 7) or a reply button row break (vbLf, vbCr, or vbCrLf). |
+| msg_returnindex      | Optional, Boolean, False when omitted          |
+| msg_min_width        | Optional, Long, defaults to 300 pt when omitted, cannot be less than 200 pt |
+| msg_max_width        | Optional, Long, defaults to 80% of the screen size when omitted |
+| msg_max_height       | Optional, Long, defaults to 70% of the screen size when omitted |
+| msg_min_button_width | Optional, Long, defaults to 70 pt when omitted |
 
 ## The Buttons service
 The _mMsg.Buttons_ service returns a Collection of items provided via a ParamArray argument. each of the items may be:
@@ -179,9 +157,9 @@ Public Sub Test_DsplyService()
        .Section(3).sText = "Any section text 3"
    End With
        
-   Select Case Dsply(dsply_title:="Any title" _
-                   , dsply_msg:=tMsg, _
-                   , dsply_buttons:=cll _
+   Select Case Dsply(msg_title:="Any title" _
+                   , msg_sections:=tMsg, _
+                   , msg_buttons:=cll _
                     )
         Case B1: Debug.Print "Button with caption """ & B1 & """ clicked"
         Case B2: Debug.Print "Button with caption """ & B2 & """ clicked"
