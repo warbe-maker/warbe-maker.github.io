@@ -5,8 +5,8 @@ date:   2020-09-30 09:11:20 +0200
 categories: vba excel component management
 ---
 
-## Introduction
-There may be a reason for the desire to update the code in a VB project. The good at first: It is possible to an astonishing extent. The bad at last: It is pretty tricky due to some serious constraints.
+
+How to update the code in a VB project is often asked. The good message is: It is possible! The bad is: It is by far not as straight forward as some think or believe. The truth is, it is pretty tricky and requires different approaches depending on the kind of component/module.
 
 ## The hurdles
 1. First of all, there is no safe and stable way for a Workbook to modify it's own code other than delegating this job/service is to another Workbook. And even the other Workbook has to de-activate the serviced Workbook before any code modification
