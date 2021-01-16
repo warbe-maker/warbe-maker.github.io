@@ -1,15 +1,20 @@
 ---
 layout: post
-title: Common VBA Error Handling Services (inspired by the best of the web)
-subtitle: An Error Handler inspired by the best of the web
-date: 2020-11-21
-categories: vba common
+title: Common VBA Error Services (inspired by the best of the web)
+subtitle: Comprehensive error handling inspired by the best of the web
+date: 2021-01-16
+categories: vba common error handling
 ---
 
-**This is not a tutorial about error handling** but the description of a full featured ready to use error handler module with an optional execution trace module.
+**This is not a tutorial about error handling** but the description of  comprehensive, full featured, ready to use error services module.
 
-## Services of the Error Handler
-### The _ErrMsg_ service
+## Services summary
+- [Error Message Service](#the-errmsg-service-overview)
+- [Path to the error service](#the-path-to-the-error-service)
+- [Debugging service](#debugging-service)
+- [Regression-Test service](#regression-test-service)
+
+## The _ErrMsg_ service (overview)
 - displays a well structured error message with
   - the **[type of the error](#the-type-of-the-error)** (Application error, VB Runtime error, and Database error) 
   - the description of the error (Err.Description,
@@ -17,14 +22,27 @@ categories: vba common
   - the **[path to the error](#the-path-to-the-error)** provided the **[_Entry Procedure_](#the-entry-procedure)** is known, 
   - an optional **[additional information about an error](#additional-information-about-an-error)**,
   - (almost) any number of **[free specified buttons](#free-buttons-specification)**
-  - displays the error line when available
-  - displays specific buttons supporting test, provided the  Conditional Compile Argument `Test = 1` (see image below)
-  - displays specific buttons supporting debug provided the Conditional Compile Argument `Debuggig = 1`
-  - considers provided **asserted error numbers** to bypass the display the corresponding error message (regression test support)
+  - the error line when available
 - waits for the user's button clicked and provides/returns [the reply button's value](#processing-the-returned-reply) to the caller.
+
+## The Path-to-the-error service
+When the [_Entry Procedure_](#the-entry-procedure) has been indicated (see [the Begin/End Procedure services](the-begin-end-of-procedure-services) and the displayed error message has only one reply choice the path to the error is composed when the error passed on back up to the _Entry Procedure_ where the error is displayed when reached.BoP/EoP.
+
+When the user has several reply choices, e.g. because debugging buttons are displayed, the error message is displayed immediately with the procedure which caused the error. In this case the path to the error is composed from the stack maintained with each BoP/EoP statement. I.e. the path to the error contains only procedures which do use BoP/EoP statements.
+
+## Debugging service
+With the Conditional Compile Argument `Debuggig = 1` the error message is displayed with two additional buttons which allow a `Stop: Resume` reaction which returns to the code line the error occurred (see display [example](example-for-a-displayed-error-message-with-debugging-option-buttons))
+
+## Regression-Test service
+While the beginning and end of a procedure is provided with BoP/Eop statements, the beginning of a test procedure may be indicated by a BoT statement, which allows the specification of **asserted error numbers** for which the display of the error message is bypassed. This allows an uninterrupted regression test which includes tests of certain error conditions.
+
+## Example for a displayed error message with debugging option buttons
+Note! The error message uses the Common VBA Message Service to display the error, allowing to display any number of user defined reply buttons.
 
 ![image](../Assets/ErrMsgWithDebuggingOption.png)
 
+## Services details
+### _ErrMsg_ service
 The _ErrMsg_ service has the following syntax
 ```vbs
    mErH.ErrMsg error-number, error-source, error-description, error-line[, buttons]
@@ -39,10 +57,12 @@ The _ErrMsg_ service has these named arguments:
 | err_line    | Optional, defaults to  Erl when omitted            |
 | err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a value for the VBA MsgBoc [_Buttons_](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) argument and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
-### The Begin/End of Procedure services _BoP_, _EoP_
-Indicate the begin/end of a procedure. The information is used by the error handler to identify the [_Entry Procedure_](#the-entry-procedure) and to compose the path to the error.
-
-The _BoP_ services has the following syntax: `BoP procedure-id[, arguments]`, the _EoP_ service has the syntax `EoP procedure-id`. The _BoP_\/_EoP_ services have the following named arguments:
+### Path to the error services
+The _BoP_ / _EoP_ services indicate the begin and end of a procedure. This information is used to finally compose the path to the error when an error message is displayed.<br>
+The _BoP_ / _EoP_ services have the following syntax:<br>
+`BoP procedure-id[, arguments]`<br>
+`EoP procedure-id`<br>
+with the following named arguments:
 
 | Service |   Argument   |   Description   |
 | ------- | ------------ | --------------- |
@@ -58,8 +78,8 @@ Private Sub Any(ByVal arg1 As String, ByVal arg2 as Single)
     BoP ErrSrc(PROC), "arg1=", arg1, "arg2=", arg2
     .... ' any code
 
-xt: EoP ErrSrc(PROC) ' never use Exit Sub but Goto xt instead
-    Exit Sub         ' in order not to bypass the EoP service
+xt: EoP ErrSrc(PROC) ' never use an Exit above but Goto xt instead in order
+    Exit Sub         ' not to bypass the EoP service and/or other 'clean exit' tasks
 
 eh: ErrMsg ....
 End Sub
@@ -188,12 +208,6 @@ Private Function ErrSrc(ByVal s As String) As String
    ErrSrc = "module-name." & s
 End Function
 ```
-
-### The _Path to the error_
-For the display of the path to the error at least one procedure must have been regognized as an/the  [_Entry Procedure_](#the-entry-procedure).<br>
-When the user has no reply choices since only one button is displayed with the error message, the path to the error is composed when the error passed on to the _Entry Procedure_ where the error is displayed when reached. This is the reason why in this particular case there is no need to have BoP/EoP statements in every procedure.
-
-When the user has choices because more than one button is displayed with the error message the error is displayed immediately with the procedure which caused the error. In this case there is only one source for the path to the error which is the stack maintained by the error handler with each BoP/EoP statement. I.e. the path to the error depends on procedures which provide a BoP/EoP information.
 
 ### Additional information about an error
 The displayed error description is what is provided by the err.Description property. However, in case of an _Application Error_ the description is provided with the err.Raise command. When the error description looks like "This is a serious error.||This error may be avoided by ...." the string concatenated with || is regarded an additional information and will be displayed in the error message as such.
