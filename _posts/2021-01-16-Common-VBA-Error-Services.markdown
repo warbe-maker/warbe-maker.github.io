@@ -40,6 +40,7 @@ While the beginning and end of a procedure is provided with BoP/Eop statements, 
 Note! The error message uses the Common VBA Message Service to display the error, allowing to display any number of user defined reply buttons.
 
 ![image](../Assets/ErrMsgWithDebuggingOption.png)
+![image](/Assets/ErrMsgWithDebuggingOption.png)
 
 ## Services details
 ### _ErrMsg_ service
@@ -117,7 +118,7 @@ eh: mErH.ErrMsg Err.Number, ErrSrc(PROC), Err.Description, Erl
 End Sub/Function
 ```
 
-displays:
+displays:<br>
 ![](../Assets/ErrMsgAlternativeMsgBox.png)
 ![](/Assets/ErrMsgAlternativeMsgBox.png)
 
