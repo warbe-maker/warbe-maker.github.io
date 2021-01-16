@@ -55,7 +55,7 @@ The _ErrMsg_ service has these named arguments:
 | err_source  | Obligatory, string expression providing \<module>.\<procedure>, see [ErrSrc(PROC)](#the-error-source).   |
 | err_dscrptn | Optional, defaults to err.Description when omitted |
 | err_line    | Optional, defaults to  Erl when omitted            |
-| err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a value for the VBA MsgBoc [_Buttons_](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) argument and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
+| err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a value for the VBA MsgBoc [_Buttons_][7] argument and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
 ### Path to the error services
 The _BoP_ / _EoP_ services indicate the begin and end of a procedure. This information is used to finally compose the path to the error when an error message is displayed.<br>
@@ -183,7 +183,7 @@ Private Function ErrSrc(ByVal s As String) As String
 End Function
 ```
 ### The _Application Error_ service
-The error Handler provides the function _AppErr_ which turns a positive number into a negative by adding the constant [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) when the error is raised with `err.Raise mErH.AppErr(n)`. The error handler (the _ErrMsg_ function) recognizes the negative number as an _Application Error_ and turns it back into the original postive number for display.
+The error Handler provides the function _AppErr_ which turns a positive number into a negative by adding the constant [_vbObjectError_][10] when the error is raised with `err.Raise mErH.AppErr(n)`. The error handler (the _ErrMsg_ function) recognizes the negative number as an _Application Error_ and turns it back into the original postive number for display.
 
 ### The _Entry Procedure_
 The procedure which the error handler has recognized as the top level procedure of a call hierarchy by means of a pair of BoP/EoP statements is considered the _Entry Procedures_.
@@ -294,14 +294,14 @@ displays:
 ![](/Assets/FreeButtonSpecification.png)<br>
 <small>Note that the additional button is displayed in a second row due to the vbLf in the buttons argument.</small>
 
-See also the [Alternative VBA MsgBox](https://github.com/warbe-maker/VBA-MsgBox-Alternative) for more details on how to use it and its advantages (not yet available as post).
+See also the [Common VBA Message Services][6] post for more details on how to use it and its advantages.
 
 ## Optional Execution Trace
 ### Service
 When the optional module _mTrc_ is installed it provides an execution trace whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure).
 
 ### Installation of the Execution Trace
-Download and import the module  [_mTrc_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mTrc.bas) 
+Download and import the module  [_mTrc_][5]] 
 
 ### Using the Execution Trace
 When the execution trace module _mTrc_ is used with the error handler it requires only the Conditional Compile Argument `ExecTrace = 1` to activate the trace. That's it. Any executed procedure with an<br> `mErH.BoP ErrSrc(PROC)`<br>at the beginning and an<br> `mErH.EoP ErrSrc(PROC)` <br>code lines at the end of a procedure will be included in the displayed trace result.<br>
@@ -318,12 +318,17 @@ However, for those who do not believe in the displayed figures a detailed view m
 
 
 ## Contribution, development, test, maintenance
-The dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler). The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErH_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
+The dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler][8]. The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErH_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
 
-Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows](https://desktop.github.com). That's my environment for a continuous improvement process.
+Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows][9]. That's my environment for a continuous improvement process.
 
-[1]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mErH.bas)
-[2]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
-[3]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
-[4]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas)
-[5]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mTrc.bas)
+[1]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mErH.bas)
+[2]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frm)
+[3]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frx)
+[4]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mMsg.bas)
+[5]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mTrc.bas)
+[6]: (https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html)
+[7]: (https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings)
+[8]: (https://github.com/warbe-maker/Common-VBA-Error-Services)
+[9]: (https://desktop.github.com)
+[10]: (https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1)
