@@ -19,29 +19,32 @@ When agreed that _Common Components_ are fine the crucial question is how to kee
 Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In to keep used Common Components up-to-date in VB-Projects using them will be one of my future tasks.
 
 ## My Common Components
-|Commmon| Download|GitHub repo|Service| Description |
-|---------|---------|------|-------|----|
-|Common VBA Message Service|fMsg<br>mMsg.bas|[public][3r]|Dsply | Display a message|
-|Common VBA Error Handling Services|[mErH.bas][1d1]<br>[fMsg.frm][1d2]<br>[fMsg.frx][1d3]<br>[mMsg.bas][1d4]|[public][1r]|[ErrMsg][1s1]|Processing the error message|
-||||[BoP, EoP][1s2]| Indicate Begin and End of a Procedure|
-||||BoTP| Indicate Begin of Test Procedure|
-|Common VBA Execution Trace Srvices|mTrc<br>fMsg<br>mMsg|[public][2]|BOP | Indicate Begin of Procedure |
-||||EoP | Indicate End of Procedure|
-||||BoC | Indicate Begin of Code|
-||||EoC| Indicate End of Code|
-|Common VBA Excel Workbook Services|mWbk|private| | |
-|Common VBA File Services|mFile|private|- Exists|File existence check|
-||||sDiff| Compare Files|
-||||ToArray| File to array|
-||||FileSelect| File select dialog|
-|Common VBA Excel Worksheet Services|mWsh|private| | |
-|Common VBA Excel Obstructions Service|mObstrctns|private|| |
-|Common VBA Excel Rows Services|mRows|private| | |
-|Common VBA Excel Range Services|mRng|private| | |
-|Common VB Project Services|mVBP<br>clsVBP|private| | |
-|Common VBA Basic Services|mBasic|private|||
-|||||
-|||||
+|         Common ...           |  Download/Install  |GitHub repo |     Service     |      Description                 |
+|------------------------------|--------------------|------------|-----------------|----------------------------------|
+|VBA Basic Services            |mBasic              |private     |                 |                                  |
+|                              |                    |            |                 |                                  |
+|VBA Error Handling Services   |[mErH.bas][1d1]     |[public][1r]|- [ErrMsg][1s1]  | Display or pass on error         |
+|                              |[fMsg.frm][1d2]     |            |- [BoP, EoP][1s2]| Indicate Begin/End of a Procedure|
+|                              |[fMsg.frx][1d3]     |            |- BoTP           | Indicate Begin of Test Procedure |
+|                              |[mMsg.bas][1d4]     |            |                 |                                  |
+|VBA Execution Trace Services  |mTrc<br>fMsg<br>mMsg|[public][2] |- BOP            | Indicate Begin of Procedure      |
+|                              |                    |            |- EoP            | Indicate End of Procedure        |
+|                              |                    |            |- BoC            | Indicate Begin of Code           |
+|                              |                    |            |- EoC            | Indicate End of Code             |
+|VBA File Services             |mFile               |private     |- Exists         | File existence check             |
+|                              |                    |            |- Differs        | Compare Files                    |
+|                              |                    |            |- Array          | File to/from array               |
+|                              |                    |            |- FileSelect     | File select dialog               |
+|                              |                    |            |- Tmp            | File select dialog               |
+|                              |                    |            |- Txt            | File to/from text                |
+|VBA Message Service           |fMsg<br>            |[public][3r]|- Dsply          | Display a structured message     |
+|                              |mMsg.bas            |            |- Box            | Display (Msg)Box analog message  |
+|VBA Excel Obstructions Service|mObstrctns          |private     |                 |                     |
+|VBA Excel Range Services      |mRng                |private     |                 |                     |
+|VBA Excel Rows Services       |mRows               |private     |                 |                     |
+|VBA Excel Workbook Services   |mWbk                |private     |                 |                     |
+|VBA Excel Worksheet Services  |mWs                 |private     |                 |                     |
+|VB Project Services           |mVBP<br>clsVBP      |private     |                 |                     |
 
 still to be continued.
 
