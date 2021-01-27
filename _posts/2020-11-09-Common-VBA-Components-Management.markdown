@@ -24,8 +24,8 @@ Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In 
 |---------------------------|--------------------|------------|----------------|---------------------------------|
 | Basic Services            |mBasic              |private     |                |                                 |
 |                           |                    |            |                |                                 |
-| Error Handling Services   |[mErH.bas][1d1]     |[public][1r]|-[ErrMsg][1s1]  | Display or pass on error        |
-|                           |[fMsg.frm][1d2]     |            |-[BoP, EoP][1s2]| Indicate Begin/End of a Procedure|
+| Error Handling Services   |[mErH.bas][1d1]     |[public][1] |-[ErrMsg][1s1]  | Display or pass on error        |
+|                           |[fMsg.frm][1d2]     |            |-BoP, EoP| Indicate Begin/End of a Procedure|
 |                           |[fMsg.frx][1d3]     |            |-BoTP           | Indicate Begin of Test Procedure |
 |                           |[mMsg.bas][1d4]     |            |                |                                  |
 | Execution Trace Services  |mTrc<br>fMsg<br>mMsg|[public][2] |-BOP            | Indicate Begin of Procedure      |
@@ -38,7 +38,7 @@ Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In 
 |                           |                    |            |-FileSelect     | File select dialog               |
 |                           |                    |            |-Tmp            | File select dialog               |
 |                           |                    |            |-Txt            | File to/from text                |
-|VBA Message Service        |fMsg<br>            |[public][3r]|-Dsply          | Display a structured message     |
+|VBA Message Service        |fMsg<br>            |[public][3]|-Dsply          | Display a structured message     |
 |                           |mMsg.bas            |            |-Box            | Display (Msg)Box analog message  |
 | Excel Obstructions Service|mObstrctns          |private     |                |                     |
 | Excel Range Services      |mRng                |private     |                |                     |
@@ -49,12 +49,13 @@ Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In 
 
 still to be continued.
 
+[1]:https://github.com/warbe-maker/Common-VBA-Error-Services
 [1r]:https://github.com/warbe-maker/Common-VBA-Error-Handler-Services
-[1s1]: https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-errmsg-service
-[1b]: https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-beginend-of-procedure-services-bop-eop
-[1d1]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mErH.bas)
-[1d2]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm)
-[1d3]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx)
-[1d4]: (https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas)
-[2]: https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
-[3r]: https://github.com/warbe-maker/Common-VBA-Message-Service
+[1s1]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-errmsg-service
+[1b]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-beginend-of-procedure-services-bop-eop
+[1d1]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mErH.bas
+[1d2]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm
+[1d3]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx
+[1d4]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas
+[2]:https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
+[3]:https://github.com/warbe-maker/Common-VBA-Message-Service
