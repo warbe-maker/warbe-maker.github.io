@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "VBA Properties: An underestimated and undervalued concept"
+title: "The VBA Property in Standard Modules with optional arguments"
 date:   2021-02-01
 categories: vba property optional argument
 excerpt_separator: <!--end-of-excerpt-->
