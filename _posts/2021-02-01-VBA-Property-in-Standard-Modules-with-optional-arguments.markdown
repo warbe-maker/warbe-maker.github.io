@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "The VBA Property in Standard Modules with optional arguments"
+title: "VBA Property in Standard Modules with optional arguments"
 date:   2021-02-01
 categories: vba property optional argument
 excerpt_separator: <!--end-of-excerpt-->
@@ -81,6 +81,7 @@ mFile.Txt(ft_file:=myfile, ft_append:=True) = s
    - they are declared consistently in the Get and Let Property
    - they are declared in the Let Property <u>before</u> the assignment variable.<br><br>Attention! This is in contrast to 'normal' declarations where they have to be declared at last
 3. Considering the fact that the 'value' may be anything and the source/target may be a wide range of things (Worksheet, File, Collection, Dictionary, etc, the applications for _Properties_ 'explode'.
+4. A little downside: _Friend Property_ is not supported! _Public_ or _Private_ is the only choice.
 
 
 [1d1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-File-Services/master/mFile.bas
