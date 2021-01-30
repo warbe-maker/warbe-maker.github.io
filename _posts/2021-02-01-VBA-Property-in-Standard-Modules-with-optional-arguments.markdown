@@ -3,10 +3,8 @@ layout: post
 title: "VBA Property in Standard Modules with optional arguments"
 date:   2021-02-01
 categories: vba property optional argument
-excerpt_separator: <!--end-of-excerpt-->
+excerpt: A significant extention of the VBA _Property_, underestimated, undervalued, and potentially be missed when ignored.
 ---
-A significant extention of VBA _Property_, underestimated, undervalued, and potentially be missed when ignored.
-<!--end-of-excerpt-->
 
 ## The very basics
 The commonly used example for a _Property_ in a _Class Module_:
