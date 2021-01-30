@@ -67,7 +67,7 @@ Each item may be :
 - a valid [VBA MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>)
 - a row break indication (vbLf, vbCr, or vbCrLf). 
 
-## The UserForm service _fMsg_
+## The _fMsg_ UserForm
 The UserForm may be used [directly](#direct-usage-of-the-fmsg-userform)  but with significant less comfort compared with the _Dsply_ and the _Box_ service.
 
 The UserForm service has the following Properties:
