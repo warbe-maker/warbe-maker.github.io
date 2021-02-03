@@ -8,13 +8,9 @@ categories: vba common error handling
 
 **This is not a tutorial about error handling** but the description of  comprehensive, full featured, ready to use error services module.
 
-## Services summary
-- [Error Message Service](#the-errmsg-service-overview)
-- [Path to the error service](#the-path-to-the-error-service)
-- [Debugging service](#debugging-service)
-- [Regression-Test service](#regression-test-service)
+## Services
 
-## The _ErrMsg_ service (overview)
+### The _ErrMsg_ service (overview)
 - displays a well structured error message with
   - the **[type of the error](#the-type-of-the-error)** (Application error, VB Runtime error, and Database error) 
   - the description of the error (Err.Description,
@@ -25,18 +21,18 @@ categories: vba common error handling
   - the error line when available
 - waits for the user's button clicked and provides/returns [the reply button's value](#processing-the-returned-reply) to the caller.
 
-## The Path-to-the-error service
+### The Path-to-the-error service
 When the [_Entry Procedure_](#the-entry-procedure) has been indicated (see [the Begin/End Procedure services](the-begin-end-of-procedure-services) and the displayed error message has only one reply choice the path to the error is composed when the error passed on back up to the _Entry Procedure_ where the error is displayed when reached.BoP/EoP.
 
 When the user has several reply choices, e.g. because debugging buttons are displayed, the error message is displayed immediately with the procedure which caused the error. In this case the path to the error is composed from the stack maintained with each BoP/EoP statement. I.e. the path to the error contains only procedures which do use BoP/EoP statements.
 
-## Debugging service
+### The debugging service
 With the Conditional Compile Argument `Debuggig = 1` the error message is displayed with two additional buttons which allow a `Stop: Resume` reaction which returns to the code line the error occurred (see display [example](example-for-a-displayed-error-message-with-debugging-option-buttons))
 
-## Regression-Test service
+### The regression-test service
 While the beginning and end of a procedure is provided with BoP/Eop statements, the beginning of a test procedure may be indicated by a BoT statement, which allows the specification of **asserted error numbers** for which the display of the error message is bypassed. This allows an uninterrupted regression test which includes tests of certain error conditions.
 
-## Example for a displayed error message with debugging option buttons
+### Example for a displayed error message with debugging option buttons
 Note! The error message uses the Common VBA Message Service to display the error, allowing to display any number of user defined reply buttons.
 
 ![](../Assets/ErrMsgWithDebuggingOption.png)
