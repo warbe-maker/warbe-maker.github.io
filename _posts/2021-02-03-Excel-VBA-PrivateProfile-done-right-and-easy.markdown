@@ -6,24 +6,24 @@ categories: VBA Office Excel
 ---
 
 ## Introduction
-_PrivateProfile_ is the term used for information in a file organized as<br>[section]<br>\<valuen-ame>=\<value><br>structure, typically for config- or ini- files. Word provides for example [System.GetPrivateProfileString][4] with a perfect syntax. Excel unfortunately offers only things like [GetPrivateProfileString][3] with a much less comfortable syntax. My mFile module provides the same services with a syntax only dealing with: file, section, value-name and value.
+_PrivateProfile_ is the term used for information in a file organized as<br>[section]<br>\<valuen-ame>=\<value><br>structure, typically for config- or ini- files. Word provides for example [System.PrivateProfileString][4] with a perfect syntax. Excel unfortunately offers only things like [GetPrivateProfileString][3] with a much less comfortable syntax. The Standard Module _mFile_ provides 'Word-like' services which as well mainly deal with the arguments: file, section, value-name and value.
 
-## _mFile_ PrivateProfile services
+## The _mFile_ PrivateProfile services
 
-### The Value service
-Syntax read: `value = mFile.Value(file, section, value-name)`
+### The _Value_ service
+Syntax read: `value = mFile.Value(file, section, value-name)`<br>
 Syntax write: `mFile.Value(file, section, value-name) = value`
 
-### The ValueExists service
+### The _ValueExists_ service
 Syntax: `If mFile.ValueExists(file[, section], value) Then`
 
-### The NameExists service
+### The _NameExists_ service
 Syntax: `If mFile.NameExists(file[, section], value-name) Then`
 
-### The SectionExists service
+### The _SectionExists_ service
 Syntax: `If mFile.SectionExists(file, section) Then`
 
-### SectionsCopy
+### The _SectionsCopy_ service
 Syntax: `mFile.SectionsCopy source, target, sections`
 
 ## The services have the following named arguments
@@ -69,3 +69,4 @@ the matter of all the above is a pretty nice example how the implementation of a
 [1]: https://gitcdn.link/repo/warbe-maker/Common-VBA-File-Services/master/mFile.bas
 [2]: https://gitcdn.link/repo/warbe-maker/Common-VBA-Dirctory-Services/master/mDct.bas
 [3]: https://docs.microsoft.com/de-de/windows/win32/api/winbase/nf-winbase-getprivateprofilestring?redirectedfrom=MSDN
+[4]: https://docs.microsoft.com/de-de/office/vba/api/word.system.privateprofilestring
