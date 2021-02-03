@@ -39,8 +39,8 @@ While the beginning and end of a procedure is provided with BoP/Eop statements, 
 ## Example for a displayed error message with debugging option buttons
 Note! The error message uses the Common VBA Message Service to display the error, allowing to display any number of user defined reply buttons.
 
-![image](../Assets/ErrMsgWithDebuggingOption.png)
-![image](/Assets/ErrMsgWithDebuggingOption.png)
+![](../Assets/ErrMsgWithDebuggingOption.png)
+![](/Assets/ErrMsgWithDebuggingOption.png)
 
 ## Services details
 ### _ErrMsg_ service
