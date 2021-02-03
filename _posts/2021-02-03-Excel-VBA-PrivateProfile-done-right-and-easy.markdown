@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Excel VBA PrivateProfile done right - and easy"
-date:   2020-09-30 09:11:20 +0200
+date:   2021-02-03
 categories: VBA Office Excel
 ---
 
