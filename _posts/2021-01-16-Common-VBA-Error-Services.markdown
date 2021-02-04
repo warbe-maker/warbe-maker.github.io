@@ -37,7 +37,7 @@ The _ErrMsg_ service has these named arguments:
 ### The _AppErr_ service
 In order to not confuse errors raised with `err.Raise ...` the _AppErr_ service adds  the [_vbObjectError_][10] constant to a given positive number to turn it into a negative. An advantage by the way: Each procedure can have it's own positive error numbers ranging from 1 to n with `err.Raise mErH.AppErr(n)`. The _ErrMsg_ service, when detecting a negative error number uses the _AppErr_ service to turn it back into it's original positive error number.
 
-### The _BoP\/EoP_ path to the error service
+### The _BoP/EoP_ path to the error service
 The _ErrMsg_ service only displays a path to the error when the [_Entry Procedure_](#the-entry-procedure) has been indicated. The path to the error is assembled when the error passed on from the error source back up to the _Entry Procedure_ where the error is displayed when reached.
 
 The _BoP/EoP_ services have the following syntax:<br>
