@@ -47,9 +47,9 @@ with the following named arguments:
 
 | Service |   Argument   |   Description   |
 | ------- | ------------ | --------------- |
-| BoP     | bop_id       | Obligatory, Expression providing a unique name of the procedure, e.g.<br>[ErrSrc(PROC)](#the-error-source) |
+| BoP     | bop_id       | Obligatory, String expression, unique identification of the procedure in the module (see [ErrSrc(PROC)](#the-error-source)) |
 | BoP     | bop_arguments| Optional, ParamArray, a list of the procedures argument, optionally paired as name, value |
-| EoP     | eop_id       | Obligatory, Expression providing a unique name of the procedure, e.g.<br>[ErrSrc(PROC)](#the-error-source) |
+| EoP     | eop_id       | Obligatory, String expression, unique identification of the procedure name in the module (see [ErrSrc(PROC)](#the-error-source)) |
 
 Note: When the user not only has one reply button but several reply choices (see the debugging service for instance), the error message is displayed immediately with the procedure which caused the error. In this case the path to the error is composed from a stack which is maintained along with each BoP/EoP statement. I.e. the path to the error contains only procedures which do use BoP/EoP statements.
 
