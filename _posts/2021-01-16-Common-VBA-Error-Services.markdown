@@ -19,7 +19,7 @@ categories: vba common error handling
   - an optional **[additional information about an error](#error-description-with-additional-information)**,
   - (almost) any number of **[free specified buttons](#free-buttons-specification)**
   - the error line when available
-- waits for the user's button clicked and provides/returns [the reply button's value](#processing-the-returned-reply) to the caller.
+- waits for the user's button clicked and provides/returns [the reply button's value](#processing-reply-buttons) to the caller.
 
 The _ErrMsg_ service has the following syntax (error description and error line are obtained from the err object)
 ```VB
