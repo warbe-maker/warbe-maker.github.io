@@ -38,7 +38,7 @@ The _ErrMsg_ service has these named arguments:
 In order to not confuse errors raised with `err.Raise ...` the _AppErr_ service adds  the [_vbObjectError_][10] constant to a given positive number to turn it into a negative. An advantage by the way: Each procedure can have it's own positive error numbers ranging from 1 to n with `err.Raise mErH.AppErr(n)`. The _ErrMsg_ service, when detecting a negative error number uses the _AppErr_ service to turn it back into it's original positive error number.
 
 ### The _BoP/EoP_ path to the error service
-The _ErrMsg_ service only displays a path to the error when the [_Entry Procedure_](#the-entry-procedure) has been indicated. The path to the error is assembled when the error passed on from the error source back up to the _Entry Procedure_ where the error is displayed when reached.
+The _ErrMsg_ service only displays a path to the error when an [_Entry Procedure_](#the-entry-procedure-for-the-path-to-the-error) has been indicated. The path to the error is assembled when the error passed on from the error source back up to the _Entry Procedure_ where the error is displayed when reached.
 
 The _BoP/EoP_ services have the following syntax:<br>
 `mErH.BoP procedure-id[, arguments]`<br>
@@ -191,7 +191,7 @@ End Function
 ```
 
 ### The _Entry Procedure_ for the path-to-the-error
-The top level procedured, i.e. the first one with a _BoP/EoP_ service statement is considered the _Entry Procedures_. Usually those procedures are event procedures like _Workbook\_Open_ or click events in a UserForm.
+The top level procedure, i.e. the first one with a _BoP/EoP_ service statement is considered the _Entry Procedures_. Usually those procedures are event procedures like _Workbook\_Open_ or click events in a UserForm.
 
 ### Error description with additional information
 The _ErrMsg_ service displayes the information provided by  _err.Description_. For an _Application Error_ the error description is what is provided with the `err.Raise` statement. When the error description looks like "This is a serious error.||This error may be avoided by ...." the string concatenated with || is regarded an additional information and will be displayed in the error message as such.
