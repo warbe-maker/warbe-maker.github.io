@@ -14,8 +14,8 @@ categories: vba common error handling
 - displays a well structured error message with
   - the **[type of the error](#error-types)** by distinguishing [Application error](#the-apperr-service), VB Runtime error, and Database error 
   - the description of the error (_err.Description_),
-  - the **[error source](#the-error-souce)**,
-  - the **[path to the error](#the-bopeop-path-to-the-error-service)** provided the **[_Entry Procedure_](#the-entry-procedure-for-the-path-to-the-error)** is known, 
+  - the **[error source](#the-error-source)**,
+  - the **[path to the error](#the-bop-eop-path-to-the-error-service)** provided the **[_Entry Procedure_](#the-entry-procedure-for-the-path-to-the-error)** is known, 
   - an optional **[additional information about an error](#error-description-with-additional-information)**,
   - (almost) any number of **[free specified buttons](#free-buttons-specification)**
   - the error line when available
