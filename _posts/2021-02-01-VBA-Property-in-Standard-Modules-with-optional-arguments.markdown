@@ -9,7 +9,7 @@ A significant extension of the VBA _Property_, underestimated, undervalued, and 
 
 ## The very basics
 The commonly used example for a _Property_ in a _Class Module_:
-```
+```VB
 Option Explicit
 Private sCustName As String
 Public Property Let CustName(ByVal s As String)
