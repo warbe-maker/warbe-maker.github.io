@@ -10,52 +10,36 @@ categories: vba common error handling
 
 ## Services
 
-### The _ErrMsg_ service (overview)
+### The _ErrMsg_ service
 - displays a well structured error message with
-  - the **[type of the error](#the-type-of-the-error)** (Application error, VB Runtime error, and Database error) 
-  - the description of the error (Err.Description,
-  - the **[error source](#the-error-source)**,
-  - the **[path to the error](#the-path-to-the-error)** provided the **[_Entry Procedure_](#the-entry-procedure)** is known, 
+  - the **[type of the error](#error-types)** (Application error, VB Runtime error, and Database error) 
+  - the description of the error (_err.Description_),
+  - the **[error source](#the-error-souce)**,
+  - the **[path to the error](#the-bopeop-path-to-the-error) service** provided the **[_Entry Procedure_](#the-entry-procedure)** is known, 
   - an optional **[additional information about an error](#additional-information-about-an-error)**,
   - (almost) any number of **[free specified buttons](#free-buttons-specification)**
   - the error line when available
 - waits for the user's button clicked and provides/returns [the reply button's value](#processing-the-returned-reply) to the caller.
 
-### The Path-to-the-error service
-When the [_Entry Procedure_](#the-entry-procedure) has been indicated (see [the Begin/End Procedure services](the-begin-end-of-procedure-services) and the displayed error message has only one reply choice the path to the error is composed when the error passed on back up to the _Entry Procedure_ where the error is displayed when reached.BoP/EoP.
-
-When the user has several reply choices, e.g. because debugging buttons are displayed, the error message is displayed immediately with the procedure which caused the error. In this case the path to the error is composed from the stack maintained with each BoP/EoP statement. I.e. the path to the error contains only procedures which do use BoP/EoP statements.
-
-### The debugging service
-With the Conditional Compile Argument `Debuggig = 1` the error message is displayed with two additional buttons which allow a `Stop: Resume` reaction which returns to the code line the error occurred (see display [example](example-for-a-displayed-error-message-with-debugging-option-buttons))
-
-### The regression-test service
-While the beginning and end of a procedure is provided with BoP/Eop statements, the beginning of a test procedure may be indicated by a BoT statement, which allows the specification of **asserted error numbers** for which the display of the error message is bypassed. This allows an uninterrupted regression test which includes tests of certain error conditions.
-
-### Example for a displayed error message with debugging option buttons
-Note! The error message uses the Common VBA Message Service to display the error, allowing to display any number of user defined reply buttons.
-
-![](../Assets/ErrMsgWithDebuggingOption.png)
-![](/Assets/ErrMsgWithDebuggingOption.png)
-
-## Services details
-### _ErrMsg_ service
-The _ErrMsg_ service has the following syntax
-```vbs
-   mErH.ErrMsg error-number, error-source, error-description, error-line[, buttons]
+The _ErrMsg_ service has the following syntax (error description and error line are obtained from the err object)
+```VB
+    On Error Goto eh
+    ` .....
+eh: mErH.ErrMsg error-source[, buttons]
 ```
 The _ErrMsg_ service has these named arguments:
 
 |  Argument   |   Description   |
 | ----------- | --------------- |
-| err_number  | Optional, defaults to err.Number when omitted      |
 | err_source  | Obligatory, string expression providing \<module>.\<procedure>, see [ErrSrc(PROC)](#the-error-source).   |
-| err_dscrptn | Optional, defaults to err.Description when omitted |
-| err_line    | Optional, defaults to  Erl when omitted            |
 | err_buttons | Optional. Variant. Defaults to "Terminate execution" button when omitted.<br>May be a value for the VBA MsgBoc [_Buttons_][7] argument and/or any descriptive button caption string (including line breaks for a multi-line caption. The buttons may be provided as a comma delimited string, a collection or a dictionary. vbLf items display the following buttons in a new row. |
 
-### Path to the error services
-The _BoP_ / _EoP_ services indicate the begin and end of a procedure. This information is used to finally compose the path to the error when an error message is displayed.<br>
+### The _AppErr_ service
+The _ErrMsg_ service recognizes an _Application Error_ i.e. an error explicitly raised via `err.Raise` through a negative error number as suggested by VBA because the _AppErr_ service adds the [_vbObjectError_][10] constant to a given positive number to turn it into a negative, thereby preventing any confusion with VB Runtime errors. An advantage by the way: Each procedure can have it's own positive error numbers ranging from 1 to n with `err.Raise mErH.AppErr(n)`. The _ErrMsg_ service, when detecting a negative error number uses the _AppErr_ service to turn it back into it's original positive error number.
+
+### The _BoP/EoP_ (path to the error) service
+The _ErrMsg_ service only displays a path to the error when the [_Entry Procedure_](#the-entry-procedure) has been indicated. The path to the error is assembled when the error passed on from the error source back up to the _Entry Procedure_ where the error is displayed when reached.
+
 The _BoP_ / _EoP_ services have the following syntax:<br>
 `BoP procedure-id[, arguments]`<br>
 `EoP procedure-id`<br>
@@ -67,42 +51,36 @@ with the following named arguments:
 | BoP     | bop_arguments| Optional, ParamArray, a list of the procedures argument, optionally paired as name, value |
 | EoP     | eop_id       | Obligatory, Expression providing a unique name of the procedure, e.g.<br>[ErrSrc(PROC)](#the-error-source) |
 
-Example:
-```
-Private Sub Any(ByVal arg1 As String, ByVal arg2 as Single)
-    On Error Goto eh
-    Const PROC = "Any"
-    BoP ErrSrc(PROC), "arg1=", arg1, "arg2=", arg2
-    .... ' any code
+Note: When the user not only has one reply button but several reply choices (see the debugging service for instance), the error message is displayed immediately with the procedure which caused the error. In this case the path to the error is composed from a stack which is maintained along with each BoP/EoP statement. I.e. the path to the error contains only procedures which do use BoP/EoP statements.
 
-xt: EoP ErrSrc(PROC) ' never use an Exit above but Goto xt instead in order
-    Exit Sub         ' not to bypass the EoP service and/or other 'clean exit' tasks
+### The debugging service for identifying an error line
+With the _Conditional Compile Argument_ `Debuggig = 1` the error message is displayed with two additional buttons which allow a `Stop: Resume` reaction which leads to the code line the error occurred (see  [Usage of the debugging service](#usage-of-the-debugging-service-identifying-the-error-line-when-code-lines-are-not-numbered))
 
-eh: ErrMsg ....
-End Sub
-```
+### The _BoTP_ service for automating regression tests
+An - preferably automated - regression test will execute a series of test procedures. Any interruption other than one caused by a failed assertion for an assertion should thus be avoided. The _BoTP_ allows the specification of **asserted error numbers** for procedures testing error conditions. For an error number indicated 'asserted' the _ErrMsg_ service bypassed the display of the error message.
 
-### The Begin of Test-procedure service _BoTP_
-Indicates the begin of a test procedure.
-The _BoTP_ services has the following syntax: `BoTP procedure-id, asserted-errors`. The _BoTP_ service has the following named arguments:
+The BoTP service has the following Syntax:<br>
+`BoTP procedure-id, err-number[, err-number] ...`
+with the following named arguments:
 
 |      Argument     |   Description   |
 | ----------------- | --------------- |
 | botp_id           | Obligatory, Expression providing a unique name of the procedure, e.g.<br>[ErrSrc(PROC)](#the-error-source) |
-| botp_errs_asserted| Obligatory, ParamArray, type Long, list of error numbers regarded asserted by the _ErrMsg_ service for the executed procedure including any sub-procedures.<br>Note 1: In case there are no asserted errors because the test-procdure does not test nay error conditions the _BoP_ service will be used instead.<br>Note 2: The _ErrMsg_ service will bypass the display of the error message for any of the corresponding error numbers. By this the test procedure will run without any user interaction as long as no other error but the asserted ones occours. |
+| botp_errs_asserted| Obligatory, ParamArray with positive numbers |
 
 
 ## Installation
 - Download and import the module  [_mErH_][1]
 - Download the UserForm [fMsg.frm][2] and [fMsg.frx][3] and import _fMsg.frm_
 - Download and import [mMsg.bas][4]
-- Because at least some effort is the same intalling the Common VBA Execution Trace Service is worth being concidered: Download [mTrc.bas][5] and import it.
+- Since the extra effort is very little, by the way installing the _Common VBA Execution Trace Service_ is worth being concidered:<br> Download [mTrc.bas][5] and import it.
 
-## Basic usage
+## Usage
+### Usage of the _ErrMsg_ service
 The below code works but does not provide a path to the error.
 
 ```vbs
- Public/Private Sub/Function Any()
+Public/Private Sub/Function Any()
    Const PROC = "Any" ' identification of the error source and (if used) the execution trace
    On Error Goto eh ' obligatory anyway
    
@@ -110,21 +88,31 @@ The below code works but does not provide a path to the error.
 
 xt: Exit Sub/Function
    
-eh: mErH.ErrMsg Err.Number, ErrSrc(PROC), Err.Description, Erl
+eh: mErH.ErrMsg ErrSrc(PROC)
 End Sub/Function
 ```
 
-displays:<br>
+To get the path to the error displayed with the error message required to additional code lines - at least in the entry procedure:
+
+```vbs
+Public/Private Sub/Function Any()
+   Const PROC = "Any" ' identification of the error source and (if used) the execution trace
+   On Error Goto eh ' obligatory anyway
+   mErH.BoP ErrSrc(PROC) ' indicates the beginning of the procedure
+   .... any code
+
+xt: mErH.EoP ErrSrc(PROC)
+    Exit Sub/Function
+   
+eh: mErH.ErrMsg ErrSrc(PROC) ' indicates the end of the procedure
+End Sub/Function
+```
+displays for example:<br>
 ![](../Assets/ErrMsgAlternativeMsgBox.png)
 ![](/Assets/ErrMsgAlternativeMsgBox.png)
 
-
-### Usage providing a "path to the error" with the error message
-When the user has no choice because just the default button is displayed with the error message an error is passed on to [the _Entry Procedure](#the-entry-procedure) and thereby the path to the error is assembled.
- 
-
-### Debug supporting usage
-One of the most common problems in identifying the code line which caused an error. Without line numbers, the mir lines a procedure has the more difficult. Those familiar with the "trick"
+### Usage of the debugging service (identifying the error line when code lines are not numbered)
+It appears that there is no way for identifying the error line when the lines ar not numbered - what they usually aren't - what extends  unproductive error chasing time. The below 'trick' provides a true godsend in case:
 
 ```vbs
 eh:
@@ -135,124 +123,12 @@ eh:
 End Sub/Function
 ```
 
-may appreciate that this is integrated in the _mErH_ module. When the Conditional Compile Argument<br>
-`Debugging = 1` an additional button is displayed with the error message:
-![](../Assets/ErrrorMessageWithResumeButton.png)
-![](/Assets/ErrrorMessageWithResumeButton.png)
+The _ErrMsg_ service has this 'trick' already built-in. When the _Conditional Compile Argument_ `Debugging = 1` the error message is displayed with two extra buttons:
 
-and when the button is clicked ...
-
-```vbs
-
-eh: If ErrHndlr(Err.Number, ErrSrc(PROC), Err.Description, Erl) = ResumeButton _
-    Then Stop: Resume ' F8 leads to the error line
-Exit Sub/Function
-```
-
-does the job. In production the Conditional Compile Argument `Debuggin = 0` prevents the display of this button.
-
-### Usage supporting test
-For _Common Components_ like this error handler I regard a regression test obligatory before a code modification is published. However, any test of an error condition stops the test process when there is only the default button displayed.
-
-With the Conditional Compile Argument `Test = 1` two additional buttons are displayed: **Continue with next code line** and **Continue with next procedure**
-
-image still missing
-
-and the following can be for a test continuation
-
-```vbs
-
-```
-## Usage/services details
-### The type of the error
-The error handler distinguishes between
-- [Application error](#the-application-error-service)<br>provided the error had been raised by `err.Raise mErH.AppErr(n) ...` with n = 1 to 2147221503 
-- VB Runtime error
-- Database error
-
-
-### The _error source_
-Since the err.Source only provides the Application name we have to care ourselves for this information:<br>
-Copy the following in any module the error handler (mErH.ErrMsg) is used
-```
-Private Function ErrSrc(ByVal s As String) As String
-   ErrSrc = "module-name." & s
-End Function
-```
-### The _Application Error_ service
-The error Handler provides the function _AppErr_ which turns a positive number into a negative by adding the constant [_vbObjectError_][10] when the error is raised with `err.Raise mErH.AppErr(n)`. The error handler (the _ErrMsg_ function) recognizes the negative number as an _Application Error_ and turns it back into the original postive number for display.
-
-### The _Entry Procedure_
-The procedure which the error handler has recognized as the top level procedure of a call hierarchy by means of a pair of BoP/EoP statements is considered the _Entry Procedures_.
-
-```
-Private/Public Sub/Function Any
-    On Error Goto eh
-    Const PROC = "Any"
-    mErH.BoP ErrSrc(PROC) ' Begin of procedure
-   ....
-   If ... Then Goto xt ' never use Exit! It will bypass the EoP execution
-   ....
-xt: mErH.EoP ErrSrc(PROC) ' End of procedure
-    Exit Sub)Function
-   
-eh: mErH.ErrMsg .....
-End Sub/Function
-```
-and the function (obligatory in each module):
-```vbs
-Private Function ErrSrc(ByVal s As String) As String
-   ErrSrc = "module-name." & s
-End Function
-```
-
-### Additional information about an error
-The displayed error description is what is provided by the err.Description property. However, in case of an _Application Error_ the description is provided with the err.Raise command. When the error description looks like "This is a serious error.||This error may be avoided by ...." the string concatenated with || is regarded an additional information and will be displayed in the error message as such.
-
-### The test option buttons
-With the Conditional Compile Argument `Test = 1` the error message will be displayed with two additional buttons which may be used when the [return value of the _ErrMsg_ is processed](#processing-the-return-value) further.
-![](/Assets/ErrMsgWithTestOption.png)
-![](../Assets/ErrMsgWithTestOption.png)
-
-### Processing the return value
-The return value is the value of the button when provided by vbYesNo, vbIgnoreRetryCancel, etc. or the caption string of the displayed button (including any vbLf). It may be processed in either of the following ways:
-```
-eh: Select Case mErH.ErrMsg(ErrSrc(PROC)
-        Case ....
-        Case ...
-    End Select
-```
-
-or
-```
-eh: mErH.ErrMsg ErrSrc(PROC)
-    Select Case mErH.ErrReply
-        Case ....
-        Case ...
-    End Select
-```
-or
-```
-    Dim vReply As Variant
-    
-eh: mErH.ErrMsg ErrSrc(PROC), err_reply:=vReply
-    Select Case vReply
-        Case ....
-        Case ...
-    End Select
-```
-
-### The debugging option buttons
-When the Conditional Compile Argument `Debugging = 1` the error message looks as follows:
-![](/Assets/ErrMsgWithDebuggingOption.png)
 ![](../Assets/ErrMsgWithDebuggingOption.png)
-The additional button have an advantage over the equivalent:
-```
-#If Debugging Then
-    Debug.Print Err.Description: Stop: Resume
-#End If
-```
-because this cannot be altered which means it loops until the reason for the error has been eliminated which may result in an unwanted code change just to continue without an error. The two buttons may be processed as return values as follows:
+![](/Assets/ErrMsgWithDebuggingOption.png)
+
+and the extra reply buttons can be used as follows:
 ```
 eh: Select Case ErrMsg(ErrSrc(PROC))
         Case mErH.DebugOpt1ResumeError: Stop: Resume
@@ -260,7 +136,77 @@ eh: Select Case ErrMsg(ErrSrc(PROC))
     End Select
 ```
 
-With both Conditional Compile Arguments `Test = 1` and `Debugging = 1` four additional buttons are displayed and may be processed accordingly.
+or alternatively:
+
+```vbs
+eh: If ErrMsg(ErrSrc(PROC)) = mErH.DebugOpt1ResumeError _
+    Then Stop: Resume ' F8 leads to the error line
+Exit Sub/Function
+```
+Note that the additional reply buttons are provided as public Properties.<br>In production the _Conditional Compile Argument_ `Debuggin = 0` prevents the display of the debugging buttons.
+
+### Regression test support
+I am a great fan of regression testing, regarded obligatory specifically for _Common Components_ like the _mErH_ module for instance (see the [full development and test environment][8] of example). However, any test of an error condition would interrupt a preferably automated regression test with the display of the tested error message. When a test procedure uses the _BoTP_ service instead of the _BoP_ service the ***asserted error numbers*** may be specified as follows which bypassed the display of the error message.
+
+Example:
+
+### Test support
+With the Conditional Compile Argument `Test = 1` the _ErrMsg_ service displays the two additional buttons:
+![](/Assets/ErrMsgWithTestOption.png)
+![](../Assets/ErrMsgWithTestOption.png)
+which may be considered when clicked as follows:
+
+
+### Execution trace support
+When the _mTrc_ module is imported and the _Conditional Compile Argument_ `ExecTrace = 1` any arguments provided with the _BoP_  service appear in the execution trace displayed when the entry procedure is reached.
+```
+Private Sub Any(ByVal arg1 As String, ByVal arg2 as Single)
+
+    On Error Goto eh
+    Const PROC = "Any"
+    BoP ErrSrc(PROC), "arg1=", arg1, "arg2=", arg2
+
+    ' .... ' any code
+
+xt: EoP ErrSrc(PROC)
+    Exit Sub
+
+eh: ErrMsg ErrSrc(PROC)
+End Sub
+```
+
+## Usage/services details
+
+### Error types
+The error handler distinguishes between
+- [Application error](#the-application-error-service)<br>provided the error had been raised by `err.Raise mErH.AppErr(n) ...` with n = 1 to 2147221503 
+- VB Runtime error
+- Database error
+
+
+### The _error source_
+The following procedure will be copied to any in component the _mErH.ErrMsg_ service is used in order to identify any procedure:
+
+```
+Private Function ErrSrc(ByVal s As String) As String
+   ErrSrc = "\<component-name>." & s
+End Function
+```
+
+### The _Entry Procedure_
+The procedure which the error handler has recognized as the top level procedure of a call hierarchy by means of the _BoP/EoP_ service statements is considered the _Entry Procedures_. Common entry procedures are any event procedures like _Workbook\_Open_ or click events in a UserForm.
+
+### _err.Description_ with additional information
+The _ErrMsg_ service displayes the information provided by  _err.Description_. For an _Application Error_ the error description is what is provided with the `err.Raise` statement. When the error description looks like "This is a serious error.||This error may be avoided by ...." the string concatenated with || is regarded an additional information and will be displayed in the error message as such.
+
+### Processing reply buttons
+The _ErrMsg_ service returns the 'value' of the clicked button. This value may be vbYesNo, vbIgnoreRetryCancel, etc. or the caption string of the displayed button (including any vbLf!). It may be processed in either of the following ways:
+```
+eh: Select Case mErH.ErrMsg(ErrSrc(PROC)
+        Case ....
+        Case ...
+    End Select
+```
 
 ### Free buttons specification
 Buttons can be provided as a comma delimited string, an array, a Collection or a Dictionary whereby the items are a VBA MsgBox value, a button's caption string, or a vbLf indicating the following buttons are displayed in a new row. This free buttons specification is a service provided by the used fMsg UserForm, a Common VBA Message Form.
@@ -319,13 +265,13 @@ The dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, 
 
 Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows][9]. That's my environment for a continuous improvement process.
 
-[1]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mErH.bas)
-[2]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frm)
-[3]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frx)
-[4]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mMsg.bas)
-[5]: (https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mTrc.bas)
-[6]: (https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html)
-[7]: (https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings)
-[8]: (https://github.com/warbe-maker/Common-VBA-Error-Services)
-[9]: (https://desktop.github.com)
-[10]: (https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1)
+[1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mErH.bas
+[2]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frm
+[3]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frx
+[4]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mMsg.bas
+[5]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mTrc.bas
+[6]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html
+[7]:https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings
+[8]:https://github.com/warbe-maker/Common-VBA-Error-Services
+[9]:https://desktop.github.com
+[10]:https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1
