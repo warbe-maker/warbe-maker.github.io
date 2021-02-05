@@ -17,14 +17,12 @@ The alternative implementation  addresses many of the constraints of the VBA Msg
 | Composing a fair designed message is time consuming and it is difficult to come up with a satisfying result | Up&nbsp;to&nbsp;4&nbsp; _Message&nbsp;Sections_ \*) each with an optional _Message Text Label_ and a _Monospaced_ option allow an appealing design without any extra  effort<br>\*) Adding an additional section is just a matter of the design and does not require any code change in the UserForm.  |
 | The maximum reply _Buttons_ is 3 | Up to 7 reply _Buttons_ may be displayed in up to 7 reply _Button Rows_ in any order (=49 buttons in total) |
 | The caption of the reply _Buttons_ is specified by a [value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) which results in 1 to 3 reply _Buttons_ with corresponding untranslated! native English captions | The caption of the reply _Buttons_ may be specified by the [VB MsgBox values](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>) **and** additionally by any multi-line text (see [Syntax of the _buttons_ argument](#syntax-of-the-buttons-argument) |
-| Specifying the default button | (yet) not implemented |
+| Specifying the default button | possible |
 | Display of an alert image (?, !, etc.) | (yet) not implemented |
 
 ## The _Dsply_ and the _Box_ service
-- _Dsply_ displays a message which may consist of 4 sections, each with an optional label
-- _Box_ displays a message analogously to the VBA MsgBox Prompt argument, i.e. a single string message of any length (up to 1GB respectively)
-
-Both services
+- _Dsply_ displays an optionally structured message, i.e one which may consist of 4 sections, each with an optional label
+- _Box_ displays a message analogously to the VBA MsgBox _Prompt_ argument, i.e. a single string message of any length (up to 1GB respectively), with the full buttons flexibility however.<br>Both services
 - displays up to 49 free configurable return buttons in up to 7 rows
 - intelligently considers the space required for the displayed elements: title, message, and buttons
 - displays a horizontal and/or vertical scroll-bar when applicable/required
@@ -45,19 +43,17 @@ The _Dsply_ and the _Box_ service have these named arguments:
  |
 | msg_monospaced  | _Box_ service only, Optional, Boolean expression, defaults to False, displays the message monospaced when True, adjusts the message window width to the longest line, displays a horizontal Scroll-Bart when exceeded|
 | msg_buttons          | Optional. Defaults to vbOkOnly when omitted. Variant expression, either a [VB MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>), a comma delimited string, a collection of string expressions, or a dictionary of string expressions. In case of a string, a collection, or a dictionary, each item either specifies a button's caption (up to 7) or a reply button row break (vbLf, vbCr, or vbCrLf). |
-| msg_returnindex      | Optional, Boolean, False when omitted          |
+| msg_button_default   | Optional, Variant, defaults 1. May be the sequence number or the caption string of the button |
+| msg_returnindex      | Optional, Boolean, False when omitted    |
 | msg_min_width        | Optional, Long, defaults to 300 pt when omitted, cannot be less than 200 pt |
 | msg_max_width        | Optional, Long, defaults to 80% of the screen size when omitted |
 | msg_max_height       | Optional, Long, defaults to 70% of the screen size when omitted |
 | msg_min_button_width | Optional, Long, defaults to 70 pt when omitted |
 
 ## The Buttons service
-The _mMsg.Buttons_ service returns a Collection of items provided via a ParamArray argument. each of the items may be:
-- a string expression
-- a valid [VBA MsgBox Buttons argument value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>)
-- a row break indication (vbLf, vbCr, or vbCrLf). 
+The _mMsg.Buttons_ service returns a Collection of items provided via a ParamArray argument. Each of the items may either be a string expression, a valid [VBA MsgBox Buttons argument value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>), or a row break indication (vbLf, vbCr, or vbCrLf). 
 
-When more than 7 items are provided without a row break indicator one is in inserted by the service. Any invalid item is ignored and any specification which exceeds 7 rows or 47 buttons is ignored.
+When more than 7 buttons items are provided without a row break indicator one is in inserted by the service. Any invalid item is ignored and any button specification which exceeds 7 rows by 7 buttons (= 47 buttons) is ignored.
 
 ## The _dsply\_buttons_ argument
 
@@ -71,7 +67,7 @@ Each item may be :
 - a valid [VBA MsgBox value](<https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings>)
 - a row break indication (vbLf, vbCr, or vbCrLf). 
 
-## The UserForm service _fMsg_
+## The _fMsg_ UserForm
 The UserForm may be used [directly](#direct-usage-of-the-fmsg-userform)  but with significant less comfort compared with the _Dsply_ and the _Box_ service.
 
 The UserForm service has the following Properties:
