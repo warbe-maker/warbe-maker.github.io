@@ -58,6 +58,7 @@ The _Buttons_ service has this syntax:
 `Buttons(item-1[, item-2][, item-3] ...`
 
 The _Buttons_ service has this named argument:
+
 |    Part     | Description                    |
 | ----------- |------------------------------- |
 | msg_buttons | Obligatory, ParamArray, each item either specifies a button or a row break (vbLf). 
