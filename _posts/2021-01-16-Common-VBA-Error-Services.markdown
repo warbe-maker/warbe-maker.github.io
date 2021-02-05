@@ -9,14 +9,13 @@ categories: vba common error handling
 **This is not a tutorial about error handling** but the description of  comprehensive, full featured, ready to use error services module.
 
 ## Services
-
 ### The _ErrMsg_ service
-- displays a well structured error message with
+ displays a well structured error message with
   - the **[type of the error](#error-types)** by distinguishing [Application error](#the-apperr-service), VB Runtime error, and Database error 
   - the description of the error (_err.Description_),
   - the **[error source](#the-error-source)**,
   - the **[path to the error](#the-bop-eop-path-to-the-error-service)** provided the **[_Entry Procedure_](#the-entry-procedure-for-the-path-to-the-error)** is known, 
-  - an optional **[additional information about an error](#error-description-with-additional-information)**,
+  - an optional **[additional information about an error](#error-description)** Services
   - (almost) any number of **[free specified buttons](#free-buttons-specification)**
   - the error line when available
 - waits for the user's button clicked and provides/returns [the reply button's value](#processing-reply-buttons) to the caller.
@@ -123,10 +122,9 @@ eh:
 End Sub/Function
 ```
 
-The _ErrMsg_ service has this 'trick' already built-in. When the _Conditional Compile Argument_ `Debugging = 1` the error message is displayed with two extra buttons:
-
+The _ErrMsg_ service has this 'trick' already built-in. When the _Conditional Compile Argument_ `Debugging = 1` the error message is displayed with two extra buttons:<br>
 ![](../Assets/ErrMsgWithDebuggingOption.png)
-![](/Assets/ErrMsgWithDebuggingOption.png)
+![](/Assets/ErrMsgWithDebuggingOption.png)<br>
 
 and the extra reply buttons can be used as follows:
 ```
@@ -151,9 +149,9 @@ I believe in proper regression testing, which I regard obligatory specifically f
 ![](../Assets/ExecTraceRegressionTest.png)
 
 ### Test support
-With the Conditional Compile Argument `Test = 1` the _ErrMsg_ service displays the two additional buttons:
+With the Conditional Compile Argument `Test = 1` the _ErrMsg_ service displays the two additional buttons:<br>
 ![](/Assets/ErrMsgWithTestOption.png)
-![](../Assets/ErrMsgWithTestOption.png)
+![](../Assets/ErrMsgWithTestOption.png)<br>
 which may be considered when clicked as outlined with the [debugging support](#using-the-debugging-service-to-identify-an-error-line-without-line-numbers) .
 
 ### Execution trace support
@@ -246,11 +244,11 @@ When the execution trace module _mTrc_ is used together with the _mErH_ services
 Note: When the _[Common VBA Execution Trace Service][11]_ had already been used before the _mErH_ module had been installed all _mTrc.BoP/mTrc.EoP_ have to be changed to _mErH.BoP/mErH.EoP_ . Any _mTrc.BoC/mTrc.EoC_ are ok.
 
 ### _Compact_ (default) versus _Detailed_ trace result
-The default is a trace display like the following:
+The default is a trace display like the following:<br>
 ![](../Assets/ExecutionTrace.png)
 ![](/Assets/ExecutionTrace.png)<br>
 
-However, for those who do not believe in the displayed figures a detailed view may be of interest. With `mTrc.DisplayedInfo = Detailed` (yes, standard modules may have properties but they are just not auto-sensed) the following kind of trace information is displayed:
+However, for those who do not believe in the displayed figures a detailed view may be of interest. With `mTrc.DisplayedInfo = Detailed` (yes, standard modules may have properties but they are just not auto-sensed) the following kind of trace information is displayed:<br>
 ![](../Assets/ExecutionTraceDetailed.png)
 ![](/Assets/ExecutionTraceDetailed.png)<br>
 
@@ -258,7 +256,7 @@ However, for those who do not believe in the displayed figures a detailed view m
 ## Contribution, development, test, maintenance
 The dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler][8]. The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErH_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
 
-Those interested not only in using the Error Handler but also modify or even contribute in improving it may fork or clone it to their own computer which is very well supported by the [GitHub Desktop for Windows][9]. That's my environment for a continuous improvement process.
+Those interested not only in using the _Common VBA Error Services_ but also feel prepared to ask question, make suggestions, open raising issues may fork or clone the [public repo][8] to their own computer. A process which is very well supported by the [GitHub Desktop for Windows][9] which is the environment I do uses for the version control and a a continuous improvement process.
 
 [1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mErH.bas
 [2]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frm
