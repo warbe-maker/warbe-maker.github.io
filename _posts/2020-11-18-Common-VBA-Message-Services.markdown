@@ -15,7 +15,7 @@ The alternative implementation  addresses many of the constraints of the VBA Msg
 | When a message exceeds the (hard to tell) size limit it is truncated | When the maximum size is exceeded a vertical and/or a horizontal scroll bar is applied
 | The message is displayed with a proportional font | A message may (or part of it may) be displayed mono-spaced |
 | Composing a fair designed message is time consuming and it is difficult to come up with a satisfying result | Up&nbsp;to&nbsp;4&nbsp; _Message&nbsp;Sections_ \*) each with an optional _Message Text Label_ and a _Monospaced_ option allow an appealing design without any extra  effort<br>\*) Adding an additional section is just a matter of the design and does not require any code change in the UserForm.  |
-| The maximum reply _Buttons_ is 3 | Up to 7 reply _Buttons_ may be displayed in up to 7 reply _Button Rows_ in any order (=49 buttons in total) |
+| The maximum reply _Buttons_ is 3 | Up to 7 reply _Buttons_ may be displayed in up to 7 reply _Button Rows_ in any order (= 49 buttons in total) |
 | The caption of the reply _Buttons_ is specified by a [value][1] which results in 1 to 3 reply _Buttons_ with corresponding untranslated! native English captions | The caption of the reply _Buttons_ may be specified by the [VB MsgBox values][1] **and** additionally by any multi-line text (see [Syntax of the _buttons_ argument](#syntax-of-the-buttons-argument) |
 | Specifying the default button | possible |
 | Display of an alert image (?, !, etc.) | (yet) not implemented |
@@ -52,7 +52,7 @@ The _Dsply_ and the _Box_ service have these named arguments:
 | msg_min_button_width | Optional, Long, defaults to 70 pt when omitted |
 
 ## The _Buttons_ service
-The _mMsg.Buttons_ service returns a Collection of items provided via a ParamArray argument. Each of the items may either be a string expression, a valid [VBA MsgBox Buttons argument value][1], or a row break indication (vbLf, vbCr, or vbCrLf). When more than 7 buttons items are provided without a row break indicator one is in inserted by the service. Any invalid item is ignored and any button specification which exceeds 7 rows by 7 buttons (= 47 buttons) is ignored.
+The _mMsg.Buttons_ service returns a Collection of items provided via a ParamArray argument. Each of the items may either be a string expression, a valid [VBA MsgBox Buttons argument value][1], or a row break indication (vbLf, vbCr, or vbCrLf). When more than 7 buttons items are provided without a row break indicator one is in inserted by the service. Any invalid item is ignored and any button specification which exceeds 7 rows by 7 buttons (= 49 buttons) is ignored.
 
 The _Buttons_ service has this syntax:
 `Buttons(item-1[, item-2][, item-3] ...`
