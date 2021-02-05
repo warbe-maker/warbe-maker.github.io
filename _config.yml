@@ -20,12 +20,11 @@
 
 title: Excel Passion
 email: warbe@tutanota.com
-description: Focus on Common VBA Components. Development, test, a continuous improvement process, and last but not least the question how they are kept up-to-date in VB-Projects which do used them.
+description: Focus on the development, test, and maintenance of Common VBA Components including the means/process to - semi-automatically - keep them up-to-date in VB-Projects which do use those Common Components.
 baseurl: "/warbe-maker.github.io" # the subpath of your site, e.g. /blog
 url: "https://github.com/warbe-maker" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username:
-github_username: warbe-maker 
-highlighter: pygments
+github_username: warbe-maker
 
 # Build settings
 theme: minima
