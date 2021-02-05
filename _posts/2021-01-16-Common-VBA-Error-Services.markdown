@@ -79,7 +79,7 @@ with the following named arguments:
 ### Usage of the _ErrMsg_ service
 The below code works but does not provide a path to the error.
 
-```vbs
+```
 Public/Private Sub/Function Any()
    Const PROC = "Any" ' identification of the error source and (if used) the execution trace
    On Error Goto eh ' obligatory anyway
@@ -94,7 +94,7 @@ End Sub/Function
 
 To get the path to the error displayed with the error message required to additional code lines - at least in the entry procedure:
 
-```vbs
+```VB
 Public/Private Sub/Function Any()
    Const PROC = "Any" ' identification of the error source and (if used) the execution trace
    On Error Goto eh ' obligatory anyway
@@ -114,7 +114,7 @@ displays for example:<br>
 ### Using the debugging service to identify an error line without line numbers
 It appears that there is no way for identifying the error line when the lines ar not numbered - what they usually aren't - what extends  unproductive error chasing time. The below 'trick' provides a true godsend in case:
 
-```vbs
+```VBS
 eh:
 #If Debugging Then
     Debug.Print Err.Description: Stop: Resume
