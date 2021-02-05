@@ -14,7 +14,7 @@ categories: vba common error handling
   - the **[type of the error](#error-types)** by distinguishing [Application error](#the-apperr-service), VB Runtime error, and Database error 
   - the description of the error (_err.Description_),
   - the **[error source](#the-error-source)**,
-  - the **[path to the error](#the-bop-eop-path-to-the-error-service)** provided the **[_Entry Procedure_](#the-entry-procedure-for-the-path-to-the-error)** is known, 
+  - the **[path to the error](#the-bopeop-service-for-the-path-to-the-error)** provided the **[_Entry Procedure_](#the-entry-procedure-for-the-path-to-the-error)** is known, 
   - an optional **[additional information about an error](#error-description)** Services
   - (almost) any number of **[free specified buttons](#free-buttons-specification)**
   - the error line when available
@@ -36,7 +36,7 @@ The _ErrMsg_ service has these named arguments:
 ### The _AppErr_ service
 In order to not confuse errors raised with `err.Raise ...` the _AppErr_ service adds  the [_vbObjectError_][10] constant to a given positive number to turn it into a negative. An advantage by the way: Each procedure can have it's own positive error numbers ranging from 1 to n with `err.Raise mErH.AppErr(n)`. The _ErrMsg_ service, when detecting a negative error number uses the _AppErr_ service to turn it back into it's original positive error number.
 
-### The _BoP/EoP_ path to the error service
+### The _BoP/EoP_ service for the path-to-the-error
 The _ErrMsg_ service only displays a path to the error when an [_Entry Procedure_](#the-entry-procedure-for-the-path-to-the-error) has been indicated. The path to the error is assembled when the error passed on from the error source back up to the _Entry Procedure_ where the error is displayed when reached.
 
 The _BoP/EoP_ services have the following syntax:<br>
@@ -72,7 +72,11 @@ with the following named arguments:
 - Download and import the module  [_mErH_][1]
 - Download the UserForm [fMsg.frm][2] and [fMsg.frx][3] and import _fMsg.frm_
 - Download and import [mMsg.bas][4]
-- Since the extra effort is very little, by the way installing the _Common VBA Execution Trace Service_ is worth being concidered:<br> Download [mTrc.bas][5] and import it.
+- Since the extra effort is very little, by the way installing the _Common VBA Execution Trace Service_ is worth being considered:<br> Download [mTrc.bas][5] and import it.<br>
+When the _mTrc_ is installed and the _Conditional Compile Argument_ 'ExecTrace = 1' an execution trace is displayed whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure). The trace includes all procedures executed which do have a [BoP/EoP statement](#the-bopeop-service-for-the-path-to-the-error).
+
+### Installation of the Execution Trace
+Download and import the module  [_mTrc_][5]. 
 
 ## Usage
 ### Usage of the _ErrMsg_ service
@@ -205,7 +209,7 @@ eh: Select Case mErH.ErrMsg(ErrSrc(PROC)
 ```
 
 ### Free buttons specification
-Because the _ErrMsg_ service uses the Common VBA Message Services UserForm _fMsg_ for the display of the error message the specification of buttons is extremely flexible. Buttons can be provided as a comma delimited string, an array, a Collection or a Dictionary whereby each of the items may be a VBA MsgBox value, a button's caption string, or a vbLf indicating the following buttons are displayed in a new row. This free buttons specification is a service provided by the used. The below is an example displays and error message with an Ok button and one with the caption "My button":
+Because the _ErrMsg_ service uses the _[Common VBA Message Services][12]_ UserForm _fMsg_ for the display of the error message specifying any other but the default button is extremely flexible. Buttons can be provided as a comma delimited string, an array, a Collection or a Dictionary whereby each of the items may be a VBA MsgBox value, a button's caption string, or a vbLf indicating the following buttons are displayed in a new row. Specifying the buttons is supported by  module. Below is an example which displays and error message with an **Ok** button and a **My button** button by using the the _[Buttons][14]_ service of the _mMsg_ module:
 ```VB
 Private Sub Any()
     Const PROC = "Any"
@@ -221,7 +225,9 @@ Private Sub Any()
 xt: mErH.EoP ErrSrc(PROC)
     Exit Sub
 
-eh: Select Case mErH.ErrMsg(err_source:=ErrSrc(PROC) err_buttons:=vbOKOnly & "," & vbLf & ",My button")
+eh: Select Case mErH.ErrMsg(err_source:=ErrSrc(PROC) _
+                          , err_buttons:=mMsg.Buttons(vbOKOnly, vbLf, "My button" _
+                           )
         Case "My button": ' any action
     End Select
 End Sub
@@ -232,14 +238,7 @@ displays:<br>
 
 See also the [Common VBA Message Services][6] post for more details on how to use the buttons argument, specifically by means of the _Buttons_ service.
 
-## Optional Execution Trace
-### The service
-When the optional module _mTrc_ is installed and the _Conditional Compile Argument_ 'ExecTrace = 1' an execution trace is displayed whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure). The trace includes all procedures executed which do have a BoP/EoP statement.
-
-### Installation of the Execution Trace
-Download and import the module  [_mTrc_][5]. 
-
-### Using the Execution Trace
+### Making use of the optional Execution Trace
 When the execution trace module _mTrc_ is used together with the _mErH_ services there is little to effort required. Any executed procedure with an<br> `mErH.BoP ErrSrc(PROC)`<br>at the beginning and an<br> `mErH.EoP ErrSrc(PROC)` <br>statement at the end of a procedure will be included in the displayed trace result.<br>
 Note: When the _[Common VBA Execution Trace Service][11]_ had already been used before the _mErH_ module had been installed all _mTrc.BoP/mTrc.EoP_ have to be changed to _mErH.BoP/mErH.EoP_ . Any _mTrc.BoC/mTrc.EoC_ are ok.
 
@@ -269,3 +268,5 @@ Those interested not only in using the _Common VBA Error Services_ but also feel
 [9]:https://desktop.github.com
 [10]:https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1
 [11]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/14/Common-VBA-Execution-Trace-Service.html
+[12]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html
+[14]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html#the-buttons-service
