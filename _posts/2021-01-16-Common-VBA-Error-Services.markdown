@@ -146,8 +146,9 @@ Exit Sub/Function
 Note that the additional reply buttons are provided as public Properties.<br>In production the _Conditional Compile Argument_ `Debuggin = 0` prevents the display of the debugging buttons.
 
 ### Regression test support
-I am a great fan of regression testing, regarded obligatory specifically for _Common Components_ like the _mErH_ module for instance (see the [full development and test environment][8] of example). However, any test of an error condition would interrupt a preferably automated regression test with the display of the tested error message. When a test procedure uses the _BoTP_ service instead of the _BoP_ service the ***asserted error numbers*** may be specified as follows which bypassed the display of the error message.
-
+I believe in proper regression testing, which I regard obligatory specifically for _Common Components_ like this _mErH_ module here for instance. Those interested may have a look into the corresponding Github repo ["Common VBA Error Services"][8].<br>However, any test of an error condition would interrupt a - preferably fully automated - regression test with the display of the tested error message. When a test procedure uses the _BoTP_ service instead of the _BoP_ service the ***asserted error numbers*** may be specified as follows which bypassed the display of the error message. For example, the regression test for the mErH services:<br>
+![](/Assets/ExecTraceRegressionTest.png)
+![](../Assets/ExecTraceRegressionTest.png)
 
 ### Test support
 With the Conditional Compile Argument `Test = 1` the _ErrMsg_ service displays the two additional buttons:
