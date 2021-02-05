@@ -1,12 +1,13 @@
 ---
 layout: post
-title: Common VBA Error Services (inspired by the best of the web)
-subtitle: Comprehensive error handling inspired by the best of the web
+title: Common VBA Error Services
 date: 2021-01-16
 categories: vba common error handling
+excerpt: true
 ---
 
-**This is not a tutorial about error handling** but the description of  comprehensive, full featured, ready to use error services module.
+A comprehensive error services approach  inspired by the best of the web. Not a tutorial but a complete description of the services and how to use them.
+<!--more-->
 
 ## Services
 
