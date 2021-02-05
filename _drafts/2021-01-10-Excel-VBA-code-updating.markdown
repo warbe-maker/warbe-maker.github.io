@@ -1,19 +1,24 @@
 ---
 layout: post
 title: "Code updates with VBA"
-date:   2020-09-30 09:11:20 +0200
+date:   2021-02-05
 categories: vba excel component management
 ---
 
+Programmatically updating the code of a VB project is not straight forward like removing and re-importing a component.
 
-How to update the code in a VB project is often asked. The good message is: It is possible! The bad is: It is by far not as straight forward as some think or believe. The truth is, it is pretty tricky and requires different approaches depending on the kind of component/module.
 
 ## The hurdles
-1. First of all, there is no safe and stable way for a Workbook to modify it's own code other than delegating this job/service is to another Workbook. And even the other Workbook has to de-activate the serviced Workbook before any code modification
-2. A component cannot be simply replaced by removing it and (re-)importing an _Export File_ because any removal takes place when the service had finished. However, renaming and removing it does the trick. Once the to be renewed/updated component is renamed it has been put out of the way.
+1. There is no safe and stable way for a VB project to uodate it's own code other than delegating this service to another VB project.
+2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick: The rename puts the component out of the way.
+3. A service to update another VB projects code is only available when needed when running as _Component Management Services_ Addin.
 
-## The implementation
-It almost had become a life's work because I've started the implementation over and over because it never turned out to be really bullet proof. Many suggestion I've found did not fullfil the promise. The below implementation is an extraction of my _Excel VBA Component Management_ and that's why it comes with several components.
+## The _UpdateOutdatedClones_ service
+A component which is developed, maintained and tested in another VB project can be called the _Raw Component_ component. The copy of this component used by another VB project can be called a _Clone Component_.
+The service checks for any clone of which the raw has changed and replaces it.
+
+## The _ExportChangedComponents_ service
+The service is evoked with the Workbook_Before_Save event, compares the code of all components in a VB project with its last _Export File_, and exports them when different. VB projects which host _Raw Components_ as well as VB projects using them use the service. Raws hosting VB projects register these components as available for other VB projects using them. 
 
 ## Installation
 
