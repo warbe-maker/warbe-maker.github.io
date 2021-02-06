@@ -8,29 +8,41 @@ categories: vba excel component management
 Programmatically updating the code of a VB project is not straight forward like removing and re-importing a component.
 
 
-## The hurdles
-1. There is no safe and stable way for a VB project to uodate it's own code other than delegating this service to another VB project.
+## The challenge
+1. There is no safe and stable way for a _VB-Project_ to uodate it's own code other than delegating this service to another _VB-Project_.
 2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick: The rename puts the component out of the way.
-3. A service to update another VB projects code is only available when needed when running as _Component Management Services_ Addin.
+3. A service to update another _VB-Project's code is only always  available when needed when running as Addin - which is the birth of a  _Component-Management-Services_ Addin.
 
 ## Disambiguation of used terms
 | Term | Meaning
 |------|--------
-| _Component_ | Generic _VB-Project_ term for a _Class Module_ or _Data Module_, _Standard Module_, or _  |
-_Common Component_ | A _Component_ which is shared ong two or more VB-Projects |
-| _Raw_ | The instance of a _Common Component_ which is regarded the original. In other words the component in a Workbook/VB-project which is dedicated to its development,  maintenance and test. I.e. the Workbook which has the means to ensure the desired quality of the services the component provides |
-| _Clone_ | The copy of a _Raw_ component in any Workbook/VP-Project using it |
-|_Host_ | The Workbook/VP-Project which hosts the _Raw_ component |
-|_Service_| A generic term for any _Public_ Property, Sub, or Funtion of  _Component_ |
-| _Template Project_ | A Workbook/VP-Project of which all components are regarded _Raw_ component. A _Template Project_ is a "code-only-project and does not have any data other than static data |
-| _Clone Project_ | A Workbook/VP-Project derived from a _TemplateProject_ |
-| _Workbook Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |## The _UpdateOutdatedClones_ service
-A component which is developed, maintained and tested in another VB project can be called the _Raw Component_ component. The copy of this component used by another VB project can be called a _Clone Component_.
-The service checks for any clone of which the raw has changed and replaces it.
+|_Component_       | Generic _VB-Project_ term for a _Class Module_, a  _Data Module_, a _Standard Module_, or a _UserForm_  |
+|_Common Component_| A _Component_ which is used by two or more VB-Projects |
+| _Raw_,<br>_Raw-Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated Workbook. |
+| _Clone_,<br>_Clone-Component_ | The copy of a _Raw_ Component_ in any Workbook/_VP-Project_ using it |
+|_Clone-Project_ | A Workbook/_VP project_ derived from a _Clone-Project_ |
+|_Host_          | The Workbook/_VP-Project_ which hosts the _Raw-Component_ |
+|_Raw-Project_   | A Workbook/_VP project_ of which all components are regarded _Raw_ Components_. A _Master Project_ is mainly a 'code-only-project' which does not have any other but static data |
+|_Service_       | Generic term for any _Public Property_, _Public Sub_, or _Public Funtion_ of a _Component_ |
+|_VB-Project_     | In the present case this term is used synonymously with Workbook |
+| _Workbook-, or<br>VB-Project-Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |
+
 
 ## The _ExportChangedComponents_ service
-The service is evoked with the Workbook_Before_Save event, compares the code of all components in a VB project with its last _Export File_, and exports them when different. VB projects which host _Raw Components_ as well as VB projects using them use the service. Raws hosting VB projects register these components as available for other VB projects using them. 
+The service is used with the _Workbook_Before_Save_ event. It compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. Usage of the service by _VB-Projects_ which host _Raw-Components_ is essential. The general usage of it for any BP-Project in a development status is appropriate as it is not only a code backup but also serves versioning. Any _Component_ indicated a _hosted Raw-Component is registered as such with its _Export File_ as the main property.<br>
+The service also checks a _Clone-Component_ modified within the VB-Project using it a offers updating the _Raw-Component_ in order to make the modification permanent. Testing the modification will be a task performed with the raw hosting project.
+
+The service has the following Syntax:
+
+The service has the following named arguments:
+
+
+## The _UpdateOutdatedClones_ service
+The service is used with the _Workbook\_Open_ event. It checks each _Component_ for being known/registered as _Raw_  _hosted_ by another _VB-Project_. If yes, its code is compared with the _Raw's Export File and suggested for being updated if different.
 
 ## Installation
 
 ## Usage
+### Usage of the _ExportChangedComponents_ service
+
+### Usage of the _UpdateOutdatedClones_ service
