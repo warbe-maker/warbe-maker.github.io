@@ -5,31 +5,36 @@ date:   2021-02-05
 categories: vba excel component management
 ---
 
-Programmatically updating the code of a VB project is not straight forward like removing and re-importing a component.
+## introduction
+Programmatically updating the code of a _VB-Project_ is not straight forward like removing and re-importing a component. Synchronizing all the code between two _VB-Projects_ is an even more ambitious service. Re-started several times I've finally ended up with a set of satisfyingly stable services provided via an Addin-Workbook.
 
 
 ## The challenge
 1. There is no safe and stable way for a _VB-Project_ to uodate it's own code other than delegating this service to another _VB-Project_.
-2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick: The rename puts the component out of the way.
-3. A service to update another _VB-Project's_ code will always be  available when needed only when running as a referenced Add-in - a  _Component-Management-Services_ Add-in therefore.
+2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
+3. An update service which can be called by any _VB-Project_ (via Application.Run) must be available as an opened Workbook. A Workbook automatically opened for a another one is only possible via a referenced! **Add-in**. The birth of a _Component-Management_ Addin-Workbook which turned out to be much more complex than expected in the first place.
+4. Updating individual components developed, maintained and (hopefully appropriately) tested in one _VB-Project_ and used by others I've successfully implemented. Synchronizing all code in a kind of Raw-Clone-Project approach still looks like opening a can of worms and will suffer from some limitations too complicated to be eliminated.
 
 ## Disambiguation
+The terms below are not only those used in this post but also used with the implementation of the _Component Management_.
+
 | Term             | Meaning                  |
 |------------------|------------------------- |
 |_Component_       | Generic _VB-Project_ term for a _Class Module_, a  _Data Module_, a _Standard Module_, or a _UserForm_  |
 |_Common Component_| A _Component_ which is used by two or more VB-Projects |
 | _Raw_,<br>_Raw-Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated _Raw-Host_ Workbook. |
-| _Clone_,<br>_Clone-Component_ | The copy of a _Raw_ Component_ in any Workbook/_VP-Project_ using it |
-|_Clone-Project_ | A Workbook/_VP project_ derived from a _Clone-Project_ |
+| _Clone_,<br>_Clone-Component_,<br>_Raw-Clone_ | The copy of a _Raw- Component_ in a _VP-Project_ using it |
+|_Clone-Project_ | A _VP-Project_ derived from a _Raw-Project_ |
+|_Procedure_     | Any - Public or Private _Property_, _Sub_, or _Funtion_ of a _Component_. See also _Service_.
 |_Raw-Host_.     | The Workbook/_VP-Project_ which hosts the _Raw-Component_ |
-|_Raw-Project_   | A Workbook/_VP project_ of which all components are regarded _Raw_ Components_. A _Master Project_ is mainly a 'code-only-project' which does not have any other but static data |
+|_Raw-Project_   | A code-only _VP-Project_ of which all components are regarded _Raw-Components_. A _Raw-Project_ is kind of a template for the productive version of it. In contrast to a classic template it is the life-time raw code base for the productive _Clone-Project_.  The service and process of 'synchronizing' the productive (clone) code with the raw is part of the _Component Management_.|
 |_Service_       | Generic term for any _Public Property_, _Public Sub_, or _Public Funtion_ of a _Component_ |
 |_VB-Project_     | In the present case this term is used synonymously with Workbook |
 | _Workbook-_, or<br>_VB-Project-Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |
 
 
 ## The _ExportChangedComponents_ service
-The service is used with the _Workbook_Before_Save_ event. It compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. Usage of the service by _VB-Projects_ which host _Raw-Components_ is essential. The general usage of it for any BP-Project in a development status is appropriate as it is not only a code backup but also serves versioning. Any _Component_ indicated a _hosted Raw-Component is registered as such with its _Export File_ as the main property.<br>
+Used with the _Workbook_Before_Save_ event it compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. The service is essential for _VB-Projects_ which host _Raw-Components_ in order to get them registered as available for other _VB-Projects_. Usage by any _VB-Project_ in a development status is appropriate as it is not only a code backup but also perfectly serves versioning - even when using [GitHub][]. Any _Component_ indicated a _hosted Raw-Component is registered as such with its _Export File_ as the main property.<br>
 The service also checks a _Clone-Component_ modified within the VB-Project using it a offers updating the _Raw-Component_ in order to make the modification permanent. Testing the modification will be a task performed with the raw hosting project.
 
 For the service's syntax and named arguments see [Usage of the _ExportChangedComponents_ service](#usage-of-the-exportchangedcomponents-service).
@@ -100,3 +105,4 @@ Contribution of any kind is welcome. It may be likely that one is looking for a 
 
 
 [1]:https://gitcdn.link/repo/warbe-maker/VBA-Components-Management-Services/master/CompManDev.xlsb
+[2]:https://github.com/
