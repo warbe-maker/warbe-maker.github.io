@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Code updates with VBA"
+title: "Programatically updating Excel VBA code"
 date:   2021-02-05
-categories: vba excel component management
+categories: vba excel code component management
 ---
 
 ## introduction
