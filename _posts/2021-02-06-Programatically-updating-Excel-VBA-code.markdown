@@ -100,6 +100,14 @@ From the above it follows: When the Workbook is moved/copied to a location outsi
 ### Pausing, continuing the CompMan Add-in
 Pddinusing and again continuing the Add-in is possible in the opened development instance.  When the Add-in is 'paused' the export and the update service will not be executed. Pausing is thus a kind of emergency stop in case the CompMan Add-in seriously fails servicing properly.
 
+## A professional code update process
+Proposition: A productive Workbook's code must not be updated but a copy of it. When the update of the copy was successful the productive version will finally be moved to a release stage, updated, finally tested and moved back. Whichever process is chosen should consider: 
+- How critical is the Workbook for the business process
+- What is the acceptable downtime of the Workbook
+- How can the downtime be kept to a minimum
+- Planning the code update process like a software release
+
+  
 ## Contribution
 Contribution of any kind is welcome. It may be likely that one is looking for a Raw/Clone-VB-Project service, described above but yet not implemented. The _Development-Instance_ Workbook is available as public Github repo from where it may be forked, installed and used.
 
