@@ -11,21 +11,21 @@ Programmatically updating the code of a VB project is not straight forward like 
 ## The challenge
 1. There is no safe and stable way for a _VB-Project_ to uodate it's own code other than delegating this service to another _VB-Project_.
 2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick: The rename puts the component out of the way.
-3. A service to update another _VB-Project's code is only always  available when needed when running as Add-in - which is the birth of a  _Component-Management-Services_ Add-in.
+3. A service to update another _VB-Project's_ code will always be  available when needed only when running as a referenced Add-in - a  _Component-Management-Services_ Add-in therefore.
 
-## Disambiguation of used terms
-| Term | Meaning
-|------|--------
+## Disambiguation
+| Term             | Meaning                  |
+|------------------|------------------------- |
 |_Component_       | Generic _VB-Project_ term for a _Class Module_, a  _Data Module_, a _Standard Module_, or a _UserForm_  |
 |_Common Component_| A _Component_ which is used by two or more VB-Projects |
-| _Raw_,<br>_Raw-Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated Workbook. |
+| _Raw_,<br>_Raw-Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated _Raw-Host_ Workbook. |
 | _Clone_,<br>_Clone-Component_ | The copy of a _Raw_ Component_ in any Workbook/_VP-Project_ using it |
 |_Clone-Project_ | A Workbook/_VP project_ derived from a _Clone-Project_ |
-|_Host_          | The Workbook/_VP-Project_ which hosts the _Raw-Component_ |
+|_Raw-Host_.     | The Workbook/_VP-Project_ which hosts the _Raw-Component_ |
 |_Raw-Project_   | A Workbook/_VP project_ of which all components are regarded _Raw_ Components_. A _Master Project_ is mainly a 'code-only-project' which does not have any other but static data |
 |_Service_       | Generic term for any _Public Property_, _Public Sub_, or _Public Funtion_ of a _Component_ |
 |_VB-Project_     | In the present case this term is used synonymously with Workbook |
-| _Workbook-, or<br>VB-Project-Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |
+| _Workbook-_, or<br>_VB-Project-Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |
 
 
 ## The _ExportChangedComponents_ service
