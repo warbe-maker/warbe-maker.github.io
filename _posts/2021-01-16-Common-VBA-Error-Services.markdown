@@ -51,10 +51,15 @@ with the following named arguments:
 | BoP     | bop_arguments| Optional, ParamArray, a list of the procedures argument, optionally paired as name, value |
 | EoP     | eop_id       | Obligatory, String expression, unique identification of the procedure name in the module (see [ErrSrc(PROC)](#the-error-source)) |
 
-Note: When the user not only has one reply button but several reply choices (see the debugging service for instance), the error message is displayed immediately with the procedure which caused the error. In this case the path to the error is composed from a stack which is maintained along with each BoP/EoP statement. I.e. the path to the error contains only procedures which do use BoP/EoP statements.
+Note: When the error message not just allows one reply but provides several buttons (e.g. when the [debugging service](#the-debugging-service) is active), the error message is displayed immediately with the procedure which caused the error. In this case the path to the error is composed from a stack which is maintained along with each BoP/EoP statement. I.e. the path to the error contains only procedures which do use BoP/EoP statements.
 
-### The debugging service for identifying an error line
-With the _Conditional Compile Argument_ `Debuggig = 1` the error message is displayed with two additional buttons which allow a `Stop: Resume` reaction which leads to the code line the error occurred (see  [Usage of the debugging service](#using-the-debugging-service-to-identify-an-error-line-without-lines-numbers))
+### The _Debugging_ service
+With the _Conditional Compile Argument_ `Debugging = 1` the error message is displayed with 3 additional buttons which allow:
+- `Stop: Resume`,
+- `Resume Next`,
+- or `Goto xt`(clean exit and continue)
+
+See also [Using the debugging service](#using-the-debugging-service)
 
 ### The _BoTP_ (begin of Test Procedure) service for automating regression tests
 An - preferably automated - regression test will execute a series of test procedures. Any interruption other than one caused by a failed assertion n assertion should thus be avoided. The _BoTP_ allows the specification of **asserted error numbers** for procedures testing error conditions. For an error number indicated 'asserted' the _ErrMsg_ service bypassed the display of the error message.
@@ -115,8 +120,8 @@ displays for example:<br>
 ![](../Assets/ErrMsgAlternativeMsgBox.png)
 ![](/Assets/ErrMsgAlternativeMsgBox.png)
 
-### Using the debugging service to identify an error line without line numbers
-It appears that there is no way for identifying the error line when the lines ar not numbered - what they usually aren't - what extends  unproductive error chasing time. The below 'trick' provides a true godsend in case:
+### Using the _Debugging_ service
+When code lines are not numbered it appears that there is no way for identifying the error line - potentially extending unproductive time for error chasing. The below 'trick' provides a true godsend in case:
 
 ```VBS
 eh:
@@ -127,7 +132,7 @@ eh:
 End Sub/Function
 ```
 
-The _ErrMsg_ service has this 'trick' already built-in. When the _Conditional Compile Argument_ `Debugging = 1` the error message is displayed with two extra buttons:<br>
+The _ErrMsg_ service has this 'trick' already built-in:<br>When the _Conditional Compile Argument_ `Debugging = 1` the error message is displayed with 3 additional buttons:<br>
 ![](../Assets/ErrMsgWithDebuggingOption.png)
 ![](/Assets/ErrMsgWithDebuggingOption.png)<br>
 
@@ -149,15 +154,10 @@ Exit Sub/Function
 Note that the additional reply buttons are provided as public Properties.<br>In production the _Conditional Compile Argument_ `Debuggin = 0` prevents the display of the debugging buttons.
 
 ### Regression test support
-I believe in proper regression testing, which I regard obligatory specifically for _Common Components_ like this _mErH_ module here for instance. Those interested may have a look into the corresponding Github repo ["Common VBA Error Services"][8].<br>However, any test of an error condition would interrupt a - preferably fully automated - regression test with the display of the tested error message. When a test procedure uses the _BoTP_ service instead of the _BoP_ service the ***asserted error numbers*** may be specified as follows which bypassed the display of the error message. For example, the regression test for the mErH services:<br>
+I am convinced of proper regression testing. It should be obligatory specially for _Common Components_ potentially used in any number of VB-Projects (like this _mErH_ module for instance). However, any test of an error condition would interrupt an - otherwise perfectly automated - regression test with the display of the tested error message. With the _BoTP_ service instead of the _BoP_ service ***asserted error numbers*** may be specified in order to have the display of the error message bypassed. Clever used, this bypassing can be used for regression only, which displays the error message when the test procedure is executed individually. Below is an example of an execution trace which documents the performed tests:<br>
 ![](/Assets/ExecTraceRegressionTest.png)
 ![](../Assets/ExecTraceRegressionTest.png)
-
-### Test support
-With the Conditional Compile Argument `Test = 1` the _ErrMsg_ service displays the two additional buttons:<br>
-![](/Assets/ErrMsgWithTestOption.png)
-![](../Assets/ErrMsgWithTestOption.png)<br>
-which may be considered when clicked as outlined with the [debugging support](#using-the-debugging-service-to-identify-an-error-line-without-line-numbers) .
+Note: The fully automated regression test can be found in the the corresponding Github repo ["Common VBA Error Services"][8] or by just downloading the [mTest.bas][15] code module of in [ErH.xlsm][16] Workbook.
 
 ### Execution trace support
 When the _mTrc_ module is imported and the _Conditional Compile Argument_ `ExecTrace = 1` any arguments provided with the _BoP_  service appear in the execution trace displayed when the entry procedure is reached.
@@ -254,9 +254,9 @@ However, for those who do not believe in the displayed figures a detailed view m
 
 
 ## Contribution, development, test, maintenance
-The dedicated _Common Component Workbook_ **ErH.xlsm** is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public [GitHub repo Common-VBA-Errror-Handler][8]. The module **_mTest_** contains all obligatory test procedures when the code is modified, the module **_mDemo_** all procedures for the images in this post. The modules **_mErH_** and **_fMsg_** are downloaded from this source. Thus, it is wise not to make any changes without specifying a branch which is merged to the master once a code change has finished and successfully tested.
+The dedicated _Common Component Workbook_ [ErH.xlsm][16] is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public GitHub repo [Common-VBA-Error-Services][8]. The module [_mTest_][15] contains all obligatory test procedures when the code is modified. Code modifying contributions will be handled by means of a branch which is merged to the master once a code change has successfully passed the regression teste.
 
-Those interested not only in using the _Common VBA Error Services_ but also feel prepared to ask question, make suggestions, open raising issues may fork or clone the [public repo][8] to their own computer. A process which is very well supported by the [GitHub Desktop for Windows][9] which is the environment I do uses for the version control and a a continuous improvement process.
+A code modifying contribution is very well supported by the [GitHub Desktop for Windows][9] which is the environment I use.
 
 [1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mErH.bas
 [2]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frm
@@ -271,3 +271,5 @@ Those interested not only in using the _Common VBA Error Services_ but also feel
 [11]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/14/Common-VBA-Execution-Trace-Service.html
 [12]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html
 [14]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html#the-buttons-service
+[15]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mTest.ba
+[16]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/ErH.xlsm
