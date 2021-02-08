@@ -1,11 +1,10 @@
 ---
 layout: post
-title: "VBA Property in Standard Modules with optional arguments"
+title: "VBA Property Get/Let in Standard Modules with optional arguments"
 date:   2021-02-01
 categories: vba property optional argument
-show_excerpts: True
+excerpt: An incredibly usefull means not only in Class Modules but also in Standard Modules, potentially underestimated and undervalued, and a pitty when ignored.
 ---
-A significant extension of the VBA _Property_, underestimated, undervalued, and potentially be missed when ignored.
 
 ## The very basics
 The commonly used example for a _Property_ in a _Class Module_:
