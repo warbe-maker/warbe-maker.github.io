@@ -8,30 +8,30 @@ categories: VBA Office Excel
 ## Introduction
 _PrivateProfile_ is the term used for information in a file organized as<br>[section]<br>\<valuen-ame>=\<value><br>structure, typically for config- or ini- files. Word provides for example [System.PrivateProfileString][4] with a perfect syntax. Excel unfortunately offers only things like [GetPrivateProfileString][3] with a much less comfortable syntax. The Standard Module _mFile_ provides 'Word-like' services which as well mainly deal with the arguments: file, section, value-name and value.
 
-## The _mFile_ PrivateProfile services
+## PrivateProfile services 
 
-### The _Value_ service
+### _Value_
 Syntax read: `value = mFile.Value(file, section, value-name)`<br>
 Syntax write: `mFile.Value(file, section, value-name) = value`
 
-### The _ValueExists_ service
+### _ValueExists_
 Syntax: `If mFile.ValueExists(file[, section], value) Then`
 
-### The _NameExists_ service
+### _NameExists_
 Syntax: `If mFile.NameExists(file[, section], value-name) Then`
 
-### The _SectionExists_ service
+### _SectionExists_
 Syntax: `If mFile.SectionExists(file, section) Then`
 
-### The _SectionsCopy_ service
+### _SectionsCopy_
 Syntax: `mFile.SectionsCopy source, target, sections`
 
-## The services have the following named arguments
+## Named arguments
 
-| Argument      | Description | Services |
-| ------------- | ----------- | -------- |
-| pp_file       | String expression, obligatory, specifies the full name of the _PrivateProfile file, automatically created with the first write if a named value.| All |
-| pp_sections   | Variant, optional, defaults to 'all sections in file' when omitted. Section names may be provided as a comma delimited string, or a Dictionary or Collection of name items.  | SectionsCopy<br>SectionsRemove<br>ValueExists<br>ValueNameExists|
+| Part      | Description | Services |
+| --------- | ----------- | -------- |
+|pp_file    | String expression, obligatory, specifies the full name of the _PrivateProfile file, automatically created with the first write if a named value.| All |
+|pp_sections| Variant, optional, defaults to 'all sections in file' when omitted. Section names may be provided as a comma delimited string, or a Dictionary or Collection of name items.  | SectionsCopy<br>SectionsRemove<br>ValueExists<br>ValueNameExists|
 | pp_replace    | Optional, boolean, defaults to false (i.e. the copied section is merged in the target file. | SectionsCopy |
 | pp_section    | Obligatory, String expression, identifies the section| NameRemove<br>SectionExists<br>SectionRemove<br>Value<br> |
 | pp_source     | String expression, obligatory, specifies the full name of the source _PrivateProfile_ file | SectionsCopy |
@@ -45,7 +45,7 @@ Syntax: `mFile.SectionsCopy source, target, sections`
 - Download and import [mDct.bas][2]
 
 ## Usage
-The services may best be used in a Standard Module dedicated to the file used for the required application specific values, whereby each value preferably is implemented as a Property. The following example provides a read service for a property called _RootFolder_ in a module called _mCfg_.
+The services may best be used in a Standard Module dedicated to the file used for the application specific values, whereby each value preferably should be implemented as a _Property_. The following example provides a read service for a property called _RootFolder_ in a module called _mCfg_.
 ```VB
 Option Explicit
 
