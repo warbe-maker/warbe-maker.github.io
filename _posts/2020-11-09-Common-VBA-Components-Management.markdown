@@ -8,24 +8,22 @@ show_excerpts: False
 ---
 
 ## Introduction
-_Common VBA Components_ provide an enormous advantage for VB-Projects provided they are well designed and carefully tested. Released from any economic pressure (retired) I've spent many hours a on their development, test, improvement, and (recently started) publication using GitHub. Although most of them had already been used for a long time, publishing required an extra effort to ensure quality, completeness, and consistency.
+_Common VBA Components_ are an enormous productivity advantage for the  development of VB-Projects - provided these components are well designed, continuously maintained and carefully tested. However, keeping them up-to-date in VB-Projects using them is  cumbersome - unless provided as a service which update them 'by the way', when a Workbook is opened for modifying the VB-Project. Synchronizing the code of whole VB-Projects is probability the 'supreme discipline' in this regard but that's the matter if another post.
 
-## The environment
-Ever since development, maintenance, and test is done via individual _Common VBA Component_ VB-Projects in a dedicated _Common Component Workbook_ in a dedicated _Common Component Folder_. This dedication has paid off it's effort last but not least because it allowed the implementation of regression tests for each component. With the (late in life) move to GitHub these folders became the _repo clone_. Using GitHub for the versioning has proofed a developer's dream. Consequently, I now try to do any modification via a branch in order not to interfere with any productive VB-Projects using them.
+## Environment
+Development, maintenance, and test of  _Common VBA Component_ , is done via dedicated VB-Projects which claim the original/raw component code 'hosted'. This dedication pais off it's effort because it it allowes the implementation of regression tests performed with every code modification. Using GitHub for the versioning has proofed a developer's dream. Consequently, I now try to do any modification via a branch in order not to interfere with any productive VB-Projects using them.
 
-## The management
-When agreed that _Common Components_ are a great means for productivity one of the crucial questions is how to keep them up-to-date in VB-Projects using them. Replacing a component in a VB-Project by a more up-to-date version is a bit tricky because it cannot be done by the VB-Project itself but requires a second instance providing this service.
 
-## The _Common VBA Components Manager_
-Publishing the _Common Component Management_ (CompMan) Workbook I use as Add-In to keep used Common Components up-to-date in VB-Projects using them will be one of my future tasks.
+## Management services
+Services are provided by a _Common Components Management_ (CompMan) Workbook, setup as Add-In.
 
-## My Common Components
+## (My) Common VBA Components
 
-|         Common VBA ...    |Download/Install|GitHub repo|     Service    |      Description                 |
+|         Common VBA ...    |Download and import|GitHub repo|     Service    |      Description                 |
 |---------------------------|----------------|-----------|----------------|----------------------------------|
 | Basic Services            |mBasic          |private    |                |                                  |
 |                           |                |           |                |                                  |
-| Error Handling Services   |[mErH.bas][1d1] |[public][1]|-[ErrMsg][1s1]  | Display or pass on error         |
+| Error Handling Services   |[mErH.bas][1d1] |[public][1]|-[ErrMsg][1s1]  | Display or pass on error to the caller        |
 |                           |[fMsg.frm][1d2] |           |-BoP, EoP       | Indicate Begin/End of a Procedure|
 |                           |[fMsg.frx][1d3] |           |-BoTP           | Indicate Begin of Test Procedure |
 |                           |[mMsg.bas][1d4] |           |                |                                  |
