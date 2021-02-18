@@ -23,7 +23,7 @@ Services are provided by a _Common Components Management_ (CompMan) Workbook, se
 |---------------------------|----------------|-----------|----------------|----------------------------------|
 | Basic Services            |mBasic          |private    |                |                                  |
 |                           |                |           |                |                                  |
-| Error Handling Services   |[mErH.bas][1d1] |[public][1]|-[ErrMsg][1s1]  | Display or pass on error to the caller        |
+| [Error Handling Services][1s1] |[mErH.bas][1d1] |[public][1]|-ErrMsg | Display or pass on error to the caller        |
 |                           |[fMsg.frm][1d2] |           |-BoP, EoP       | Indicate Begin/End of a Procedure|
 |                           |[fMsg.frx][1d3] |           |-BoTP           | Indicate Begin of Test Procedure |
 |                           |[mMsg.bas][1d4] |           |                |                                  |
@@ -50,7 +50,7 @@ still to be continued.
 
 [1]:https://github.com/warbe-maker/Common-VBA-Error-Services
 [1r]:https://github.com/warbe-maker/Common-VBA-Error-Handler-Services
-[1s1]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-errmsg-service
+[1s1]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/error/handling/2021/01/16/Common-VBA-Error-Services.html
 [1b]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-beginend-of-procedure-services-bop-eop
 [1d1]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mErH.bas
 [1d2]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm
