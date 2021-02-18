@@ -12,7 +12,7 @@ The alternative implementation  addresses many of the constraints of the VBA Msg
 |The VBA MsgBox|The Common VBA Message Service|
 |--------------|------------------------------|
 | The message width and height is limited and cannot be altered | The&nbsp;maximum&nbsp;width and&nbsp;height&nbsp;is&nbsp;specified as&nbsp;a percentage of the screen&nbsp;size&nbsp; which&nbsp;defaults&nbsp;to: 80%&nbsp;width and  90%&nbsp;height (hardly ever used)|
-| When a message exceeds the (hard to tell) size limit it is truncated | When the maximum size is exceeded a vertical and/or a horizontal scroll bar is applied
+| When a message -or the title - exceeds the (hard to tell) size limit it is truncated | When the maximum size is exceeded a vertical and/or a horizontal scroll bar is applied
 | The message is displayed with a proportional font | A message may (or part of it may) be displayed mono-spaced |
 | Composing a fair designed message is time consuming and it is difficult to come up with a satisfying result | Up&nbsp;to&nbsp;4&nbsp; _Message&nbsp;Sections_ \*) each with an optional _Message Text Label_ and a _Monospaced_ option allow an appealing design without any extra  effort<br>\*) Adding an additional section is just a matter of the design and does not require any code change in the UserForm.  |
 | The maximum reply _Buttons_ is 3 | Up to 7 reply _Buttons_ may be displayed in up to 7 reply _Button Rows_ in any order (= 49 buttons in total) |
