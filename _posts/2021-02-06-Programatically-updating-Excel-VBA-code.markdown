@@ -5,11 +5,11 @@ date:   2021-02-05
 categories: vba excel code component management
 ---
 
-## introduction
+## Introduction
 Programmatically updating the code of a _VB-Project_ is not straight forward like removing and re-importing a component. Synchronizing all the code between two _VB-Projects_ is an even more ambitious service. Re-started several times I've finally ended up with a set of satisfyingly stable services provided via an Addin-Workbook.
 
 
-## The challenge
+## Challenges
 1. There is no safe and stable way for a _VB-Project_ to uodate it's own code other than delegating this service to another _VB-Project_.
 2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
 3. An update service which can be called by any _VB-Project_ (via Application.Run) must be available as an opened Workbook. A Workbook automatically opened for a another one is only possible via a referenced! **Add-in**. The birth of a _Component-Management_ Addin-Workbook which turned out to be much more complex than expected in the first place.
@@ -33,19 +33,23 @@ The terms below are not only those used in this post but also used with the impl
 | _Workbook-_, or<br>_VB-Project-Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |
 
 
-## The _ExportChangedComponents_ service
+## Services
+### _ExportChangedComponents_ service
 Used with the _Workbook_Before_Save_ event it compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. The service is essential for _VB-Projects_ which host _Raw-Components_ in order to get them registered as available for other _VB-Projects_. Usage by any _VB-Project_ in a development status is appropriate as it is not only a code backup but also perfectly serves versioning - even when using [GitHub][]. Any _Component_ indicated a _hosted Raw-Component is registered as such with its _Export File_ as the main property.<br>
 The service also checks a _Clone-Component_ modified within the VB-Project using it a offers updating the _Raw-Component_ in order to make the modification permanent. Testing the modification will be a task performed with the raw hosting project.
 
 For the service's syntax and named arguments see [Usage of the _ExportChangedComponents_ service](#usage-of-the-exportchangedcomponents-service).
 
-## The _UpdateRawClones_ service
+### _UpdateRawClones_ service
 The service is used with the _Workbook\_Open_ event. It checks each _Component_ for being known/registered as _Raw_  _hosted_ by another _VB-Project_. If yes, its code is compared with the _Raw's Export File and suggested for being updated if different.
 
 For the service's syntax and named arguments see [Usage of the  _UpdateRawClones_ service](#usage-of-the-updaterawclones-service).
 
+### _SynVbProjects_ service
+Under construction
+
 ## Installation
-### Installation of the _CompMan_ Add-in
+### _CompMan_ Add-in
 1. Download and open [CompManDev.xlsb][1]
 2. Follow the instructions to identify a location for the Add-in - preferably a dedicated folder like ../CompMan/Add-in. The folder will hold the following files:
    - CompMan.cfg    ' the basic configuration
