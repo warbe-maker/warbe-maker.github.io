@@ -88,29 +88,20 @@ End Sub
 ```
 2. For a Workbook which hosts _Raw-Components_ specify them in the HOSTED_RAWS constant delimited with commas.
 
-> ++**Be aware:**++ The Workbook component will be one of which the code cannot be updated by any means because it contains the code executed to perform the update. Thought this will only be relevant for Raw/Clone-VB-Projects which are yet not supported. However, as a consequence only calls to procedures provided with all arguments will remain in the Workbook component code and all the rest will be in a dedicated mWorkbook component.
+> ++**Be aware:**++ When the update service is initiated from within the Workbook_Open event, the Workbook component of this  VB-Project is the only code which cannot be modified programmatically. When the update service is initiated manually in the immediate window, even the Workbook component's code may be modified. Unfortunately there is no way for the service to check these condition and thus the Workbook component is exempted from any programmatic code modification. This constraint can only be handled by all open code in a dedicated Standard module.
 
 ## Usage
-### The preconditions
-The export and the update service have the following preconditions:
-1. The respective below code snippet is copied to the concerned Workbbok
-3. The concerned Workbook is located in any folder within the configured _ServicedRootFolder_
+### Preconditions
+Every service will be denied unless the following preconditions are met:
+1. The basic configuration is complete and valid
+3. The serviced Workbook resides in a subfolder of the configured _ServicedRootFolder_. When copied to a Location 'outside' the services will be denied even when all other preconditions are met.
+4. The serviced Workbook is the only Workbook in its parent folder
+5. The CompMan services are not _Paused_
 4. The _Conditional Compile Argument_ `CompMan = 1`
-5. The Workbook has the Add-in (CompMan) referenced
-
-From the above it follows: When the Workbook is moved/copied to a location outside the _ServicedRootFolder_ which is supposed to be the 'productive' location of the Workbook:
-1. The _Conditional Compile Argument_ `CompMan = 0`
-1. The Workbook has the Add-in (CompMan) un-referenced
+5. At least one of the open Workbooks must have referenced the CompMan Addin which results in an opened Addin.
 
 ### Pausing, continuing the CompMan Add-in
-Pddinusing and again continuing the Add-in is possible in the opened development instance.  When the Add-in is 'paused' the export and the update service will not be executed. Pausing is thus a kind of emergency stop in case the CompMan Add-in seriously fails servicing properly.
-
-## A professional code update process
-Proposition: A productive Workbook's code must not be updated but a copy of it. When the update of the copy was successful the productive version will finally be moved to a release stage, updated, finally tested and moved back. Whichever process is chosen should consider: 
-- How critical is the Workbook for the business process
-- What is the acceptable downtime of the Workbook
-- How can the downtime be kept to a minimum
-- Planning the code update process like a software release
+Pausing and continuing the Addin is possible when the Addin or the development instance of it is open.
 
   
 ## Contribution
