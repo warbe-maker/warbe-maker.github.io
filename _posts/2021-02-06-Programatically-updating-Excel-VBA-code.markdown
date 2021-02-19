@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Programatically updating Excel VBA code"
-date:   2021-02-05
+title: Programmatically modifying the code of an  Excel VB-Project
+date:   2021-02-19
 categories: vba excel code component management
 ---
 
@@ -10,13 +10,14 @@ Programmatically updating the code of a _VB-Project_ is not straight forward lik
 
 
 ## Challenges
-1. There is no safe and stable way for a _VB-Project_ to uodate it's own code other than delegating this service to another _VB-Project_.
+1. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another _VB-Project_.
 2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
-3. An update service which can be called by any _VB-Project_ (via Application.Run) must be available as an opened Workbook. A Workbook automatically opened for a another one is only possible via a referenced! **Add-in**. The birth of a _Component-Management_ Addin-Workbook which turned out to be much more complex than expected in the first place.
-4. Updating individual components developed, maintained and (hopefully appropriately) tested in one _VB-Project_ and used by others I've successfully implemented. Synchronizing all code in a kind of Raw-Clone-Project approach still looks like opening a can of worms and will suffer from some limitations too complicated to be eliminated.
+3. An update service which can be called by any _VB-Project_ (via Application.Run) must be available as an open Workbook. Such a Workbook may automatically opened for a another one  only when referenced as an **Add-in** Workbook (a solution which turned out to be much more complex than expected in the first place.
+
+Conclusion: Automatically updating _Common VBA Components_ developed, maintained (and hopefully appropriately tested) in one _VB-Project_ and used by others is successfully implemented in a _CompMan_ Addin Workbook. However, synchronizing all code in a  _VB-Clone-Project_ based on the code in a _VB-Raw-Project_ is about opening a can of worms and will probably suffer from some limitations too complicated or even impossible to be eliminated.
 
 ## Disambiguation
-The terms below are not only those used in this post but also used with the implementation of the _Component Management_.
+The terms below are used in all posts regarding this matter and in the _[Excel-VB-Components-Management][2]_ VB-Project.
 
 | Term             | Meaning                  |
 |------------------|------------------------- |
@@ -85,7 +86,7 @@ Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
 #End If
 End Sub
 ```
-2. For a Workbook which hosts _Raw_Components_ specify them in the HOSTED_RAWS constant. If its more then one, have the component's names delimited with commas.
+2. For a Workbook which hosts _Raw-Components_ specify them in the HOSTED_RAWS constant delimited with commas.
 
 > ++**Be aware:**++ The Workbook component will be one of which the code cannot be updated by any means because it contains the code executed to perform the update. Thought this will only be relevant for Raw/Clone-VB-Projects which are yet not supported. However, as a consequence only calls to procedures provided with all arguments will remain in the Workbook component code and all the rest will be in a dedicated mWorkbook component.
 
@@ -117,4 +118,4 @@ Contribution of any kind is welcome. It may be likely that one is looking for a 
 
 
 [1]:https://gitcdn.link/repo/warbe-maker/VBA-Components-Management-Services/master/CompManDev.xlsb
-[2]:https://github.com/
+[2]:https://GitHub.com/warbe-maker/VBA-Components-Management-Services
