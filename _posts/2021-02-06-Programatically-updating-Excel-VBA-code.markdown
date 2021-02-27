@@ -12,23 +12,32 @@ Programmatically updating the code of a _VB-Project_ is not straight forward lik
 ## Challenges
 1. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another _VB-Project_.
 2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
-3. An update service which can be called by any _VB-Project_ (via Application.Run) must be available as an open Workbook. Such a Workbook may automatically opened for a another one  only when referenced as an **Add-in** Workbook (a solution which turned out to be much more complex than expected in the first place.
+3. An update service may be available
+   - through an open Workbook via Application.Run
+   - through an Addin-Workbook which may automatically be opened by another Workbook referencing it.
+4. _Document Modules_ come with extra challenges
+   - the code can only be changed line by line, i.e. transferring it from an _Export-File_
+   - while renaming the Workbook Document Module is pretty straight forward the Worksheet Document Module has two names which may both be changed - and if both are the link to the altered one gets lost and it appears like a new sheet!
+   - sheets may have _Controls_ which create a specific issue
+   - sheets may - and often will - come with range names which can only be updated in concert with a sheet's design change 
 
-Conclusion: Automatically updating _Common VBA Components_ developed, maintained (and hopefully appropriately tested) in one _VB-Project_ and used by others is successfully implemented in a _CompMan_ Addin Workbook. However, synchronizing all code in a  _VB-Clone-Project_ based on the code in a _VB-Raw-Project_ is about opening a can of worms and will probably suffer from some limitations too complicated or even impossible to be eliminated.
+
+Conclusion: Updating _VBA Components_ developed, maintained (and appropriately tested!) in one _VB-Project_ and used by others plus the synchronization of a productive Workbook with a temporary development copy is the aim of my _CompMan_ Workbook/VB-Project.
 
 ## Disambiguation
 The terms below are used in all posts regarding this matter and in the _[Excel-VB-Components-Management][2]_ VB-Project.
 
+
 | Term             | Meaning                  |
 |------------------|------------------------- |
 |_Component_       | Generic _VB-Project_ term for a _Class Module_, a  _Data Module_, a _Standard Module_, or a _UserForm_  |
-|_Common Component_| A _Component_ which is used by two or more _VB-Projects_ |
-| _Raw-Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated _Raw-Host_ Workbook. |
-|_Clone-Component_,<br>_Raw-Clone_ | The copy of a _Raw-Component_ in a _VB-Project_ using it |
-|_VB-Clone-Project_ | A _VB-Project_ derived from a _VB-Raw-Project_ and productively used (the code is maintained in the _VB-Raw-Project_ |
+|_Common Component_| A _Component_ which is used by two or more VB-Projects |
+| _Raw_,<br>_Raw-Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated _Raw-Host_ Workbook. |
+| _Clone_,<br>_Clone-Component_,<br>_Raw-Clone_ | The copy of a _Raw- Component_ in a _VP-Project_ using it |
+|_VB-Clone-Project_ | A _VP-Project_ derived from a _Raw-Project_ |
 |_Procedure_     | Any - Public or Private _Property_, _Sub_, or _Funtion_ of a _Component_. See also _Service_.
 |_Raw-Host_.     | The Workbook/_VP-Project_ which hosts the _Raw-Component_ |
-|_Raw-Project_   | A code-only _VP-Project_ of which all components are regarded _Raw-Components_. A _Raw-Project_ is kind of a template for the productive version of it. In contrast to a classic template it is the life-time raw code base for the productive _Clone-Project_.  The service and process of 'synchronizing' the productive (clone) code with the raw is part of the _Component Management_.|
+|_VB-Raw-Project_ | The copy of a _VB-Clone-Project_ temporarily used for the development and test of the _VB-Clone-Project_. When the development had finished, the source for the code synchronization.|
 |_Service_       | Generic term for any _Public Property_, _Public Sub_, or _Public Funtion_ of a _Component_ |
 |_VB-Project_     | In the present case this term is used synonymously with Workbook |
 | _Workbook-_, or<br>_VB-Project-Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |
