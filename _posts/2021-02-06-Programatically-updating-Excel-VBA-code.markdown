@@ -16,10 +16,10 @@ Programmatically updating the code of a _VB-Project_ is not straight forward lik
    - through an open Workbook via Application.Run
    - through an Addin-Workbook which may automatically be opened by another Workbook referencing it.
 4. _Document Modules_ come with extra challenges
-   - the code can only be changed line by line, i.e. transferring it from an _Export-File_
-   - while renaming the Workbook Document Module is pretty straight forward the Worksheet Document Module has two names which may both be changed - and if both are the link to the altered one gets lost and it appears like a new sheet!
-   - sheets may have _Controls_ which create a specific issue
-   - sheets may - and often will - come with range names which can only be updated in concert with a sheet's design change 
+   - They code can only be changed by transferring the code from an _Export-File_ line by line
+   - While renaming the _Workbook Document Module_ is pretty straight forward the _Worksheet Document Module_ has two names, the sheets _Name_ and the sheets _CodeName_. When both are changed the assignment becomes a challenge, uncertain, or even impossible depending on whether the number of sheets is still equal or different
+   - _Worksheets_ may have new or outdated _Controls_ and their properties may have changed, all leading to additional challenges not considered in the first place
+   - _Workheets_ may - and often will - come with range names which can only be updated in concert with a sheet's design change which will remains a manual task
 
 
 Conclusion: Updating _VBA Components_ developed, maintained (and appropriately tested!) in one _VB-Project_ and used by others plus the synchronization of a productive Workbook with a temporary development copy is the aim of my _CompMan_ Workbook/VB-Project.
