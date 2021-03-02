@@ -6,18 +6,20 @@ categories: vba excel code component management
 ---
 
 ## Introduction
-Programmatically updating the code of a _VB-Project_ is not straight forward like removing and re-importing a component. Synchronizing all the code between two _VB-Projects_ is an even more ambitious service. Re-started several times I've finally ended up with a set of satisfyingly stable services provided via an Addin-Workbook.
+Programmatically updating the code of individual _VB-Project-Components_ is not just removing and re-importing. Synchronizing whole _VB-Projects_ is an even more ambitious. My implementation of the required services required several re-starts and as many times I was close to give up. I've finally ended up with a set of satisfyingly stable services which may either be used via an Addin-Workbook or by means of the servicing Workbook just opened.
 
 
 ## Challenges
-1. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another _VB-Project_.
-2. A component cannot be simply removed and replaced by importing an _Export File_ because the removal of a component is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
+All the below assumes that a _Raw-Component_ or _Raw-Vb-Project_ is the source for a code update or a full synchronization of a _Clone-Component or _Clone-VB-Project.
+1. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
+2. A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
 3. An update service may be available
    - through an open Workbook via Application.Run
-   - through an Addin-Workbook which may automatically be opened by another Workbook referencing it.
-4. _Document Modules_ come with extra challenges
+   - through an Addin-Workbook which may automatically be opened by any Workbook referencing it.
+4. _Document Modules_ come with a bunch of extra challenges
    - They code can only be changed by transferring the code from an _Export-File_ line by line
-   - While renaming the _Workbook Document Module_ is pretty straight forward the _Worksheet Document Module_ has two names, the sheets _Name_ and the sheets _CodeName_. When both are changed the assignment becomes a challenge, uncertain, or even impossible depending on whether the number of sheets is still equal or different
+   - Renaming the _Workbook Document Module_ is pretty straight forward when identifying it has been managed
+   - _Worksheet Document Module_ have two names, the sheets _Name_ and the sheets _CodeName_. And when both are renamed/changed the assignment may become uncertain or even impossible - primarily depending on whether the number of sheets is equal or different
    - _Worksheets_ may have new or outdated _Controls_ and their properties may have changed, all leading to additional challenges not considered in the first place
    - _Workheets_ may - and often will - come with range names which can only be updated in concert with a sheet's design change which will remains a manual task
 
