@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Programmatically modifying the code of an  Excel VB-Project
+title: Programmatically updating or synchronizing VBA code of Excel VB-Project Components
 date:   2021-02-19
 categories: vba excel code component management
 ---
