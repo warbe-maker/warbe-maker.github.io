@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Programmatically updating or synchronizing VBA code of Excel VB-Project Components
-date:   2021-02-19
+date:   2021-03-02
 categories: vba excel code component management
 ---
 
@@ -44,18 +44,18 @@ The terms below are used in all posts regarding this matter and in the _[Excel-V
 
 
 ## Services
-### _ExportChangedComponents_ service
+### _ExportChangedComponents_
 Used with the _Workbook_Before_Save_ event it compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. The service is essential for _VB-Projects_ which host _Raw-Components_ in order to get them registered as available for other _VB-Projects_. Usage by any _VB-Project_ in a development status is appropriate as it is not only a code backup but also perfectly serves versioning - even when using [GitHub][]. Any _Component_ indicated a _hosted Raw-Component is registered as such with its _Export File_ as the main property.<br>
 The service also checks a _Clone-Component_ modified within the VB-Project using it a offers updating the _Raw-Component_ in order to make the modification permanent. Testing the modification will be a task performed with the raw hosting project.
 
 For the service's syntax and named arguments see [Usage of the _ExportChangedComponents_ service](#usage-of-the-exportchangedcomponents-service).
 
-### _UpdateRawClones_ service
+### _UpdateRawClones_
 The service is used with the _Workbook\_Open_ event. It checks each _Component_ for being known/registered as _Raw_  _hosted_ by another _VB-Project_. If yes, its code is compared with the _Raw's Export File and suggested for being updated if different.
 
 For the service's syntax and named arguments see [Usage of the  _UpdateRawClones_ service](#usage-of-the-updaterawclones-service).
 
-### _SynVbProjects_ service
+### _SyncVbProject_
 Under construction
 
 ## Installation
