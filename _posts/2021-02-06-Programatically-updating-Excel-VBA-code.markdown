@@ -6,11 +6,18 @@ categories: vba excel code component management
 ---
 
 ## Introduction
-Programmatically updating the code of individual _VB-Project-Components_ is not just removing and re-importing. Synchronizing whole _VB-Projects_ is an even more ambitious. My implementation of the required services required several re-starts and as many times I was close to give up. I've finally ended up with a set of satisfyingly stable services which may either be used via an Addin-Workbook or by means of the servicing Workbook just opened.
+This post focuses on the two major aspects
+ - Programmatically updating the code of individual _VB-Project-Components_
+ - Programmatically synchronizing whole _VB-Projects_ which is even a more ambitious.
+My implementation provides a dedicated Workbook for the required services and the Workbook includes the service to optionally set it up as an _Addin-Workbook_.
 
 
 ## Challenges
-All the below assumes that a _Raw-Component_ or _Raw-Vb-Project_ is the source for a code update or a full synchronization of a _Clone-Component or _Clone-VB-Project.
+### Assumptions
+1. A _Raw-Component_ (developed and tested in one Workbook) is the source for the update of _Clone-Components_ in other Workbooks - an approach for commonly used _VB-Components_.
+2. A productive _VB-Project_ is temporarily copied for a code modification (extension, bug fix, etc.)  and this copy becomes the source for the (re-)synchronization of the uninterrupted productive _VB-Project_. An approach which not only minimizes the downtime but also the risk of  inappropriate changes under time pressure. 
+
+### Issues
 1. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
 2. A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
 3. An update service may be available
