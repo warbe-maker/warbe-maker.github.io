@@ -13,7 +13,6 @@ This post focuses on
 The services cater to professional and semi-professional VB-Project developers. They are implemented as a dedicated Workbook which may either be used directly (just opened) or via a setup _Addin-Workbook_.
 
 
-
 ## Basic considerations
 1. A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_, preferably automatically updated when changed.
 2. A productive _VB-Project_ may be modified with a minimum downtime when a copy is modified and finally synchronized.
@@ -21,15 +20,11 @@ The services cater to professional and semi-professional VB-Project developers. 
 4. A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
 5. A programmatic update service may be available either by means of an open Workbook or via an Addin-Workbook
 6. Any service must be executed either via the _immediate window_ or called by   Application.Run
-7. _Document Modules_
-  - can only be updated by transferring the code from an _Export-File_ line by line
-   - Renaming the _Workbook Document Module_ is pretty straight forward when identifying it has been managed
-   - _Worksheet Document Module_ have two names, the sheets _Name_ and the sheets _CodeName_. And when both are renamed/changed the assignment may become uncertain or even impossible - primarily depending on whether the number of sheets is equal or different
-   - _Worksheets_ may have new or outdated _Controls_ and their properties may have changed, all leading to additional challenges not considered in the first place
-   - _Workheets_ may - and often will - come with range names which can only be updated in concert with a sheet's design change which will remains a manual task
-
-
-Conclusion: Updating _VBA Components_ developed, maintained (and appropriately tested!) in one _VB-Project_ and used by others plus the synchronization of a productive Workbook with a temporary development copy is the aim of my _CompMan_ Workbook/VB-Project.
+7. _Document Modules_ can only be updated by transferring the code from an _Export-File_ line by line
+8. The _Workbook Document Module_ needs to be distinguished from any _Worksheet Document-Midule
+9. A _Worksheet Document Module_ has a _Name_ and _CodeName_. When both are renamed/changed the sheet seems to be a new one.
+10. _Worksheets_ may have _Shapes_ new,  outdated or with changed properties.
+11. _Workheets_ may - and often will - come with range names and design changes such like new/removed columns/rows.
 
 ## Disambiguation
 The terms below are used in all posts regarding this matter and in the _[Excel-VB-Components-Management][2]_ VB-Project.
