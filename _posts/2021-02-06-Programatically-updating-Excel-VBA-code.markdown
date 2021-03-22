@@ -1,30 +1,28 @@
 ---
 layout: post
 title: Programmatically updating or synchronizing VBA code of Excel VB-Project Components
-date:   2021-03-02
+date:   2021-03-22
 categories: vba excel code component management
 ---
 
 ## Introduction
-This post focuses on the two major aspects
- - Programmatically updating the code of individual _VB-Project-Components_
- - Programmatically synchronizing whole _VB-Projects_ which is even a more ambitious.
-My implementation provides a dedicated Workbook for the required services and the Workbook includes the service to optionally set it up as an _Addin-Workbook_.
+This post focuses on
+ - programmatically updating the code of individual _VB-Project-Components_
+ - programmatically synchronizing  _VB-Projects_
+
+The services cater to professional and semi-professional VB-Project developers. They are implemented as a dedicated Workbook which may either be used directly (just opened) or via a setup _Addin-Workbook_.
 
 
-## Challenges
-### Assumptions
-1. A _Raw-Component_ (developed and tested in one Workbook) is the source for the update of _Clone-Components_ in other Workbooks - an approach for commonly used _VB-Components_.
-2. A productive _VB-Project_ is temporarily copied for a code modification (extension, bug fix, etc.)  and this copy becomes the source for the (re-)synchronization of the uninterrupted productive _VB-Project_. An approach which not only minimizes the downtime but also the risk of  inappropriate changes under time pressure. 
 
-### Issues
-1. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
-2. A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
-3. An update service may be available
-   - through an open Workbook via Application.Run
-   - through an Addin-Workbook which may automatically be opened by any Workbook referencing it.
-4. _Document Modules_ come with a bunch of extra challenges
-   - They code can only be changed by transferring the code from an _Export-File_ line by line
+## Basic considerations
+1. A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_, preferably automatically updated when changed.
+2. A productive _VB-Project_ may be modified with a minimum downtime when a copy is modified and finally synchronized.
+3. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
+4. A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
+5. A programmatic update service may be available either by means of an open Workbook or via an Addin-Workbook
+6. Any service must be executed either via the _immediate window_ or called by   Application.Run
+7. _Document Modules_
+  - can only be updated by transferring the code from an _Export-File_ line by line
    - Renaming the _Workbook Document Module_ is pretty straight forward when identifying it has been managed
    - _Worksheet Document Module_ have two names, the sheets _Name_ and the sheets _CodeName_. And when both are renamed/changed the assignment may become uncertain or even impossible - primarily depending on whether the number of sheets is equal or different
    - _Worksheets_ may have new or outdated _Controls_ and their properties may have changed, all leading to additional challenges not considered in the first place
@@ -68,15 +66,9 @@ For the service's syntax and named arguments see [Usage of the  _UpdateRawClones
 Under construction
 
 ## Installation
-### _CompMan_ Add-in
 1. Download and open [CompManDev.xlsb][1]
-2. Follow the instructions to identify a location for the Add-in - preferably a dedicated folder like ../CompMan/Add-in. The folder will hold the following files:
-   - CompMan.cfg    ' the basic configuration
-   - CompMan.xlam   ' the Add-in
-   - HostedRaws.dat ' the specified raws hosted in any Workbook
-   - RawHost.dat    ' the Workbooks which claim raws hosted
-   
-3. Follow the instructions to identify a 'serviced root'
+2. Perform _Setup/Renew_ even if you not intend to use the Addin in order to setup the obligatory basic configuration which is required even when only the [CompManDev.xlsb][1] is used  
+3. Follow the instructions to identify a _Serviced-Root_'
 4. Use the built-in Command button to run the _Renew_ service. It will:
    - ask to confirm or change the basic configuration
    - initially setup or subsequently renew the CompMan Add-in by saving a copy  of the development instance as Add-in (mind the fact that this is a multi-step process which may take some seconds)
