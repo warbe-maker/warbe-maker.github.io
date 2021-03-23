@@ -14,17 +14,19 @@ The services cater to professional and semi-professional VB-Project developers. 
 
 
 ## Basic considerations
-1. A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_, preferably automatically updated when changed.
-2. A productive _VB-Project_ may be modified with a minimum downtime when a copy is modified and finally synchronized.
-3. There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
-4. A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
-5. A programmatic update service may be available either by means of an open Workbook or via an Addin-Workbook
-6. Any service must be executed either via the _immediate window_ or called by   Application.Run
-7. _Document Modules_ can only be updated by transferring the code from an _Export-File_ line by line
-8. The _Workbook Document Module_ needs to be distinguished from any _Worksheet Document-Midule
-9. A _Worksheet Document Module_ has a _Name_ and _CodeName_. When both are renamed/changed the sheet seems to be a new one.
-10. _Worksheets_ may have _Shapes_ new,  outdated or with changed properties.
-11. _Workheets_ may - and often will - come with range names and design changes such like new/removed columns/rows.
+- A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_, preferably automatically updated when changed.
+- A productive _VB-Project_ may be modified with a minimum downtime when a copy is modified and finally synchronized.
+- There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
+- A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
+- A programmatic update service may be available either by means of an open Workbook or via an Addin-Workbook
+- Any service must be executed either via the _immediate window_ or called via `Application.Run`
+
+## Synchronization specific considerations
+- _Document Modules_ can only be updated by transferring the code from an _Export-File_ line by line
+- The _Workbook Document Module_ needs to be distinguished from any _Worksheet Document-Module_
+- A _Worksheet Document Module_ has a _Name_ and _CodeName_. When both are renamed/changed the sheet seems to be a new one.
+- _Worksheets_ may have _Shapes_ new,  outdated or with changed properties.
+- _Workheets_ may - and often will - come with range names and design changes such like new/removed columns/rows.
 
 ## Disambiguation
 The terms below are used in all posts regarding this matter and in the _[Excel-VB-Components-Management][2]_ VB-Project.
