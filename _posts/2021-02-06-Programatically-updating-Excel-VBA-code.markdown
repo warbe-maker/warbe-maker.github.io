@@ -63,49 +63,29 @@ For the service's syntax and named arguments see [Usage of the  _UpdateRawClones
 Under construction
 
 ## Installation
-1. Download and open [CompManDev.xlsb][1]
-2. Perform _Setup/Renew_ even if you not intend to use the Addin in order to setup the obligatory basic configuration which is required even when only the [CompManDev.xlsb][1] is used  
-3. Follow the instructions to identify a _Serviced-Root_'
-4. Use the built-in Command button to run the _Renew_ service. It will:
-   - ask to confirm or change the basic configuration
-   - initially setup or subsequently renew the CompMan Add-in by saving a copy  of the development instance as Add-in (mind the fact that this is a multi-step process which may take some seconds)
+1. Download and open [CompMan.xlsb][1]
+2. Perform _Setup/Renew_ even if you not intend to use the Addin in order to setup the obligatory basic configuration which is required even when only the [CompMan.xlsb][1] is used  
+3. Follow the instructions to identify a _Serviced-RootFolder_ and a dedicated folder for the CompMan-Addin
 
 Once the Add-in is established it will automatically be loaded with the first Workbook opened having it referenced. See the Usage below for further required preconditions.
 
-### Installation for Workbooks/VB-Projects hosting raws or using raw clones
-1. Copy the following into the Workbook component
-```vb
-Option Explicit
-
-Private Const HOSTED_RAWS = ""
-
-Private Sub Workbook_Open()
-#If CompMan Then
-    mCompMan.UpdateRawClones uc_wb:=ThisWorkbook _
-                           , uc_hosted:=HOSTED_RAWS
-#End If
-End Sub
-
-Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
-#If CompMan Then
-    mCompMan.ExportChangedComponents ec_wb:=ThisWorkbook _
-                                   , ec_hosted:=HOSTED_RAWS
-#End If
-End Sub
-```
-2. For a Workbook which hosts _Raw-Components_ specify them in the HOSTED_RAWS constant delimited with commas.
-
-> ++**Be aware:**++ When the update service is initiated from within the Workbook_Open event, the Workbook component of this  VB-Project is the only code which cannot be modified programmatically. When the update service is initiated manually in the immediate window, even the Workbook component's code may be modified. Unfortunately there is no way for the service to check these condition and thus the Workbook component is exempted from any programmatic code modification. This constraint can only be handled by all open code in a dedicated Standard module.
 
 ## Usage
-### Preconditions
+### Common preconditions
 Every service will be denied unless the following preconditions are met:
 1. The basic configuration is complete and valid
-3. The serviced Workbook resides in a subfolder of the configured _ServicedRootFolder_. When copied to a Location 'outside' the services will be denied even when all other preconditions are met.
-4. The serviced Workbook is the only Workbook in its parent folder
-5. The CompMan services are not _Paused_
-4. The _Conditional Compile Argument_ `CompMan = 1`
-5. At least one of the open Workbooks must have referenced the CompMan Addin which results in an opened Addin.
+2. The serviced Workbook resides in a subfolder of the configured _ServicedRootFolder_. When copied to a location 'outside' the services will be denied even when all other preconditions are met.
+3. The serviced Workbook is the only Workbook in its parent folder
+4. The CompMan services are not _Paused_
+5. WinMerge is installed
+
+### Using the _ExportChangedComponents_ service
+This service is crucial for all Workbooks which either host a commonly used component or which may become the source for a synchronization. Both rely ...
+
+### Using the _UpdateChangedRawClones_ service
+
+### Using the _SynchronizeTargetWithSource_ service
+
 
 ### Pausing, continuing the CompMan Add-in
 Pausing and continuing the Addin is possible when the Addin or the development instance of it is open.
@@ -115,5 +95,5 @@ Pausing and continuing the Addin is possible when the Addin or the development i
 Contribution of any kind is welcome. It may be likely that one is looking for a Raw/Clone-VB-Project service, described above but yet not implemented. The _Development-Instance_ Workbook is available as public Github repo from where it may be forked, installed and used.
 
 
-[1]:https://gitcdn.link/repo/warbe-maker/VBA-Components-Management-Services/master/CompManDev.xlsb
+[1]:https://gitcdn.link/repo/warbe-maker/VBA-Components-Management-Services/master/CompMan.xlsb
 [2]:https://GitHub.com/warbe-maker/VBA-Components-Management-Services
