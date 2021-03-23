@@ -12,7 +12,6 @@ This post focuses on
 
 The services cater to professional and semi-professional VB-Project developers. They are implemented as a dedicated Workbook which may either be used directly (just opened) or via a setup _Addin-Workbook_.
 
-
 ## Basic considerations
 - A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_, preferably automatically updated when changed.
 - A productive _VB-Project_ may be modified with a minimum downtime when a copy is modified and finally synchronized.
@@ -22,45 +21,98 @@ The services cater to professional and semi-professional VB-Project developers. 
 - Any service must be executed either via the _immediate window_ or called via `Application.Run`
 
 ## Synchronization specific considerations
-- _Document Modules_ can only be updated by transferring the code from an _Export-File_ line by line
+- A _Document-Modules_ can only be updated by transferring the code from an _Export-File_ line by line
 - The _Workbook Document Module_ needs to be distinguished from any _Worksheet Document-Module_
-- A _Worksheet Document Module_ has a _Name_ and _CodeName_. When both are renamed/changed the sheet seems to be a new one.
-- _Worksheets_ may have _Shapes_ new,  outdated or with changed properties.
-- _Workheets_ may - and often will - come with range names and design changes such like new/removed columns/rows.
+- A _Worksheet Document-Module_ has a _Name_ and a _CodeName_. When both are renamed/changed in the synchronization source Workbook the sheet no longer relates to any sheet in the synchronization target Workbook ans thus will be regarded a new Worksheet. An assertion that never both are renamed at the same time is required to avoid any ambiguity.
+- _Worksheets_ may have new or outdated _Shapes_ and _Shapes_ properties may have changed.
+- _Worksheets_ may - and often will - come with range names and design changes such like new/removed columns/rows.
 
 ## Disambiguation
 The terms below are used in all posts regarding this matter and in the _[Excel-VB-Components-Management][2]_ VB-Project.
 
-
 | Term             | Meaning                  |
 |------------------|------------------------- |
-|_Component_       | Generic _VB-Project_ term for a _Class Module_, a  _Data Module_, a _Standard Module_, or a _UserForm_  |
-|_Common Component_| A _Component_ which is used by two or more VB-Projects |
-| _Raw_,<br>_Raw-Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated _Raw-Host_ Workbook. |
-| _Clone_,<br>_Clone-Component_,<br>_Raw-Clone_ | The copy of a _Raw- Component_ in a _VP-Project_ using it |
-|_VB-Clone-Project_ | A _VP-Project_ derived from a _Raw-Project_ |
-|_Procedure_     | Any - Public or Private _Property_, _Sub_, or _Funtion_ of a _Component_. See also _Service_.
-|_Raw-Host_.     | The Workbook/_VP-Project_ which hosts the _Raw-Component_ |
-|_VB-Raw-Project_ | The copy of a _VB-Clone-Project_ temporarily used for the development and test of the _VB-Clone-Project_. When the development had finished, the source for the code synchronization.|
-|_Service_       | Generic term for any _Public Property_, _Public Sub_, or _Public Funtion_ of a _Component_ |
-|_VB-Project_     | In the present case this term is used synonymously with Workbook |
-| _Workbook-_, or<br>_VB-Project-Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable |
-
+|_Component_       | Generic _VB&#8209;Project_ term for a _VB-Project-Component_ which may be a _Class Module_ , a  _Data Module_, a _Standard Module_, or a _UserForm_  |
+|_Common Component_ | A _VB-Component_ which is hosted in one and commonly used by two or more _VB-Projects_ |
+|_Clone&#8209;Component_ <br> | The copy of a _Raw&#8209;Component_ in a _VP&#8209;Project_ using it. _Clone-Components_ are kept up-to-date by an _UpdateRawClones_ service.<br>The term _clone_ is borrowed from GitHub but has a slightly different meaning because the clone is usually not maintained but the _raw_. |
+|_Procedure_     | Any - Public or Private _Property_, _Sub_, or _Function_ of a _Component_. See also _Service_.
+|_Raw&#8209;Component_ | The instance of a _Common Component_ which is regarded the developed, maintained and tested 'original', hosted in a dedicated _Raw&#8209;Host_ Workbook. The term _raw_ is borrowed from GitHub and indicates the original version of something |
+|_Raw&#8209;Host_      | The Workbook/_VB-Project_ which hosts the _Raw-Component_ |
+|_Service_       | Generic term for any _Public Property_, _Public Sub_, or _Public Function_ of a _Component_ |
+|_VB&#8209;Clone&#8209;Project_ | A _VP-Project_ which is a copy (i.e regarding the VB-Project code a clone) of a corresponding  _VB&#8209;Raw&#8209;Project_. The code of the clone project is kept up-to-date by means of a code synchronization service. |
+|_VB-Project_     | In the present case this term is used synonymous with Workbook |
+|_Source&#8209;Workbook/VBProject_   | The temporary copy of productive Workbook which becomes by then the _Target-Workbook/Project for the synchronization.|
+| _Workbook-_, or<br>_VB&#8209;Project&#8209;Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export-Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable.|
 
 ## Services
 ### _ExportChangedComponents_
-Used with the _Workbook_Before_Save_ event it compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. The service is essential for _VB-Projects_ which host _Raw-Components_ in order to get them registered as available for other _VB-Projects_. Usage by any _VB-Project_ in a development status is appropriate as it is not only a code backup but also perfectly serves versioning - even when using [GitHub][]. Any _Component_ indicated a _hosted Raw-Component is registered as such with its _Export File_ as the main property.<br>
-The service also checks a _Clone-Component_ modified within the VB-Project using it a offers updating the _Raw-Component_ in order to make the modification permanent. Testing the modification will be a task performed with the raw hosting project.
+Compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. The service is essential for _VB-Projects_ which host components used in other Workbooks. The service registers the hosted component as _Raw-Component_ which enables the _Update_RawClones_ service to recognize a component a _Clone-Component_ - and update it when it had changed.
 
-For the service's syntax and named arguments see [Usage of the _ExportChangedComponents_ service](#usage-of-the-exportchangedcomponents-service).
+The service also checks if a _Clone-Component_ has been modified within the VB-Project using it. This may happen when the change of a _Common-Component_ appears appropriate directly in the VB-Project which triggered the change. In this case the service offers a choice for updating the _Raw-Component_ in order to make the modification permanent for all other VB-Projects using the component. Testing however will remain a task for the hosting Workbook/VB-Project.<br>
+It should be noted that changes not made 'public' will be reverted by the _UpdateRawClones_ service the next time the Workbook is opened.
 
 ### _UpdateRawClones_
-The service is used with the _Workbook\_Open_ event. It checks each _Component_ for being known/registered as _Raw_  _hosted_ by another _VB-Project_. If yes, its code is compared with the _Raw's Export File and suggested for being updated if different.
+The service checks each component in a VB-Project whether it is a known/registered _Raw-Component_. If yes, the component is regarded a _Clone-Component_ and updated if the raw had changed whereby a dialog offers to first display the code changes and either skip or confirm the update.<br>
+Note: The service is meant (and tested) only for Standard-Modules, Class-Modules, and UserForms. It may - in theory - be used for Worksheets as well. However, this would mean that one Workbook hosts a Worksheet which is regarded a _Common-Component_ used in other Workbooks. Something pretty unlikely I think. Whenever this case may become true extra testing and possibly some modification with the service may become required. 
 
-For the service's syntax and named arguments see [Usage of the  _UpdateRawClones_ service](#usage-of-the-updaterawclones-service).
+### _SyncTargetWithSource_
+The service synchronizes a _target-Workbook_ with a _source-Workbook_ whereby the _source-Workbook_ is a temporary copy of the **productive** _target-Workbook_. While the **productive** Workbook remains in use the VB-Project of the _source-Workbook_ can be made without time restraint. When the modification, maintenance, bug-fixing, etc. is finished all changes can be synchronized by a minimized downtime for the **productive** workbook.
 
-### _SyncVbProject_
-Under construction
+#### Synchronization coverage
+
+| Item              | Extent of synchronization |
+| ----------------- | ------------------------- |
+|_References_       | New, obsolete             |
+|_Standard&#8209;Modules_<br>_Class&#8209;Modules_<br>_UserForms_| New, obsolete, code change |
+|_Data&#8209;Modules_| _Workbook-Module_: Code change<br>_Worksheet-Module_: New, obsolete, code change, shapes|
+|_Shapes_           | New, obsolete, properties (may still be incomplete)            |
+|_ActiveX-Controls_ | None. May be added in the future                               |
+|_Names_            | New and obsolete will be recognized but (yet) not synchronized.|
+
+The service is  - usually called without any arguments and displays a dialog for the selection of the source and the target Workbook- which may be already open. The service displays all synchronization issues for being confirmed. In case new or obligatory Worksheets had been detected an explicit assertion that never both, the Name and the CodeName of a sheet is changed, is requested. Example:
+![](../Assets/SyncIssuesConfirmation1.png)
+![](/Assets/SyncIssuesConfirmation1.png)
+
+When asserted and confirmed all synchronizations are logged in a file _CompMan.Services.log_ in the target Workbook folder. Example:
+<small>
+```
+21-03-20 18:14:02 SynchTargetWithSource by CompMan.xlsb for 'Test_Sync_Target.xlsb': 
+21-03-20 18:14:02 -------------------------------------------------------------------
+21-03-20 18:14:13 Worksheet       Test_B1(wsSyncTest_B) ............: Name changed to 'Test_B1'.
+21-03-20 18:14:14 Worksheet       Test_C_New(wsSyncTest_C_new) .....: Copied from source Workbook.
+21-03-20 18:14:25 Name            celUsedInTest_C_New(=Test_A!$C$5) : Link to source sheet removed
+21-03-20 18:14:25 Worksheet       Test_Obsolete(wbSyncTest_Obsolete): Obsolete (deleted)
+21-03-20 18:17:24 Worksheet       wsSyncTest_C_new .................: Code updated with code from Export-File '.....'
+21-03-20 18:17:24 Worksheet       Test_A(wsSyncTest_A1) ............: Order synched!
+21-03-20 18:17:24 Worksheet       Test_C_New(wsSyncTest_C_new) .....: Order synched!
+21-03-20 18:17:24 Worksheet       Test_B1(wsSyncTest_B) ............: Order synched!
+21-03-20 18:17:24 Shape           Button 4 .........................: Copied from source sheet
+21-03-20 18:17:24 Shape           Check Box 6 ......................: Copied from source sheet
+21-03-20 18:17:24 Shape           Drop Down 5 ......................: Copied from source sheet
+21-03-20 18:17:24 Shape           Group Box 3 ......................: Copied from source sheet
+21-03-20 18:17:24 Shape           Label 10 .........................: Copied from source sheet
+21-03-20 18:17:24 Shape           List Box 8 .......................: Copied from source sheet
+21-03-20 18:17:24 Shape           Option Button 9 ..................: Copied from source sheet
+21-03-20 18:17:24 Shape           Scroll Bar 11 ....................: Copied from source sheet
+21-03-20 18:17:24 Shape           Spinner 7 ........................: Copied from source sheet
+21-03-20 18:17:24 Shape           CommandButton1 ...................: Property 'Left' synched
+21-03-20 18:17:24                                                     Property 'Top' synched
+21-03-20 18:17:24 Shape           List Box 8 .......................: Property 'Height' synched
+21-03-20 18:17:24 Shape           CommandButton1 ...................: Property 'Height' synched
+21-03-20 18:17:24                                                     Property 'Left' synched
+21-03-20 18:17:24                                                     Property 'Top' synched
+21-03-20 18:17:24                                                     Property 'Width' synched
+21-03-20 18:17:24 Shape           CommandButton2 ...................: Property 'Left' synched
+21-03-20 18:17:24                                                     Property 'Top' synched
+21-03-20 18:17:25 Standard-Module mNewModule .......................: Component imported from Export-File '.......'
+21-03-20 18:17:25 Standard-Module mObsoleteModule ..................: Removed!
+21-03-20 18:17:25 UserForm        fObsoleteUserForm ................: Removed!
+```
+</small>
+
+The service has the following syntax:<br>
+`mService.SyncTargetWithSource(target-workbook, source-workbook, backup-folder)`<br>
+backup-folder is an argument returned by the function which ends with TRUE when the synchronization had been performed (it may have been terminated with the confirmation dialog).
 
 ## Installation
 1. Download and open [CompMan.xlsb][1]
@@ -69,30 +121,90 @@ Under construction
 
 Once the Add-in is established it will automatically be loaded with the first Workbook opened having it referenced. See the Usage below for further required preconditions.
 
-
 ## Usage
 ### Common preconditions
 Every service will be denied unless the following preconditions are met:
-1. The basic configuration is complete and valid
-2. The serviced Workbook resides in a subfolder of the configured _ServicedRootFolder_. When copied to a location 'outside' the services will be denied even when all other preconditions are met.
+1. The basic configuration - confirmed with each Setup/Renew of the _CompMan-Addin-Folder_ - is complete and valid
+2. The serviced Workbook resides in a sub-folder of the configured _ServicedRootFolder_
 3. The serviced Workbook is the only Workbook in its parent folder
 4. The CompMan services are not _Paused_
 5. WinMerge is installed
 
+### Common usage requirement
+In any Workbook either using the _ExportChangedComponents_ and/or the _UpdateChangedRawClones_ service copy the following in a Standard-Module called _mCompManClient_:
+```vb
+Option Explicit
+' ----------------------------------------------------------------------
+' Standard Module mCompManClient, optionally used by any Workbook to:
+' - update used 'Common-Components' (hosted, developed, tested,
+'   and provided, by another Workbook) with the Workbook_open event
+' - export any changed VBComponent with the Workbook_Before_Save event.
+'
+' W. Rauschenberger, Berlin March 2021
+'
+' See also Github repo:
+' https://github.com/warbe-maker/Excel-VB-Components-Management-Services
+' ----------------------------------------------------------------------
+
+Public Sub CompManService(ByVal cm_service As String, _
+                          ByVal hosted As String)
+' -----------------------------------------------------
+' Execution of the CompMan service (cm_service) pre-
+' ferably via the CompMan-Addin or when not available
+' alternatively via the CompMan.xlsb Workbook.
+' -----------------------------------------------------
+    Const COMPMAN_BY_ADDIN = "CompMan.xlam!mCompMan."
+    Const COMPMAN_BY_DEVLP = "CompMan.xlsb!mCompMan."
+    
+    On Error Resume Next
+    Application.Run COMPMAN_BY_ADDIN & cm_service, ThisWorkbook, hosted
+    If Err.Number = 1004 Then
+        On Error Resume Next
+        Application.Run COMPMAN_BY_DEVLP & cm_service, ThisWorkbook, hosted
+        If Err.Number = 1004 Then
+            Application.StatusBar = "'" & cm_service & "' neither available by '" & COMPMAN_BY_ADDIN & "' nor by '" & COMPMAN_BY_DEVLP & "'!"
+        End If
+    End If
+End Sub
+```
+
 ### Using the _ExportChangedComponents_ service
-This service is crucial for all Workbooks which either host a commonly used component or which may become the source for a synchronization. Both rely ...
+This service is crucial for all Workbooks which either host a commonly used component or which may become the source for a synchronization because both rely on up-to-date Export-Files.
 
-### Using the _UpdateChangedRawClones_ service
+In the concerned Workbook's Workbook-Component copy:
+```vb
+                                    ' -------------------------------------------------------------
+Private Const HOSTED_RAWS = ""      ' Comma delimited names of Common Components hosted, developed,
+                                    ' tested, and provided by this Workbook - if any
+                                    ' -------------------------------------------------------------
+```
 
-### Using the _SynchronizeTargetWithSource_ service
+and in the concerned Workbook's Workbook_BerforeSave event procedure copy:
+```vb
+Private Sub Workbook_BeforeSave(ByVal SaveAsUI As Boolean, Cancel As Boolean)
+    mCompManClient.CompManService "ExportChangedComponents", HOSTED_RAWS
+End Sub
+```
+
+### Using the _UpdateRawClones_ service
+In the concerned Workbook's Workbook_Open event procedure copy:
+```vb
+Private Sub Workbook_Open()
+    mCompManClient.CompManService "UpdateRawClones", HOSTED_RAWS
+End Sub
+
+```
+
+### Using the _SyncTargetWithSource_ service
+In the _Immediate Window_ enter mService.SyncTargetWithSource. A dialog will open for the selection of the source and the target Workbook. The are selected by their files even when already open. Opening them beforehand may be appropriate in case there are some used _Common-Components_ yet not up-to-date.
 
 
-### Pausing, continuing the CompMan Add-in
-Pausing and continuing the Addin is possible when the Addin or the development instance of it is open.
+### Pausing/continuing the CompMan Add-in
+Use the corresponding command buttons when the [CompMan.xlsb][1] Workbook is open.
 
   
 ## Contribution
-Contribution of any kind is welcome. It may be likely that one is looking for a Raw/Clone-VB-Project service, described above but yet not implemented. The _Development-Instance_ Workbook is available as public Github repo from where it may be forked, installed and used.
+Contribution of any kind is welcome commenting this post or raising issues with the [Github project repo][2].
 
 
 [1]:https://gitcdn.link/repo/warbe-maker/VBA-Components-Management-Services/master/CompMan.xlsb
