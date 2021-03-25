@@ -10,14 +10,14 @@ This post focuses on
  - programmatically updating the code of individual _VB-Project-Components_
  - programmatically synchronizing  _VB-Projects_
 
-The services cater to professional and semi-professional VB-Project developers. They are implemented as a dedicated Workbook which may either be used directly (just opened) or via a setup _Addin-Workbook_.
+The services cater professional and semi-professional VB-Project developers. They are implemented as a dedicated Workbook which may either be used directly (just opened) or via a setup _Addin-Workbook_.
 
 ## Basic considerations
 - A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_, preferably automatically updated when changed.
 - A productive _VB-Project_ may be modified with a minimum downtime when a copy is modified and finally synchronized.
 - There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
 - A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
-- A programmatic update service may be available either by means of an open Workbook or via an Addin-Workbook
+- A programmatic update service may be available either by means of an open Workbook or via an _Addin-Workbook_
 - Any service must be executed either via the _immediate window_ or called via `Application.Run`
 
 ## Synchronization specific considerations
@@ -74,7 +74,6 @@ The service is  - usually called without any arguments and displays a dialog for
 ![](/Assets/SyncIssuesConfirmation1.png)
 
 When asserted and confirmed all synchronizations are logged in a file _CompMan.Services.log_ in the target Workbook folder. Example:
-<small>
 ```
 21-03-20 18:14:02 SynchTargetWithSource by CompMan.xlsb for 'Test_Sync_Target.xlsb': 
 21-03-20 18:14:02 -------------------------------------------------------------------
@@ -108,7 +107,6 @@ When asserted and confirmed all synchronizations are logged in a file _CompMan.S
 21-03-20 18:17:25 Standard-Module mObsoleteModule ..................: Removed!
 21-03-20 18:17:25 UserForm        fObsoleteUserForm ................: Removed!
 ```
-</small>
 
 The service has the following syntax:<br>
 `mService.SyncTargetWithSource(target-workbook, source-workbook, backup-folder)`<br>
@@ -116,8 +114,8 @@ backup-folder is an argument returned by the function which ends with TRUE when 
 
 ## Installation
 1. Download and open [CompMan.xlsb][1]
-2. Perform _Setup/Renew_ even if you not intend to use the Addin in order to setup the obligatory basic configuration which is required even when only the [CompMan.xlsb][1] is used  
-3. Follow the instructions to identify a _Serviced-RootFolder_ and a dedicated folder for the CompMan-Addin
+2. Perform _Setup/Renew_ even if you not intend to use CompMan as Addin. Setting up the basic configuration is obligatory even when the [CompMan.xlsb][1] is directly used  
+3. Follow the instructions to identify a _Serviced-RootFolder_ and a dedicated _CompMan-Addin-Folder_
 
 Once the Add-in is established it will automatically be loaded with the first Workbook opened having it referenced. See the Usage below for further required preconditions.
 
@@ -196,10 +194,16 @@ End Sub
 ```
 
 ### Using the _SyncTargetWithSource_ service
-In the _Immediate Window_ enter mService.SyncTargetWithSource. A dialog will open for the selection of the source and the target Workbook. The are selected by their files even when already open. Opening them beforehand may be appropriate in case there are some used _Common-Components_ yet not up-to-date.
+In the _Immediate Window_ enter mService.SyncTargetWithSource. A dialog will open for the selection of the source and the target Workbook. The are selected by their files even when already open. Opening them beforehand may be appropriate in case there are some used _Common-Components_ yet not up-to-date. A VB-Project synchronization will follow the steps:
+1. Prepare the **productive** Workbook/VB-Project for using the _ExportChangedComponents_ service
+2. Prepare the **productive** Workbbok/VB-Project for using the _UpdateRawClones_ service in case it uses _Common-Components_ hosted elsewhere
+3. Copy the Workbook under a different name into a dedicated sub-folder of the configured _Serviced-Root-Folder_.
+4. Perform all required changes while the **productive** Workbook remains in use
+5. When the required modifications had been finished and successfully tested
+6. Move the **productive
 
 
-### Pausing/continuing the CompMan Add-in
+### Pause/Continue the CompMan-Addin
 Use the corresponding command buttons when the [CompMan.xlsb][1] Workbook is open.
 
   
