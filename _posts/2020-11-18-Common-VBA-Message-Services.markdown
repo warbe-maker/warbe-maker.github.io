@@ -178,6 +178,6 @@ Displays:<br>
 The effect it has when a text in a section is specified mono-spaced (the default is proportional-spaced) is demonstrated by the second example in the [Services](#services) section above. Because the section specific message text is ++not++ "wrapped"  but The message windows width is adjusted up to the maximum width specified. In case even that's not enough a horizontal scroll-bar is displayed.
 
 [1]:https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings
-[2]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frm
-[3]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/fMsg.frx
-[4]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/mMsg.bas
+[2]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/source/fMsg.frm
+[3]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/source/fMsg.frx
+[4]:https://gitcdn.link/repo/warbe-maker/VBA-MsgBox-alternative/master/source/mMsg.bas

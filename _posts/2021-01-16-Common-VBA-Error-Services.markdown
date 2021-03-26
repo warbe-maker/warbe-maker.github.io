@@ -254,15 +254,15 @@ However, for those who do not believe in the displayed figures a detailed view m
 
 
 ## Contribution, development, test, maintenance
-The dedicated _Common Component Workbook_ [ErH.xlsm][16] is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public GitHub repo [Common-VBA-Error-Services][8]. The module [_mTest_][15] contains all obligatory test procedures when the code is modified. Code modifying contributions will be handled by means of a branch which is merged to the master once a code change has successfully passed the regression teste.
+The dedicated _Common Component Workbook_ [ErH.xlsm][16] is used for development, test, and maintenance. This Workbook is kept in a dedicated folder which is the local equivalent (in github terminology the clone of the public GitHub repo [Common-VBA-Error-Services][8]. The module [_mTest_][15] contains all obligatory test procedures when the code is modified. Code modifying contributions will be handled by means of a branch which is merged to the master once a code change has successfully passed the regression test.
 
 A code modifying contribution is very well supported by the [GitHub Desktop for Windows][9] which is the environment I use.
 
-[1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mErH.bas
-[2]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frm
-[3]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/fMsg.frx
-[4]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mMsg.bas
-[5]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/mTrc.bas
+[1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/source/mErH.bas
+[2]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/source/fMsg.frm
+[3]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/source/fMsg.frx
+[4]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/source/mMsg.bas
+[5]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Message-Service/master/source/mTrc.bas
 [6]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html
 [7]:https://docs.microsoft.com/de-DE/office/vba/Language/Reference/User-Interface-Help/msgbox-function#settings
 [8]:https://github.com/warbe-maker/Common-VBA-Error-Services
@@ -271,5 +271,5 @@ A code modifying contribution is very well supported by the [GitHub Desktop for 
 [11]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/14/Common-VBA-Execution-Trace-Service.html
 [12]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html
 [14]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/17/Common-VBA-Message-Services.html#the-buttons-service
-[15]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/mTest.ba
-[16]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/ErH.xlsm
+[15]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/source/mTest.bas
+[16]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/source/ErH.xlsm

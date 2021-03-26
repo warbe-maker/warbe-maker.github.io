@@ -10,7 +10,10 @@ categories: vba common
 When the optional module _mTrc_ is installed it provides an execution trace whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure).
 
 ### Installation
-- Download and import the module  [_mTrc_](https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Handler/master/mTrc.bas) 
+- Download and import the module  [_mTrc_][1]
+For the display of the trace result the _Common-VBA-Message-Service_ is used
+- Download [_fMsg.frm_][2] and [_fMsg.frx_][3] and import fMsg.frm
+- Download [_mMsg][4] and import it
 - For the unique identification of a traced procedure copy the following into every module of which procedures are to be traced:
 ```vbscript
 Private Function ErrSrc(ByVal sProc As String) As String
@@ -76,6 +79,13 @@ However, for those who do not believe in the displayed figures a detailed view m
 The seconds precision defaults to 6 decimals which should be far enough since results will differ anyway from trace to trace due to system conditions. The property _Precision_ may be used to change the default however.
 
 ### Contribution, development, test, maintenance
-The dedicated _Common Component Workbook_ **Trc.xlsm** is used for development, test, and maintenance of the _mTrc_ module. This Workbook is kept in a dedicated folder which is [GitHub's public repo Common-VBA-Errror-Handler](https://github.com/warbe-maker/Common-VBA-Error-Handler) clone folder. The module **_mTest_** contains all test procedures of which the execution is obligatory when the code is modified. The module **_fMsg_** is used to display the trace results without any limit in the width (a vertical scroll bar is displayed when the maximum message window width is exceeded). Any changes are preferably managed by means of a branch which is merged to the master once the change/modification has successfully passed the regression test.
+The dedicated _Common Component Workbook_ **Trc.xlsm** is used for development, test, and maintenance of the _mTrc_ module. This Workbook is kept in a dedicated folder which is [GitHub's public repo Common-VBA-Errror-Handler][5] clone folder. The module **_mTest_** contains all test procedures of which the execution is obligatory when the code is modified. The module **_fMsg_** is used to display the trace results without any limit in the width (a vertical scroll bar is displayed when the maximum message window width is exceeded). Any changes are preferably managed by means of a branch which is merged to the master once the change/modification has successfully passed the regression test.
 
 Those interested not only in using the Execution Trace but also motivated to modify/improve it are kindly asked to fork it and create a pull request before start with the modification. I may invite you to contribute.
+
+
+[1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/mTrc.bas
+[2]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/fMsg.frm
+[3]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/fMsg.frx
+[4]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/mMsg.bas
+[5]:https://github.com/warbe-maker/Common-VBA-Error-Handler
