@@ -52,10 +52,16 @@ The service also checks if a _Clone-Component_ has been modified within the VB-P
 It should be noted that changes not made 'public' will be reverted by the _UpdateRawClones_ service the next time the Workbook is opened.
 
 ### _UpdateRawClones_
-The service checks each component in a VB-Project whether it is a known/registered _Raw-Component_. If yes, the component is regarded a _Clone-Component_ and updated if the raw had changed whereby a dialog offers to first display the code changes and either skip or confirm the update.<br>
-Note: The service is meant (and tested) only for Standard-Modules, Class-Modules, and UserForms. It may - in theory - be used for Worksheets as well. However, this would mean that one Workbook hosts a Worksheet which is regarded a _Common-Component_ used in other Workbooks. Something pretty unlikely I think. Whenever this case may become true extra testing and possibly some modification with the service may become required. 
+The service checks each component in a VB-Project whether it is a known/registered _Raw-Component_. If yes, the component is regarded a _Clone-Component_ and updated if the raw had changed. See confirmation dialog below.
 
-### _SyncTargetWithSource_
+![](../Assets/UpdateRawCloneConfirmationDialog.png)
+![](/Assets/UpdateRawCloneConfirmationDialog.png)
+<br>
+
+Note 1: The service is meant (and tested) only for _Standard-Modules_, _Class-Modules_, and _UserForms_. It may - in theory - be used for Worksheets as well. However, this would mean that one Workbook hosts a Worksheet which is regarded a _Common-Component_ used in other Workbooks. Something pretty unlikely I think. Whenever this case may become true extra testing and possibly some modification with the service may become required.
+Note 2: This service must not be confused with a synchronization service. A synchronization service uses one Workbook as the source and synchronizes the corresponding target Workbook. This update service will have different Workbook's Export-Files as the source, depending on where the _Raw-Component_ is hosted.
+
+### _SyncVBProjects_
 The service synchronizes a _target-Workbook_ with a _source-Workbook_ whereby the _source-Workbook_ is a temporary copy of the **productive** _target-Workbook_. While the **productive** Workbook remains in use the VB-Project of the _source-Workbook_ can be made without time restraint. When the modification, maintenance, bug-fixing, etc. is finished all changes can be synchronized by a minimized downtime for the **productive** workbook.
 
 #### Synchronization coverage
@@ -69,13 +75,15 @@ The service synchronizes a _target-Workbook_ with a _source-Workbook_ whereby th
 |_ActiveX-Controls_ | None. May be added in the future                               |
 |_Names_            | New and obsolete will be recognized but (yet) not synchronized.|
 
-The service is  - usually called without any arguments and displays a dialog for the selection of the source and the target Workbook- which may be already open. The service displays all synchronization issues for being confirmed. In case new or obligatory Worksheets had been detected an explicit assertion that never both, the Name and the CodeName of a sheet is changed, is requested. Example:
-![](../Assets/SyncIssuesConfirmation1.png)
-![](/Assets/SyncIssuesConfirmation1.png)
+The service is (usually) called without arguments and thus displays a dialog for the selection of the source and the target Workbook (which may be already open). The service displays all synchronization issues for confirmation (see example below). In case new or obligatory Worksheets had been detected an explicit assertion is required that never both, the **Name** and the **CodeName** of a sheet is changed. Confirmation dialog example:
 
-When asserted and confirmed all synchronizations are logged in a file _CompMan.Services.log_ in the target Workbook folder. Example:
+![](../Assets/SyncIssuesConfirmation.png)
+![](/Assets/SyncIssuesConfirmation.png)
+
+When asserted and confirmed all synchronizations are logged in a file _CompMan.Services.log_ in the target Workbook folder.<br>Example of the synchronization log:
+<small>
 ```
-21-03-20 18:14:02 SynchTargetWithSource by CompMan.xlsb for 'Test_Sync_Target.xlsb': 
+21-03-20 18:14:02 SynchVBProjects by CompMan.xlsb for 'Test_Sync_Target.xlsb': 
 21-03-20 18:14:02 -------------------------------------------------------------------
 21-03-20 18:14:13 Worksheet       Test_B1(wsSyncTest_B) ............: Name changed to 'Test_B1'.
 21-03-20 18:14:14 Worksheet       Test_C_New(wsSyncTest_C_new) .....: Copied from source Workbook.
@@ -107,14 +115,18 @@ When asserted and confirmed all synchronizations are logged in a file _CompMan.S
 21-03-20 18:17:25 Standard-Module mObsoleteModule ..................: Removed!
 21-03-20 18:17:25 UserForm        fObsoleteUserForm ................: Removed!
 ```
+</small>
 
 The service has the following syntax:<br>
-`mService.SyncTargetWithSource(target-workbook, source-workbook, backup-folder)`<br>
+`mService.SyncVBProjects(target-workbook, source-workbook, backup-folder)`<br>
 backup-folder is an argument returned by the function which ends with TRUE when the synchronization had been performed (it may have been terminated with the confirmation dialog).
+
+### Synchronization safety
+Each synchronization creates a backup of the _Target-Workbook_ in a time-stamped folder in the Workbook's parent folder. These backups are currently not cleaned-up.
 
 ## Installation
 1. Download and open [CompMan.xlsb][1]
-2. Perform _Setup/Renew_ even if you not intend to use CompMan as Addin. Setting up the basic configuration is obligatory even when the [CompMan.xlsb][1] is directly used  
+2. Perform _Setup/Renew_ even if you not intend to use CompMan as Addin. Setting up the basic configuration is obligatory even when the [CompMan.xlsb][1] is directly used
 3. Follow the instructions to identify a _Serviced-RootFolder_ and a dedicated _CompMan-Addin-Folder_
 
 Once the Add-in is established it will automatically be loaded with the first Workbook opened having it referenced. See the Usage below for further required preconditions.
@@ -193,7 +205,7 @@ End Sub
 
 ```
 
-### Using the _SyncTargetWithSource_ service
+### Using the synchronization service ( _SyncVBProjects_)
 In the _Immediate Window_ enter mService.SyncTargetWithSource. A dialog will open for the selection of the source and the target Workbook. The are selected by their files even when already open. Opening them beforehand may be appropriate in case there are some used _Common-Components_ yet not up-to-date. A VB-Project synchronization will follow the steps:
 1. Prepare the **productive** Workbook/VB-Project for using the _ExportChangedComponents_ service
 2. Prepare the **productive** Workbbok/VB-Project for using the _UpdateRawClones_ service in case it uses _Common-Components_ hosted elsewhere
@@ -202,13 +214,28 @@ In the _Immediate Window_ enter mService.SyncTargetWithSource. A dialog will ope
 5. When the required modifications had been finished and successfully tested
 6. Move the **productive
 
+### Setup/Renew _CompMan-Addin_
+When the [CompMan.xlsb][1] Workbook is opened the services are all available. _Setup/Renew_ offers the option to establish the services as an Addin-Workbook. The steps are logged as follows
+
+Initial setup (in this case Addin-Workbook existed already but was not open):
+![](../Assets/CompManSetupResult_not_open.png)
+![](/Assets/CompManSetupResult_not_open.png)
+
+Renew (in this case the Addin was already open and thus some more steps were required):
+![](../Assets/CompManAddinRenewResult_addin_open.png)
+![](/Assets/CompManAddinRenewResult_addin_open.png)
+
+Each Setup/Renew request the confirmation or specification of a _Basic-CompMan-Configuration_ which is a _Service-Root-Folder_ (only Workbooks residing therein are serviced - productive Workbooks are not touched), and a dedicated folder for the Addin-Workbook (additional system files are stored therein as well). The Addin-Workbook folder may be available for development purpose only and hidden from any productively used Workbook. 
+
+![](../Assets/CompManBasicConfigurationDialog.png)
+![](/Assets/CompManBasicConfigurationDialog.png)
 
 ### Pause/Continue the CompMan-Addin
-Use the corresponding command buttons when the [CompMan.xlsb][1] Workbook is open.
+Use the corresponding command buttons when the [CompMan.xlsb][1] Workbook is open. While paused services will be denied.
 
   
 ## Contribution
-Contribution of any kind is welcome commenting this post or raising issues with the [Github project repo][2].
+Contribution of any kind is welcome commenting this post or raising issues with the [GitHub repo][2].
 
 
 [1]:https://gitcdn.link/repo/warbe-maker/VBA-Components-Management-Services/master/CompMan.xlsb
