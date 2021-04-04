@@ -10,25 +10,23 @@ This post focuses on
  - programmatically updating the code of individual _VB-Project-Components_
  - programmatically synchronizing  _VB-Projects_
 
-The services cater professional and semi-professional VB-Project developers. They are implemented as a dedicated Workbook which may either be used directly (just opened) or via a setup _Addin-Workbook_.
+The services are implemented as a dedicated Workbook and available either when the Workbook is open or when the Workbook is setup as _Addin-Workbook_. The services cater professional and semi-professional VB-Project development.
 
 ## Basic considerations
-- A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_, preferably automatically updated when changed.
-- A productive _VB-Project_ may be modified with a minimum downtime when a copy is modified and finally synchronized.
+- A VB-Component developed, maintained and tested in one Workbook and used in many others is regarded a _Common-Component_ which should be updated when changed preferably automated
+- A productive _VB-Project_ could be modified with a minimum downtime when a copy is modified and finally synchronized
 - There is no safe and stable way to programmatically modify the code of a _VB-Project_  other than delegating this service to another dedicated _VB-Project_.
-- A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VBComponent_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import.
-- A programmatic update service may be available either by means of an open Workbook or via an _Addin-Workbook_
-- Any service must be executed either via the _immediate window_ or called via `Application.Run`
+- A component cannot be simply removed and replaced by importing an _Export-File_ because the removal of a _VB-Component_ is postponed by the system until the running process has ended. However, renaming and removing does the trick because the rename puts the component out of the way for the import
+- Service may be available either by means of an open Workbook or via an _Addin-Workbook_, in any case performed via `Application.Run`
 
 ## Synchronization specific considerations
-- A _Document-Modules_ can only be updated by transferring the code from an _Export-File_ line by line
-- The _Workbook Document Module_ needs to be distinguished from any _Worksheet Document-Module_
-- A _Worksheet Document-Module_ has a _Name_ and a _CodeName_. When both are renamed/changed in the synchronization source Workbook the sheet no longer relates to any sheet in the synchronization target Workbook ans thus will be regarded a new Worksheet. An assertion that never both are renamed at the same time is required to avoid any ambiguity.
-- _Worksheets_ may have new or outdated _Shapes_ and _Shapes_ properties may have changed.
-- _Worksheets_ may - and often will - come with range names and design changes such like new/removed columns/rows.
+- _Document-Modules_ (Workbook and Woeksheet) are updated by transferring the code from an _Export-File_ line by line
+- The _Workbook Document-Module_ needs to be distinguished from any _Worksheet Document-Module_ in order to apply specific sheet synchronizations
+- A _Worksheet Document-Module_ has a _Name_ and a _CodeName_. When both are renamed/changed the sheet in the source Workbook no longer relates to the corresponding sheet in the target Workbook and thus is regarded a new Worksheet. An assertion that never both are names are changed is explicitly requested to assure disambiguation
+- _Worksheets_ may have new or outdated _Shapes_ and _Shapes-Properties_ which should be synchronized.
+- _Worksheets_ may come with _Range-Names_ and design changes such like new/removed columns/rows which can only be synchronized when indicated through a _Synchronization-Manifest_.
 
 ## Disambiguation
-The terms below are used in all posts regarding this matter and in the _[Excel-VB-Components-Management][2]_ VB-Project.
 
 | Term             | Meaning                  |
 |------------------|------------------------- |
@@ -41,18 +39,17 @@ The terms below are used in all posts regarding this matter and in the _[Excel-V
 |_Service_       | Generic term for any _Public Property_, _Public Sub_, or _Public Function_ of a _Component_ |
 |_VB&#8209;Clone&#8209;Project_ | A _VP-Project_ which is a copy (i.e regarding the VB-Project code a clone) of a corresponding  _VB&#8209;Raw&#8209;Project_. The code of the clone project is kept up-to-date by means of a code synchronization service. |
 |_VB-Project_     | In the present case this term is used synonymous with Workbook |
-|_Source&#8209;Workbook/VBProject_   | The temporary copy of productive Workbook which becomes by then the _Target-Workbook/Project for the synchronization.|
-| _Workbook-_, or<br>_VB&#8209;Project&#8209;Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export-Files and other project specific means. Such a folder is the equivalent of a Git-Repo-Clone (provided Git is used for the project's versioning which is recommendable.|
+|_Source&#8209;Workbook-/_<br>_Source-VB-Project_   | The temporary copy of productive Workbook which becomes by then the _Target-Workbook/Project for the synchronization.|
+| _Workbook-&#8209;Folder_ | A folder dedicated to a Workbook/VB-Project with all its Export-Files and other project specific means. Such a folder is the equivalent of a Github-Repo-Clone (provided Github is used for the project's versioning which is recommendable.|
 
 ## Services
 ### _ExportChangedComponents_
-Compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. The service is essential for _VB-Projects_ which host components used in other Workbooks. The service registers the hosted component as _Raw-Component_ which enables the _Update_RawClones_ service to recognize a component a _Clone-Component_ - and update it when it had changed.
-
-The service also checks if a _Clone-Component_ has been modified within the VB-Project using it. This may happen when the change of a _Common-Component_ appears appropriate directly in the VB-Project which triggered the change. In this case the service offers a choice for updating the _Raw-Component_ in order to make the modification permanent for all other VB-Projects using the component. Testing however will remain a task for the hosting Workbook/VB-Project.<br>
-It should be noted that changes not made 'public' will be reverted by the _UpdateRawClones_ service the next time the Workbook is opened.
+Compares the code of any component in a _VB-Project_ with its last _Export File_ and re-exports it when different. The service is essential for _VB-Projects_ with _Hosted-Components_ used in other Workbooks. The service registers the hosted component as _Raw-Component_ which enables the _UpdateRawClones_ service to recognize and update them as _Clone-Component_.
+- The service checks if a _Clone-Component_ has been modified within the _VB-Project_ using it. This may happen when the change of a _Common-Component_ appears appropriate directly in the _VB-Project_ which triggered the change. In this case the service offers a choice for updating the _Raw-Component_ in order to make the modification permanent for all other _VB-Projects_ using the component (testing however will remain a task for the hosting _Workbook/VB-Project_.<br>
+It also should be noted that changes not made 'public' will be reverted by the _UpdateRawClones_ service the next time the Workbook is opened.
 
 ### _UpdateRawClones_
-The service checks each component in a VB-Project whether it is a known/registered _Raw-Component_. If yes, the component is regarded a _Clone-Component_ and updated if the raw had changed. See confirmation dialog below.
+The service checks each component in a _VB-Project_ whether it is a known/registered _Raw-Component_. If yes, the component is regarded a _Clone-Component_ and updated if the raw had changed. See confirmation dialog below.
 
 ![](../Assets/UpdateRawCloneConfirmationDialog.png)
 ![](/Assets/UpdateRawCloneConfirmationDialog.png)
@@ -118,7 +115,7 @@ When asserted and confirmed all synchronizations are logged in a file _CompMan.S
 </small>
 
 The service has the following syntax:<br>
-`mService.SyncVBProjects(target-workbook, source-workbook, backup-folder)`<br>
+`mService.SyncVBProjects target-workbook, source-workbook, backup-folder`<br>
 backup-folder is an argument returned by the function which ends with TRUE when the synchronization had been performed (it may have been terminated with the confirmation dialog).
 
 ### Synchronization safety
@@ -129,12 +126,12 @@ Each synchronization creates a backup of the _Target-Workbook_ in a time-stamped
 2. Perform _Setup/Renew_ even if you not intend to use CompMan as Addin. Setting up the basic configuration is obligatory even when the [CompMan.xlsb][1] is directly used
 3. Follow the instructions to identify a _Serviced-RootFolder_ and a dedicated _CompMan-Addin-Folder_
 
-Once the Add-in is established it will automatically be loaded with the first Workbook opened having it referenced. See the Usage below for further required preconditions.
+Once the Add-in is established it will automatically be opened when Excel starts. However, the services may still be paused to avoid execution in case of problems (see Usage below for further required preconditions).
 
 ## Usage
 ### Common preconditions
-Every service will be denied unless the following preconditions are met:
-1. The basic configuration - confirmed with each Setup/Renew of the _CompMan-Addin-Folder_ - is complete and valid
+The update and the export service will be denied unless the following preconditions are met:
+1. The basic configuration - confirmed with each Setup/Renew is complete and valid
 2. The serviced Workbook resides in a sub-folder of the configured _ServicedRootFolder_
 3. The serviced Workbook is the only Workbook in its parent folder
 4. The CompMan services are not _Paused_
