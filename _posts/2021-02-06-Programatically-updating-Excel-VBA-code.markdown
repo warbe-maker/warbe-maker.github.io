@@ -118,8 +118,8 @@ The service has the following syntax:<br>
 `mService.SyncVBProjects target-workbook, source-workbook, backup-folder`<br>
 backup-folder is an argument returned by the function which ends with TRUE when the synchronization had been performed (it may have been terminated with the confirmation dialog).
 
-### Synchronization safety
-Each synchronization creates a backup of the _Target-Workbook_ in a time-stamped folder in the Workbook's parent folder. These backups are currently not cleaned-up.
+#### Synchronization safety
+Each synchronization creates a backup of the _Target-Workbook_ by creating a copy with a .backup extension. In case of a problem this copy just needs to be renamed (better ideas welcome).
 
 ## Installation
 1. Download and open [CompMan.xlsb][1]
