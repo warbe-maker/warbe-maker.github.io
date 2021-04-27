@@ -4,6 +4,7 @@ title: Add key/item pairs to a Dictionary "instantly ordered"
 subtitle: Adding item to a Dictionary by any sequence order without extra sorting
 date: 2020-10-02 16:00 +0200
 categories: vba dictionary common
+excerpt_separator: <!--more-->
 ---
 Excerpt 1
 <!--more-->
