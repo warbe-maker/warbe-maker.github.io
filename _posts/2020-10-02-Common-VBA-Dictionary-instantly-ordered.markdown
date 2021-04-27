@@ -5,6 +5,10 @@ subtitle: Adding item to a Dictionary by any sequence order without extra sortin
 date: 2020-10-02 16:00 +0200
 categories: vba dictionary common
 ---
+Excerpt 1
+<!--more-->
+Excerpt 2
+<!--more-->
 
 ## Services
 ### Adding items to a Dictionary instantly ordered: _DctAdd_
