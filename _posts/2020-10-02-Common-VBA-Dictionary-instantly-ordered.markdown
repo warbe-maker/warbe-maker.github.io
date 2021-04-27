@@ -6,7 +6,6 @@ date: 2020-10-02 16:00 +0200
 categories: vba dictionary common
 excerpt_separator: <!--more-->
 ---
-Excerpt 1
 <!--more-->
 
 ## Services
