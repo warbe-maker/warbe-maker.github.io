@@ -24,9 +24,7 @@ layout: default
             {%- if forloop.last == false %}, {% endif -%}
         {% endfor %}
       {%- endif -%}</p>
-      {% if post.excerpt %}
-         {{ post.excerpt }}
-      {% endif %}
+       <p>{{ page.description }}</p>
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
