@@ -3,10 +3,8 @@ layout: post
 title: Common VBA Error Services
 date: 2021-01-16
 categories: vba common error handling
-excerpt: true
 ---
-
-A comprehensive error services approach  inspired by the best of the web. Not a tutorial but a complete description of the services and how to use them.
+Error services inspired by the best of the web. Not a tutorial but a complete description of the services and how to use them.
 <!--more-->
 
 ## Services
