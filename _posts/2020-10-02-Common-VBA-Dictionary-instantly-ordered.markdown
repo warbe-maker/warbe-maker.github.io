@@ -8,15 +8,16 @@ categories: vba dictionary common
 A couple of items may be stored in a Dictionary instantly sorted by item or key and many other options.
 <!--more-->
 
-## Services
-### Adding items to a Dictionary instantly ordered: _DctAdd_
-Adds an item to a Dictionary with the following options:
-- ascending, descending, or entry sequence
-- ordered by key or by item
-- case sensitive and case ignored
-- add before or add after a specific target entry identified by key or by item
-- avoid or keep duplicate items
-- update item
+## The _DctAdd_ service
+Adds a key/item pair to a Dictionary with the following options:
+
+| Subject         | Options
+| --------------- | ----------
+| Sequence        | ascending, descending, or entry sequence |
+| Order           | by key or by item |
+| Case            | sensitive or ignored |
+| Mode            | add before or add after a specific target entry identified by key or by item |
+| Duplicate Items | avoided or kept, stay with first or update |
 
 The service has the following syntax
 
@@ -37,7 +38,7 @@ The procedure has these named arguments:
 | add_target        | Optional. An existing key or item. When omitted:<br>-When the sequence is _seq\_beforekey_, or _seq\_beforeitem_, the sequence is changed to _seq\_descending_<br>- When the sequence  _seq\_afterkey_, _seq\_afteritem_ the sequence is changed to _seq\_ascending_ |
 | add_staywithfirst | Optional. Boolean. Defaults to False.<br>False:<br>- With _order\_bykey_ any add of an existing key updates the item<br>- With _order\_byitem_ any add if the same item is added provided it has a new key.<br>True:<br>- With _order\_bykey_ any add for an existing key is ignored<br>- With _order\_byitem_ Attention!!! Any add if an existing item is ignored - even when it has a new unique key !!!|
 
-### Settings
+## Settings
 
 |  Argument |      Constant       | Description                                      |
 | --------- | ------------------- | ------------------------------------------------ |
@@ -52,8 +53,8 @@ The procedure has these named arguments:
 |           | sense_casesensitive | Items are ordered with case sensitive (default)  |
 
 
-### Usage examples
-#### Entry sequence
+## Usage
+### Entry sequence
 In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in entry sequence (the default):
 ```vbscript
 Private Sub DctAddExample()
@@ -67,7 +68,7 @@ Private Sub DctAddExample()
    
 End Sub
 ```
-#### Ascending by key case sensitive
+### Ascending by key case sensitive
 In the below example the _VBComponents_ of _ThisWorkbook_ are added ordered in ascending sequence case sensitive. The order criteria is the key which means the sort order is by the key object's name property.
 ```vbscript
 Private Sub DctAddExample()
@@ -82,10 +83,10 @@ Private Sub DctAddExample()
    
 End Sub
 ```
-### Installation
+## Installation
 Download [_mDct.bas_][1] and import it into your VB-Project. Alternatively you may fork the Github repo [Common-VBA-Dictionary-Services][3].
 
-### Development, test, maintenance
+## Development, test, maintenance
 - The dedicated _Common Component Workbook_ [Dct.xlsm][2] (see [Github repo][3]) is the development, test, and maintenance environment.
 - The procedure _Test\_DctAdd_ in module _mTest_ provides a fully automated regression test, obligatory after any kind of code modification
 - The procedure _Test\_DctAddPerfornance_ in module _mTest_ provides an example for a performance test. In order to trace the execution time the tests make use of  the _mErrHndlr_ module (not required for the _DctAdd_ procedure)
