@@ -5,6 +5,7 @@ subtitle: When performance has become an issue
 date: 2020-11-14
 categories: vba common
 ---
+<!--more-->
 
 ### Service
 When the optional module _mTrc_ is installed it provides an execution trace whenever the processing reaches an [_Entry Procedure_](#the-entry-procedure).

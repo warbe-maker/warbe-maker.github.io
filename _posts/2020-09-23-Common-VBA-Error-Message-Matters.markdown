@@ -3,6 +3,7 @@ layout: post
 title: All the matter for a VB error message
 subtitle: Error number, Error type, Error source, etc.
 date: 2020-11-21
+show_excerpts: false
 ---
 
 <small>All aspects of this post are part of the [Common VBA Error Services][1]</small>

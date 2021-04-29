@@ -5,6 +5,7 @@ subtitle: An alternative for the VBA MsgBox with less constraints, more options,
 date: 2020-11-17
 categories: vba common
 ---
+<!--more-->
 
 ## Why this alternative to the VBA MsgBox?
 The alternative implementation  addresses many of the constraints of the VBA MsgBox - without re-implementing it yet to 100% however.

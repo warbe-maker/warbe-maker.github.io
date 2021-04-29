@@ -1,9 +1,10 @@
 ---
 layout: post
-title: "Excel VBA PrivateProfile done right - and easy"
+title: Excel VBA PrivateProfile done right - and easy
 date:   2021-02-03
 categories: VBA Office Excel
 ---
+<!--more-->
 
 ## Introduction
 _PrivateProfile_ is the term used for information in a file organized as<br>[section]<br>\<valuen-ame>=\<value><br>structure, typically for config- or ini- files. Word provides for example [System.PrivateProfileString][4] with a perfect syntax. Excel unfortunately offers only things like [GetPrivateProfileString][3] with a much less comfortable syntax. The Standard Module _mFile_ provides 'Word-like' services which as well mainly deal with the arguments: file, section, value-name and value.
