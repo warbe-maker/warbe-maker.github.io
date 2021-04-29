@@ -3,10 +3,10 @@ layout: post
 title: All the matter for a VB error message
 subtitle: Error number, Error type, Error source, etc.
 date: 2020-11-21
-show_excerpts: false
 ---
+<!--more-->
 
-<small>All aspects of this post are part of the [Common VBA Error Services][1]</small>
+All aspects of this post are part of the [Common VBA Error Services][1]
 
 ## The error number
 The _Number_ property of the _Err_ object may indicate a VB Runtime, a Database, or an Application Error. The latter is one explicitly raised by `Err.Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of the application error n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
