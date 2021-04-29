@@ -13,11 +13,10 @@ Adds a key/item pair to a Dictionary with the following options:
 
 | Subject         | Options
 | --------------- | ----------
-| Sequence        | ascending, descending, or entry sequence |
-| Order           | by key or by item |
-| Case            | sensitive or ignored |
-| Mode            | add before or add after a specific target entry identified by key or by item |
-| Duplicate Items | avoided or kept, stay with first or update |
+| Sequence        | ascending, descending, entry sequence, add before, add after |
+| Order           | by key, by item |
+| Sense            | case sensitive, case ignored |
+| Duplicate Items | - avoided > stay with first<br>- avoided > updated<br> - kept |
 
 The service has the following syntax
 
@@ -40,7 +39,7 @@ The procedure has these named arguments:
 
 ## Settings
 
-|  Argument |      Constant       | Description                                      |
+|  Argument |      Constant,<br> enumerated value      | Description                                      |
 | --------- | ------------------- | ------------------------------------------------ |
 | add_order | order_bykey         | Items added are ordered by key (default for ascending or descending sequence)|
 |           | order_byitem        | Items added are ordered by item                  |
