@@ -3,6 +3,7 @@ layout: post
 title: Common VBA Execution Trace
 subtitle: When performance has become an issue
 date: 2020-11-14
+last_revised: 2021-04-29
 categories: vba common
 ---
 <!--more-->

@@ -2,6 +2,7 @@
 layout: post
 title: VBA Property Get/Let in Standard Modules with optional arguments
 date:   2021-02-01
+last_revised: 2021-04-29
 categories: vba property optional argument
 ---
 Not only in _Class Modules_ but also in _Standard Modules_! A usefulness potentially underestimated and undervalued, and a pitty when ignored.

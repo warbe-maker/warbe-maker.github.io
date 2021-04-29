@@ -3,12 +3,14 @@ layout: post
 title: Common VBA Components
 subtitle: Ready for use, highly reusable, carefully tested
 date: 2021-02-19
+last_revised: 2021-04-29
 categories: vba common
 ---
+A great advantage for the  development of VB-Projects - provided well designed, continuously maintained and carefully tested.
 <!--more-->
 
 ## Introduction
-_Common VBA Components_ are an enormous productivity advantage for the  development of VB-Projects - provided these components are well designed, continuously maintained and carefully tested. However, keeping them up-to-date in VB-Projects using them is  cumbersome - unless provided as a service which update them 'by the way', when a Workbook is opened for modifying the VB-Project. Synchronizing the code of whole VB-Projects is probability the 'supreme discipline' in this regard but that's the matter if another post.
+Keeping _Common VBA Components_ up-to-date in VB-Projects using them is  cumbersome - unless done by a service when a Workbook is opened. _Synchronizing_ the code of whole VB-Projects is probability the 'supreme discipline' in this regard but that's the matter if another post.
 
 ## Environment
 Development, maintenance, and test of  _Common VBA Component_ , is done via dedicated VB-Projects which claim the original/raw component code 'hosted'. This dedication pais off it's effort because it it allowes the implementation of regression tests performed with every code modification. Using GitHub for the versioning has proofed a developer's dream. Consequently, I now try to do any modification via a branch in order not to interfere with any productive VB-Projects using them.

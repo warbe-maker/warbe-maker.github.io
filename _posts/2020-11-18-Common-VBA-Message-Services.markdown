@@ -3,6 +3,7 @@ layout: post
 title: Common VBA Message Service
 subtitle: An alternative for the VBA MsgBox with less constraints, more options, and a better display
 date: 2020-11-17
+last_revised: 2021-04-29
 categories: vba common
 ---
 <!--more-->

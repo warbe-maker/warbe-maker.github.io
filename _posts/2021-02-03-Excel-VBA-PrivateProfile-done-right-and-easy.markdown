@@ -2,6 +2,7 @@
 layout: post
 title: Excel VBA PrivateProfile done right - and easy
 date:   2021-02-03
+last_revised: 2021-04-29
 categories: VBA Office Excel
 ---
 <!--more-->
