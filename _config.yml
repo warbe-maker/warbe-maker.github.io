@@ -28,6 +28,7 @@ github_username: warbe-maker
 
 # Build settings
 theme: minima
+show_excerpts: true
 plugins:
   - jekyll-feed
 
