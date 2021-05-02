@@ -25,7 +25,7 @@ layout: default
       {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
       {%- for post in posts -%}
       <li>
-        <span class="post-meta">Created: {{ post.date | date: date_format }}       Last revised: {{ post.last_revised | date: date_format }} </span>
+        <span class="post-meta">Created:&nbsp; {{ post.date | date: date_format }}  &nbsp;&nbsp;Last modified:&nbsp; {{ post.date_modified | date: date_format }} </span>
         <h3>
           <a class="post-link" href="{{ post.url | relative_url }}">
             {{ post.title | escape }}
