@@ -3,13 +3,13 @@ layout:        post
 title:         All the matter for a VB error message
 subtitle:      Error number, Error type, Error source, etc.
 date:          2020-11-21
-modified_date: 2021-04-29
+modified_date: 2021-05-02
 ---
 <!--more-->
 
 All aspects of this post are part of the [Common VBA Error Services][1]
 
-## The error number
+## Error Number
 The _Number_ property of the _Err_ object may indicate a VB Runtime, a Database, or an Application Error. The latter is one explicitly raised by `Err.Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of the application error n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
 ```
 Public Function AppErr(ByVal err_no As Long) As Long
@@ -32,15 +32,15 @@ The error handling may investigate the number as follows:
    End Select
 ```
 
-## The source of the error
+## Error Source
 The source of the error is the most important information in a displayed error message. Unfortunately the _Source_ property of the _err_ object does not deliver what it's name promises but just the application name. Thus this information needs to be provided in each module via:
 ```
 Private Function ErrSrc(ByVal s As String) As String
     ErrSrc = "module-name." & s
 End Function
 ```
-## The error line
-The more code lines in a procedure the more desired in case of an error. Unfortunately the _Erl_ provided by VBA only delivers the code line which caused the error when there are line numbers. In by far the most cases when they are desired they are missed. The following however does the trick:
+## Error Line
+The more code lines in a procedure the greater the desired for getting it in case of an error. Unfortunately the _Erl_ provided by VBA only delivers the code line which caused the error when there are line numbers. In by far the most cases when they are desired they are missed. The following however does the trick:
 ```
     On error Goto eh
     ...
@@ -55,10 +55,10 @@ End Function/Sub
 
 Where I have found this the guy called it a godsend when needed. At that's what it is. The only disadvantage I found, it will loop until the error is eliminated or bypassed by any kind of code modification. Without a code modification the above may be achieved when the error message displayed comes with tow extra buttons: One called "Resume" and the other one called "Resume Next". This service is provided by my [Common VBA Error Handler][1].
 
-## The type of error
+## Error Type
 An error message should preferably distinguish between _VB Runtime error_, _Application error_, and _Database error_. This distinction requires the analysis of the Err.Number and the Err.Description.
 
-### All matter for an error message
+## All the matter
 The below procedure delivers/returns all the above mentioned in a way it can be used to build a proper error message:
 ```
 Private Sub ErrMsgMatter(ByVal err_source As String, _
@@ -100,6 +100,7 @@ Private Sub ErrMsgMatter(ByVal err_source As String, _
 End Sub
 ```
 
+## Usage
 Used in a procedure which displays an error message will look as follows:
 
 ```
@@ -113,7 +114,12 @@ Private Sub ErrMsg(ByVal err_no As Long, _
     Dim sTitle      As String
     Dim sDetails    As String
     
-    ErrMsgMatter err_source:=err_source, err_no:=err_no, err_line:=err_line, err_dscrptn:=err_dscrptn, _                         msg_title:=sTitle, msg_details:=sDetails
+    ErrMsgMatter err_source:=err_source _
+               , err_no:=err_no _
+               , err_line:=err_line _
+               , err_dscrptn:=err_dscrptn _
+               , msg_title:=sTitle _
+               , msg_details:=sDetails
     
     MsgBox Prompt:="Error description:" & vbLf & _
                     err_dscrptn & vbLf & vbLf & _
