@@ -2,9 +2,9 @@
 layout: post
 title: Common VBA Components
 subtitle: Ready for use, highly reusable, carefully tested
-date: 2021-02-19
-last_revised: 2021-04-29
-categories: vba common
+date:          2021-02-19
+modified_date: 2021-04-29
+categories:    vba common
 ---
 A great advantage for the  development of VB-Projects - provided well designed, continuously maintained and carefully tested.
 <!--more-->

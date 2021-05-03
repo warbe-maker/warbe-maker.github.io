@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Programmatically updating or synchronizing VBA code of Excel VB-Project Components
-date:   2021-03-22
-last_revised: 2021-04-29
-categories: vba excel code component management
+date:          2021-03-22
+modified_date: 2021-04-29
+categories:    vba excel code component management
 ---
 <!--more-->
 

@@ -2,9 +2,9 @@
 layout: post
 title: Add key/item pairs to a Dictionary "instantly ordered"
 subtitle: Adding item to a Dictionary by any sequence order without extra sorting
-date: 2020-10-02
-last_revised: 2021-04-29
-categories: vba dictionary common
+date:          2020-10-02
+modified_date: 2021-04-29
+categories:    vba dictionary common
 ---
 A couple of items may be stored in a Dictionary instantly sorted by item or key and many other options.
 <!--more-->
