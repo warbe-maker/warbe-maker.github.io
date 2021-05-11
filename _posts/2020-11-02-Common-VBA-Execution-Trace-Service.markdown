@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Common VBA Execution Trace
-subtitle: When performance has become an issue
-date:          2020-11-14
+date: 2020-11-14
 modified_date: 2021-04-29
-categories:    vba common
+categories: vba common
 ---
+Monitoring which code component has been executed and how much time (highest precision!) it took.
 <!--more-->
 
 ### Service

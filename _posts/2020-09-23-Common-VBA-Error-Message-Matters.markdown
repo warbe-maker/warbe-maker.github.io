@@ -1,7 +1,6 @@
 ---
 layout:        post
 title:         All the matter for a VB error message
-subtitle:      Error number, Error type, Error source, etc.
 date:          2020-11-21
 modified_date: 2021-05-02
 ---

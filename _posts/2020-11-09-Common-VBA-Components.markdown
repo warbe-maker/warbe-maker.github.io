@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Common VBA Components
-subtitle: Ready for use, highly reusable, carefully tested
 date:          2021-02-19
 modified_date: 2021-04-29
 categories:    vba common
