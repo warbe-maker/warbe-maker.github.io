@@ -53,5 +53,5 @@ plugins:
 #   - vendor/ruby/
 excerpt_separator: "<!--more-->" #global excerpt separator for the blog posts
 #
-- name: GitHub App installation access token generator
-  uses: navikt/github-app-token-generator@v1.0.4
+#- name: GitHub App installation access token generator
+# uses: navikt/github-app-token-generator@v1.0.4
