@@ -6,7 +6,7 @@ date:          2020-11-17
 modified_date: 2021-04-29
 categories:    vba common
 ---
-An alternative VBA.MsgBox with limits hardly ever reached respectively.
+An alternative VBA.MsgBox with limits hardly ever reached.
 <!--more-->
 
 ## Why this alternative to the VBA MsgBox?
