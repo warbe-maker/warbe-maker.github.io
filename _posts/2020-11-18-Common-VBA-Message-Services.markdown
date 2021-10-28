@@ -67,54 +67,52 @@ The _Buttons_ service has this named argument:
 | msg_buttons | Obligatory, ParamArray, each item either specifies a button or a row break (vbLf). 
 
 ## The _fMsg_ UserForm
-The UserForm may be used [directly](#direct-usage-of-the-fmsg-userform)  but with significant less comfort compared with the _Dsply_ and the _Box_ service.
-
-The _fMsg_ service has the following Properties (usually covered by the _Dsply_ and the _Box_ service):
-
-| Property      | Meaning |
-|---------------|---------|
-| _MsgTitle_    | Mandatory. String expression. Applied in the message window's handle bar|
-| _Msg_         | Optional. User defined type _tMsg_. Structure of the UserForm's message area. May alternatively be used to the below properties _MsgLabel_, _MsgText_, and _MsgMonoSpaced_ to pass a complete message.<br>See .... |
-| _MsgLabel(n)_ | Optional. String expression with _n__ as a numeric expression 1 to 4. Applied as a descriptive label above a below message text. Not displayed (even when provided) when no corresponding _MsgText_ is provided |
-| _MsgText(n)_  | Optional.String expression with _n__ as a numeric expression 1 to 4). Applied as message text of section _n_.|
-| _MsgMonospaced(n)_ | Optional. Boolean expression with _n__ as a numeric expression 1 to 4). Defaults to False when omitted. When True, the text in section _n_ is displayed mono-spaced.|
-| _MsgButtons_  | Optional. Defaults to vbOkOnly when not provided (see [The Buttons service](#the-buttons-service) and the [_dsply\_buttons_](#the-dsply-buttons-argument) argument.|
-| _ReplyValue_  | Read only. The clicked button's caption string or [value][1]. When there is more than one button the form is unloaded when the clicked buttons value is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click.|
-| _ReplyIndex_  | Read only. The clicked button's index. When there is more than one button the form is unloaded when the clicked button's index is fetched. When there is just one button this value will not be available since the form is immediately unloaded with the button click. |
-
+The UserForm cannot may be used directly because it passed the clicked reply button's value or string or index to a public Property of the caller   
 See [Additional properties for advanced usage](<Implementation.md#public-properties-for-advanced-usage-of-the-message-form>) to create application specific messages.
 
 ## Installation
-1. Download the UserForm  [fMsg.frm][2] and   [fMsg.frx][3]
-1. Import _fMsg.frm_
-1. Download and import [mMsg.bas][4]
+1. Download [fMsg.frm][2], [fMsg.frx][3], and [mMsg.bas][4] 
+1. Import _fMsg.frm_ and _mMsg.bas_
 1. In the VBE add a Reference to "Microsoft Scripting Runtime"
-
 
 ## Usage
 ### Using the _Box_ service
-The code example directly uses the _Box_ service. Not a typical use for the _Box_ service which is meant to be pretty much like the VBA.MsgBox service but used here to show the difference to the _Dsply_ service.
+The code example below uses
+- the _Buttons_ service for the _box\_buttons_ argument which shows how caption strings can be mixed with VBA MsgBox button values
+- the _ErrSrc_ procedure
+- the mMsg.ErrMsg service to display an error if any.
 ```
+Private Sub Text_50_Box()
+
+    Const PROC = "Text_50_Box"
     Const BTTN_1 = "Caption Button 1"
     Const BTTN_2 = "Caption Button 2"
     Const BTTN_3 = "Caption Button 3"
     Const BTTN_4 = "Caption Button 4"
-    Const BTTN_5 = "Caption Button 5"
-    Const BTTN_6 = "Caption Button 6"
-    Const BTTN_7 = "Caption Button 7"
     
-    Select Case mMsg.Box(msg_title:="Any title" _
-                       , msg:="The message"
-                       , msg_buttons:=msg_buttons:=mMsg.Buttons(BTTN_1, BTTN_2, BTTN_3, vbLf, BTTN_4, BTTN_5, BTT_6, vbLf, BTTN_7)
-        Case BTTN_1 ...
-        Case BTTN_2 ...
-        Case BTTN_3 ...
-        Case BTTN_4 ...
-        Case BTTN_5 ...
-        Case BTTN_6 ...
-        Case BTTN_7 ...
+    On Error GoTo eh
+    Select Case mMsg.Box(box_title:="Any title" _
+                       , box_msg:="Any message of any length. In case the argument box_monospaced=True (defaults to False) " & _
+                                  "the longest line would determines the message window width um to the maximum width which " & _
+                                  "defaults to 80 percent of the screen width." _
+                       , box_buttons:=mMsg.Buttons(BTTN_1, BTTN_2, BTTN_3, BTTN_4, vbLf, vbYesNoCancel))
+        Case BTTN_1:    '...
+        Case BTTN_2:    '...
+        Case BTTN_3:    '...
+        Case BTTN_4:    '...
+        Case vbYes:     '...
+        Case vbNo:      '...
+        Case vbCancel:  '...
     End Select
+
+xt: Exit Sub
+
+eh: If mMsg.ErrMsg(ErrSrc(PROC)) = vbYes Then: Stop: Resume
+End Sub
 ```
+Displays
+![](../Assets/Example-Box-Service.jpg)
+![](/Assets/Example-Box-Service.jpg)<br>
 
 ### Using the _Dsply_ service
 
