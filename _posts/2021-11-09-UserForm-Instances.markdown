@@ -79,7 +79,7 @@ End Function
 
 ## Test of the _FormInstance_ function
 The test procedure by-the-way proves that it is not required to have a variable for the instance. I.e. any instance may be addressed "directly". 
-```vbscript
+```vb
 Public Sub Test_FormInstance()
 ' ------------------------------------------------------------------------------
 ' Creates a number of instance of the UserForm named fProcTest and unloads them
