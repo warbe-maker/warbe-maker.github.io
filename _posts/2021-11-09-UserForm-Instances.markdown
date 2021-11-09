@@ -123,6 +123,8 @@ End Sub
 Displays:
 ![](../Assets/UserForm-Instances.gif)
 ![](../Assets/UserForm-Instances.jpg)
+![](/Assets/UserForm-Instances.gif)
+![](/Assets/UserForm-Instances.jpg)
 ## Used error handling procedures
 ```vb
 Private Function AppErr(ByVal app_err_no As Long) As Long
