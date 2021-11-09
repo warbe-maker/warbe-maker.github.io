@@ -120,6 +120,8 @@ Public Sub Test_FormInstance()
     
 End Sub
 ```
+Displays:
+![](../Assets/UserForm-Instances.gif)
 
 ## Used error handling procedures
 ```vb
