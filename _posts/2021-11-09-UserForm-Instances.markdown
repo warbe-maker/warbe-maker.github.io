@@ -9,8 +9,11 @@ categories:    vba common
 An easy way to have any number of UserForm instances managed with a minimum effort.
 <!--more-->
 
-## The _Instance_ function
-Note: Const PROC and the error handling are my personal standard ans my of course be removed. The used code is added here however just in case of interest.
+## The _FormInstance_ function
+> **Const PROC** and the error handling are my personal standard which of course may or may not be used. Just in case of interest and to complete the matter all the used code is added below as well.
+
+> **fProcTest** will have to be replaced by the desired UserForm.
+
 ```vb
 Private Function FormInstance(ByVal fi_key As String, _
                      Optional ByVal fi_unload As Boolean = False) As fProcTest
@@ -75,8 +78,8 @@ End Function
 ```
 
 ## Test of the _FormInstance_ function
-The test procedure by-the-way proves that it is not required to have a variable for the instance by using it "directly". 
-```vb
+The test procedure by-the-way proves that it is not required to have a variable for the instance. I.e. any instance may be addressed "directly". 
+```vbscript
 Public Sub Test_FormInstance()
 ' ------------------------------------------------------------------------------
 ' Creates a number of instance of the UserForm named fProcTest and unloads them
