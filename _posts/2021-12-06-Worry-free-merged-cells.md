@@ -6,6 +6,8 @@ modified_date: 2021-12-06
 ---
 <!--more-->
 
+Get rid of any worry with merged cells in VBA Projects.
+
 Not using the great design feature 'merged cells' is the credo of numerous developers throughout forums. And they are right - as long as they have not found a way to properly manage this kind of 'obstruction'. I was not prepared to stay away from merged cells and implemented a way to manage them.
 
 A service called _MergedAreas_ temporarily _eliminates_ (un-merges) merged cells and finally _restores_ (re-merges) them in the meantime even allowing to delete concerned rows or insert new rows straight in the middle of a merged area.
