@@ -12,9 +12,9 @@ Not using the great design feature 'merged cells' is the credo of numerous devel
 
 A service called _MergedAreas_ temporarily _eliminates_ (un-merges) merged cells and finally _restores_ (re-merges) them in the meantime even allowing to delete concerned rows or insert new rows straight in the middle of a merged area.
 
-The _MergedAreas_ service (among others) is available in the [_mObstructions.bas_][1] which may downloaded and imported into any Excel VBA Project. See the README in the [public Github repository][2] for details.
+The _MergedAreas_ service (among others) is available in the [_mObstructions.bas_][1] which may be downloaded and imported into any Excel VBA Project. See the README in the [public Github repository][2] for details.
 
 This is one of the obstruction services successfully used in a _Common Rows Component_. The component provides row services like _move up_/_move down_, _insert new_, or _delete_ rows in protected Worksheets specifically focusing on the preservation of total formulas. However, that's another story still pending to go public.
 
-[1]:https://gitcdn.link/repo/warbe-maker/Common-Excel-VBA-Obstructions-Services/master/source/mObstructions.bas
+[1]:https://gitcdn.link/cdn/warbe-maker/Common-Excel-VBA-Obstructions-Services/master/source/mObstructions.bas
 [2]:https://github.com/warbe-maker/Common-Excel-VBA-Obstructions-Services

@@ -22,7 +22,7 @@ The services are implemented as a dedicated Workbook and available either when t
 - Service may be available either by means of an open Workbook or via an _Addin-Workbook_, in any case performed via `Application.Run`
 
 ## Synchronization specific considerations
-- _Document-Modules_ (Workbook and Woeksheet) are updated by transferring the code from an _Export-File_ line by line
+- _Document-Modules_ (Workbook and Worksheet) are updated by transferring the code from an _Export-File_ line by line
 - The _Workbook Document-Module_ needs to be distinguished from any _Worksheet Document-Module_ in order to apply specific sheet synchronizations
 - A _Worksheet Document-Module_ has a _Name_ and a _CodeName_. When both are renamed/changed the sheet in the source Workbook no longer relates to the corresponding sheet in the target Workbook and thus is regarded a new Worksheet. An assertion that never both are names are changed is explicitly requested to assure disambiguation
 - _Worksheets_ may have new or outdated _Shapes_ and _Shapes-Properties_ which should be synchronized.
@@ -237,5 +237,5 @@ Use the corresponding command buttons when the [CompMan.xlsb][1] Workbook is ope
 Contribution of any kind is welcome commenting this post or raising issues with the [GitHub repo][2].
 
 
-[1]:https://gitcdn.link/repo/warbe-maker/VBA-Components-Management-Services/master/CompMan.xlsb
+[1]:https://gitcdn.link/cdn/warbe-maker/VBA-Components-Management-Services/master/CompMan.xlsb
 [2]:https://GitHub.com/warbe-maker/VBA-Components-Management-Services

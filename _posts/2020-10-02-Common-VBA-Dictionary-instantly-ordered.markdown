@@ -93,6 +93,6 @@ Download [_mDct.bas_][1] and import it into your VB-Project. Alternatively you m
 - The _DctAdd_ procedure uses the _ErrMsg_ procedure in module _mBasic_
 
 
-[1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Dictionary-Procedures/master/source/mDct.bas
-[2]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Dictionary-Procedures/master/Dct.xlsm
+[1]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Dictionary-Procedures/master/source/mDct.bas
+[2]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Dictionary-Procedures/master/Dct.xlsm
 [3]:https://github.com/warbe-maker/Common-VBA-Dictionary-Services

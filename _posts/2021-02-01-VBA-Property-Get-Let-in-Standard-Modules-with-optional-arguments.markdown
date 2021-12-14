@@ -86,4 +86,4 @@ mFile.Txt(ft_file:=myfile, ft_append:=True) = s
  - Because all optional arguments must exactly match between Get and Let some may not be used and this will be considered 'dead code' when quality checked e.g. with MZTools (what I use)
 
 
-[1d1]:https://gitcdn.link/repo/warbe-maker/Common-VBA-File-Services/master/mFile.bas
+[1d1]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-File-Services/master/mFile.bas

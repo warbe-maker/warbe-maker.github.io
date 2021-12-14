@@ -68,7 +68,7 @@ This service will be used subsequently in the project:<br>
 
 the matter of all the above is a pretty nice example how the implementation of a couple of modules each providing a service on a higher abstraction layer. I.e. each module provides a service while hiding the used technical means.  
 
-[1]: https://gitcdn.link/repo/warbe-maker/Common-VBA-File-Services/master/mFile.bas
-[2]: https://gitcdn.link/repo/warbe-maker/Common-VBA-Dirctory-Services/master/mDct.bas
+[1]: https://gitcdn.link/cdn/warbe-maker/Common-VBA-File-Services/master/mFile.bas
+[2]: https://gitcdn.link/cdn/warbe-maker/Common-VBA-Dirctory-Services/master/mDct.bas
 [3]: https://docs.microsoft.com/de-de/windows/win32/api/winbase/nf-winbase-getprivateprofilestring?redirectedfrom=MSDN
 [4]: https://docs.microsoft.com/de-de/office/vba/api/word.system.privateprofilestring
