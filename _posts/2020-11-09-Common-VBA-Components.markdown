@@ -2,23 +2,31 @@
 layout: post
 title: Common VBA Components
 date:          2021-02-19
-modified_date: 2021-04-29
+modified_date: 2022-01-25
 categories:    vba common
 ---
-A great advantage for the  development of VB-Projects - provided well designed, continuously maintained and carefully tested.
+A great advantage for the  development of VB-Projects - provided they are well designed, continuously maintained and carefully tested.
 <!--more-->
 
 ## Introduction
-Keeping _Common VBA Components_ up-to-date in VB-Projects using them is  cumbersome - unless done by a service when a Workbook is opened. _Synchronizing_ the code of whole VB-Projects is probability the 'supreme discipline' in this regard but that's the matter if another post.
+### Clarification of the term _Common Component_
+A component just having the same name in various VBProjects is **not** a _Common Component_ in the sense of this post unless these _Used Common Components_ are all based on a _Raw Common Component_ one Workbook/VP-Project has claimed hosting it. And any _Used Common Component_ in whichever VB-Project is a copy of this _Raw Common Component_. The Workbook/VP-Project which hosts the _Raw Common Component_ is responsible for the development, maintenance, and testing - why it preferably should be dedicated.
 
-## Environment
-Development, maintenance, and test of  _Common VBA Component_ , is done via dedicated VB-Projects which claim the original/raw component code 'hosted'. This dedication pais off it's effort because it it allowes the implementation of regression tests performed with every code modification. Using GitHub for the versioning has proofed a developer's dream. Consequently, I now try to do any modification via a branch in order not to interfere with any productive VB-Projects using them.
+The very next question: How can it be guaranteed that the _Used Common Components_ are not outdated? The only appropriate solution: When the Workbook is opened for development/maintenance (not for production!) all outdated _Used Common Components_ are updated with the _Raw Common Component_ - which cannot be done by the Workbook itself but only by a "third party Workbook" dedicated providing this update service.
+
+I have started over several times implementing such a Workbook and I've given up the try as many times. Finally I do have a fairly stable and solid _[Excel VBA Component Management][5]_ in place, as a public Github repo for use by everyone. 
+
+## My Common VBA Components
+### Public versus personal: Principals of design
+I don't like the idea of providing a 'public' version of a component apart from the version I use. _Common Components_ serving personal preferences in my own VB-Projects while being absolutely autonomous in any 'foreign' VB-Project. That's the challenge. To manage this balancing act all my _Common Components_ do use a couple of procedures which either perfectly work in both environments - or simply do nothing. Concerned of this approach are:
+#### _Error Handling_
+The procedures _AppErr_, _ErrSrc_, and _ErrMsg_ provide a fairly elaborated error handling which includes a debugging option (display of an error with the option to resume the error line) when activated by the _Conditional Compile Argument_ `Debugging = 1`. [^1]
+
+#### _Execution Trace_
+Procedures: _BoP_, _EoP_. Corresponding statements do absolutely nothing unless activated by the _Conditional Compile Argument_ `ExecTrace = 1` which requires the _Common Component_ [mTrc.bas][2d1] being downloaded and imported. 
 
 
-## Management services
-Services are provided by a _Common Components Management_ (CompMan) Workbook, setup as Add-In.
 
-## (My) Common VBA Components
 
 |         Common VBA ...    |Download and import|GitHub repo|     Service    |      Description                 |
 |---------------------------|----------------|-----------|----------------|----------------------------------|
@@ -49,6 +57,10 @@ Services are provided by a _Common Components Management_ (CompMan) Workbook, se
 
 still to be continued.
 
+
+[^1]: Im my personal VB-Projects I do use the _Common Components_ _mMsg_, _fMsg_, and _mErH_ which do provide a much "nicer" display of an error, activated by the _Conditional Compile Argument_ `MsgComp = 1` and `ErHComp = 1`.
+
+
 [1]:https://github.com/warbe-maker/Common-VBA-Error-Services
 [1r]:https://github.com/warbe-maker/Common-VBA-Error-Handler-Services
 [1s1]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/error/handling/2021/01/16/Common-VBA-Error-Services.html
@@ -65,3 +77,4 @@ still to be continued.
 [3]:https://github.com/warbe-maker/Common-VBA-Message-Service
 [4]:https://github.com/warbe-maker/Common-VBA-File-Services
 [4d1]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-File-Services/master/source/mFile.bas
+[5]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services
