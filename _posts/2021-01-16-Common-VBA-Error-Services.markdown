@@ -13,7 +13,7 @@ The error message service described in this post might appear overdone and/or to
 
 ## Disambiguation
 | Term            | Meaning                                         |
-|-----------------|-------------------------------------------------|
+| --------------- | ----------------------------------------------- |
 |_Application&nbsp;Error_| An error which had been raised by an `err.Raise` statement. An _Application Error_ is distinguished from any VB Run-time or Database error by adding the [_vbObjectError_][10] to an integer number. See [The _AppErr_ service](#the-apperr-service).  |
 |_Entry&nbsp;Procedure_| The key for the display of a 'path to the error'. The top level procedure in a call hierarchy with a _BoP/EoP_ statement. Typical _Entry Procedures_ are event procedures like _Workbook\_Open_ , click events in a UserForm etc..|
 |_Error&nbsp;Source_   | The error message can only display the source of the error when it had been provided as argument |
