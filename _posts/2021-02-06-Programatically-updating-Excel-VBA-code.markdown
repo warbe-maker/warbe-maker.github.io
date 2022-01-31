@@ -50,15 +50,15 @@ Compares the code of any component in a _VB-Project_ with its last _Export File_
 - The service checks if a _Clone-Component_ has been modified within the _VB-Project_ using it. This may happen when the change of a _Common-Component_ appears appropriate directly in the _VB-Project_ which triggered the change. In this case the service offers a choice for updating the _Raw-Component_ in order to make the modification permanent for all other _VB-Projects_ using the component (testing however will remain a task for the hosting _Workbook/VB-Project_.<br>
 It also should be noted that changes not made 'public' will be reverted by the _UpdateRawClones_ service the next time the Workbook is opened.
 
-### _UpdateRawClones_
+### _UpdateOutdatedUsedCommonComponents_
 The service checks each component in a _VB-Project_ whether it is a known/registered _Raw-Component_. If yes, the component is regarded a _Clone-Component_ and updated if the raw had changed. See confirmation dialog below.
 
 ![](../Assets/UpdateRawCloneConfirmationDialog.png)
 ![](/Assets/UpdateRawCloneConfirmationDialog.png)
 <br>
 
-Note 1: The service is meant (and tested) only for _Standard-Modules_, _Class-Modules_, and _UserForms_. It may - in theory - be used for Worksheets as well. However, this would mean that one Workbook hosts a Worksheet which is regarded a _Common-Component_ used in other Workbooks. Something pretty unlikely I think. Whenever this case may become true extra testing and possibly some modification with the service may become required.
-Note 2: This service must not be confused with a synchronization service. A synchronization service uses one Workbook as the source and synchronizes the corresponding target Workbook. This update service will have different Workbook's Export-Files as the source, depending on where the _Raw-Component_ is hosted.
+- Note 1: The service is meant (and tested) only for _Standard-Modules_, _Class-Modules_, and _UserForms_. It may - in theory - be used for Worksheets as well. However, this would mean that one Workbook hosts a Worksheet which is regarded a _Common-Component_ used in other Workbooks. Something pretty unlikely I think. Whenever this case may become true extra testing and possibly some modification with the service may become required.
+- Note 2: This service must not be confused with a synchronization service which uses one Workbook as the source and synchronizes a corresponding target Workbook. This update service will use **all** Export-Files of the source Workbook as the update source.
 
 ### _SyncVBProjects_
 The service synchronizes a _target-Workbook_ with a _source-Workbook_ whereby the _source-Workbook_ is a temporary copy of the **productive** _target-Workbook_. While the **productive** Workbook remains in use the VB-Project of the _source-Workbook_ can be made without time restraint. When the modification, maintenance, bug-fixing, etc. is finished all changes can be synchronized by a minimized downtime for the **productive** workbook.
