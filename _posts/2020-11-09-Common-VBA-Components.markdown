@@ -38,15 +38,15 @@ The primary goal is to provide _Common Components_ which are as autonomous as po
 By these means other users are no bothered by my personal preferences - or are only as little as possible :-).
 
 ## _Common Components_ overview
-|Component|Module(s)|Status|Comment|
-|---------|---------|------|-------|
-|Common VBA Message Services |mMsg, fMsg |[public GitHub repo][2]|Used by mErH (optionally by mTrc |
-|Common VBA Error Services|mErH, mMsg, fMsg|[public GitHub  repo][3]|Optionally uses mTrc|
-|Common VBA Execution Trace Services|mTrc |[public GitHub repo][4]|stand-alone or as optional component of mErH|
- |Common VBA Excel Workbook Services|mWrkbk|[public GitHub repo][5]|Existence/open check over multiple Excel instances, open services and other|
- |Common VBA File Services|mFile|[public GitHub repo][6]|Existence check, etc.|
- |Common VBA Basic Services|mBasic|private GitHub repo| 
- [Common VBA Registry Services|mReg|private GitHub repo| Read/write named values simplified to the max |
+|Component                          |Module(s)       |Status                 |Comment               |
+| --------------------------------- | -------------- | --------------------- | -------------------- |
+|Common VBA Message Services        |mMsg, fMsg      |[public GitHub repo][2]|Used by mErH (optionally by mTrc |
+|Common VBA Error Services          |mErH, mMsg, fMsg|[public GitHub repo][3]|Optionally uses mTrc|
+|Common VBA Execution Trace Services|mTrc            |[public GitHub repo][4]|stand-alone or as optional component of mErH|
+|Common VBA Excel Workbook Services |mWrkbk          |[public GitHub repo][5]|Existence/open check over multiple Excel instances, open services and other|
+|Common VBA File Services           |mFile           |[public GitHub repo][6]|Existence check, etc.|
+|Common VBA Basic Services          |mBasic          |private GitHub repo    | 
+|Common VBA Registry Services       |mReg            |private GitHub repo    | Read/write named values simplified to the max |
  
  
  
