@@ -46,7 +46,9 @@ By these means other users are no bothered by my personal preferences - or are o
  |Common VBA Excel Workbook Services|mWrkbk|[public GitHub repo][5]|Existence/open check over multiple Excel instances, open services and other|
  |Common VBA File Services|mFile|[public GitHub repo][6]|Existence check, etc.|
  |Common VBA Basic Services|mBasic|private GitHub repo| 
- [Common VBA Registry Services|mReg|private GitHub repo| Read/write named values simplified to the max
+ [Common VBA Registry Services|mReg|private GitHub repo| Read/write named values simplified to the max |
+ 
+ 
  
 
 [1]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services
