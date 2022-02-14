@@ -2,66 +2,56 @@
 layout: post
 title: Common VBA Components
 date:          2021-02-19
-modified_date: 2021-04-29
+modified_date: 2022-02-14
 categories:    vba common
 ---
-A great advantage for the  development of VB-Projects - provided well designed, continuously maintained and carefully tested.
+A true development performance boost provided they are well designed, continuously maintained and carefully tested.
 <!--more-->
 
 ## Introduction
-Keeping _Common VBA Components_ up-to-date in VB-Projects using them is  cumbersome - unless done by a service when a Workbook is opened. _Synchronizing_ the code of whole VB-Projects is probability the 'supreme discipline' in this regard but that's the matter if another post.
+Each of my _Common Components_ 
+- had initially been developed when it seemed appropriate
+- had been maintained and extended every now and then
+- has its dedicated VB-Project which includes a test environment and an unattended Regression Test
+- is kept in a public GitHub repo of which I use clones
+- meets a consistent coding standard and follows clean code principals (no defaults, early binding, avoiding unintended 'case' changes, etc.)
 
-## Environment
-Development, maintenance, and test of  _Common VBA Component_ , is done via dedicated VB-Projects which claim the original/raw component code 'hosted'. This dedication pais off it's effort because it it allowes the implementation of regression tests performed with every code modification. Using GitHub for the versioning has proofed a developer's dream. Consequently, I now try to do any modification via a branch in order not to interfere with any productive VB-Projects using them.
+I use a _[Common Component Management][1]_ Workbook which is saved as Addin and provides the service to _Export Changed Components_ and _Update Outdated Common Components_ to keep all used _Common Components_ up-to-date. Pretty sophisticated but still easy to use.
 
+## Personal and public use of (my) _Common Components_
+I do not like the idea maintaining different code versions of _Common Components_, one which I use in my VB-Projects and another 'public' version. On the other hand I do not want to urge users of my _Common Components_ to also use the other _Common Components_ which have become a de facto standard for me.
 
-## Management services
-Services are provided by a _Common Components Management_ (CompMan) Workbook, setup as Add-In.
+### Managing the splits
+The primary goal is to provide _Common Components_ which are as autonomous as possible by allowing to optionally use them in a more sophisticated environment. This is achieved by a couple of procedures which only optionally use other _Common Components_ when also installed which is indicated by the use of a couple of _Conditional Compile Arguments_:
 
-## (My) Common VBA Components
+| Conditional<br>Compile&nbsp;Argument | Purpose |
+| ------------------------------------ | ------- |
+| _Debugging_                          | Indicates that error messages should be displayed with a debugging option allowing to resume the error line |
+| _ExecTrace_                          | Indicates that the _[mTrc][4]_ module is installed
+| _MsgComp_                            | indicates that the _[mMsg][3]_, _[fMsg.frm][1]_, and _[fMsg.frx][2]_ are installed |
+| _ErHComp_                            | Indicates that the _[mErH][6]_ is installed |
 
-|         Common VBA ...    |Download and import|GitHub repo|     Service    |      Description                 |
-|---------------------------|----------------|-----------|----------------|----------------------------------|
-| Basic Services            |mBasic          |private    |                |                                  |
-|                           |                |           |                |                                  |
-| [Error Handling Services][1s1] |[mErH.bas][1d1] |[public][1]|-ErrMsg | Display or pass on error to the caller        |
-|                           |[fMsg.frm][1d2] |           |-BoP, EoP       | Indicate Begin/End of a Procedure|
-|                           |[fMsg.frx][1d3] |           |-BoTP           | Indicate Begin of Test Procedure |
-|                           |[mMsg.bas][1d4] |           |                |                                  |
-| Execution Trace Services  |[mTrc.bas][2d1] |[public][2]|-BOP            |Indicate Begin of Procedure       |
-|                           |[fMsg.frm][2d2] |           |-EoP            |Indicate End of Procedure         |
-|                           |[fMsg.frx][2d3] |           |-BoC            |Indicate Begin of Code            | 
-|                           |[mMsg.bas][2d4] |           |-EoC            |Indicate End of Code              |
-|VBA File Services          |[mFile][4d1]    |[public][4]|-Exists         | File existence check             |
-|                           |                |           |-Differs        | Compare Files                    |
-|                           |                |           |-Arry           | File to/from array               |
-|                           |                |           |-FileSelect     | File select dialog               |
-|                           |                |           |-Tmp            | File select dialog               |
-|                           |                |           |-Txt            | File to/from text                |
-|VBA Message Service        |fMsg            |[public][3]|-Dsply          | Display a structured message     |
-|                           |mMsg.bas        |           |-Box            | Display (Msg)Box analog message  |
-| Excel Obstructions Service|mObstrctns      |private    |                |                                  |
-| Excel Range Services      |mRng            |private    |                |                                  |
-| Excel Rows Services       |mRows           |private    |                |                                  |
-| Excel Workbook Services   |mWbk            |private    |                |                                  |
-| Excel Worksheet Services  |mWs             |private    |                |                                  |
-| Project Services          |mVBP<br>clsVBP  |private    |                |                                  |
+By these means other users are no bothered by my personal preferences - or are only as little as possible :-).
+
+## _Common Components_ overview
+|Component|Module(s)|Status|Comment|
+|---------|---------|------|-------|
+|Common VBA Message Services |mMsg, fMsg |[public GitHub repo][2]|Used by mErH (optionally by mTrc |
+|Common VBA Error Services|mErH, mMsg, fMsg|[public GitHub  repo][3]|Optionally uses mTrc|
+|Common VBA Execution Trace Services|mTrc |[public GitHub repo][4]|stand-alone or as optional component of mErH|
+ |Common VBA Excel Workbook Services|mWrkbk|[public GitHub repo][5]|Existence/open check over multiple Excel instances, open services and other|
+ |Common VBA File Services|mFile|[public GitHub repo][6]|Existence check, etc.|
+ |Common VBA Basic Services|mBasic|private GitHub repo| 
+ [Common VBA Registry Services|mReg|private GitHub repo| Read/write named values simplified to the max
+ 
 
 still to be continued.
 
-[1]:https://github.com/warbe-maker/Common-VBA-Error-Services
-[1r]:https://github.com/warbe-maker/Common-VBA-Error-Handler-Services
-[1s1]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/error/handling/2021/01/16/Common-VBA-Error-Services.html
-[1b]:https://warbe-maker.github.io/warbe-maker.github.io/vba/common/2020/11/21/Common-VBA-Error-Handler.html#the-beginend-of-procedure-services-bop-eop
-[1d1]:https://gitcdn.link/cdn/warbe-maker/VBA-MsgBox-alternative/master/source/mErH.bas
-[1d2]:https://gitcdn.link/cdn/warbe-maker/VBA-MsgBox-alternative/master/source/fMsg.frm
-[1d3]:https://gitcdn.link/cdn/warbe-maker/VBA-MsgBox-alternative/master/source/fMsg.frx
-[1d4]:https://gitcdn.link/cdn/warbe-maker/VBA-MsgBox-alternative/master/source/mMsg.bas
-[2]:https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
-[2d1]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/mTrc.bas
-[2d2]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/fMsg.frm
-[2d3]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/fMsg.frx
-[2d4]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/mMsg.bas
-[3]:https://github.com/warbe-maker/Common-VBA-Message-Service
-[4]:https://github.com/warbe-maker/Common-VBA-File-Services
-[4d1]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-File-Services/master/source/mFile.bas
+[1]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services
+[2]:https://github.com/warbe-maker/Common-VBA-Message-Service
+[3]:https://github.com/warbe-maker/Common-VBA-Error-Services
+[4]:https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
+[5]:https://github.com/warbe-maker/Common-VBA-Excel-Workbook-Services
+[6]:https://github.com/warbe-maker/Common-VBA-File-Services
+[7]:https://github.com/warbe-maker/Common-VBA-Basic-Services
+[8]:https://github.com/warbe-maker/Common-VBA-Registry-Services
