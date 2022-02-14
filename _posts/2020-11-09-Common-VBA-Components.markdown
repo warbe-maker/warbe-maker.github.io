@@ -9,14 +9,18 @@ A true development performance boost provided they are well designed, continuous
 <!--more-->
 
 ## Introduction
-Each of my _Common Components_ 
+### Disambiguation
+> A _Common Component_ has the same content in any VB-Project using it. It is developed, maintained, and tested in ***one*** specific -  preferably dedicated - Workbook/VB-Project.<br>A component/module just having the same name with different code is ***not*** a _Common Component_ in the subsequent sense.
+
+### My _Common Components_ 
 - had initially been developed when it seemed appropriate
 - had been maintained and extended every now and then
 - has its dedicated VB-Project which includes a test environment and an unattended Regression Test
 - is kept in a public GitHub repo of which I use clones
 - meets a consistent coding standard and follows clean code principals (no defaults, early binding, avoiding unintended 'case' changes, etc.)
 
-I use a _[Common Component Management][1]_ Workbook which is saved as Addin and provides the service to _Export Changed Components_ and _Update Outdated Common Components_ to keep all used _Common Components_ up-to-date. Pretty sophisticated but still easy to use.
+### How to keep them up-to-date in VB-Projects using them?
+I use a _[Common Component Management][1]_ Workbook which is saved as _Addin_ and provides - amongst others - the service to _Update Outdated Common Components_. A bit sophisticated but well for the  job.
 
 ## Personal and public use of (my) _Common Components_
 I do not like the idea maintaining different code versions of _Common Components_, one which I use in my VB-Projects and another 'public' version. On the other hand I do not want to urge users of my _Common Components_ to also use the other _Common Components_ which have become a de facto standard for me.
@@ -44,8 +48,6 @@ By these means other users are no bothered by my personal preferences - or are o
  |Common VBA Basic Services|mBasic|private GitHub repo| 
  [Common VBA Registry Services|mReg|private GitHub repo| Read/write named values simplified to the max
  
-
-still to be continued.
 
 [1]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services
 [2]:https://github.com/warbe-maker/Common-VBA-Message-Service
