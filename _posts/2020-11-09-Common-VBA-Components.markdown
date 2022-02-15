@@ -2,7 +2,7 @@
 layout: post
 title: Common VBA Components
 date:          2021-02-19
-modified_date: 2022-02-14
+modified_date: 2022-02-15
 categories:    vba common
 ---
 A true development performance boost provided they are well designed, continuously maintained and carefully tested.
@@ -34,7 +34,10 @@ I use a _[Common Component Management][1]_ Workbook which is saved as _Addin_ an
 |Common VBA Basic Services          |mBasic          |private GitHub repo    | 
 |Common VBA Registry Services       |mReg            |private GitHub repo    | Read/write named values simplified to the max |
  
-See also:  
+See also: [Conflicts with personal and public _Common Components_][9]
+
+### Comments
+Comments are welcome. I apologize for the fact that commenting requires a login to GitHub. This seems to be the only way to keep away spammers.
  
 
 [1]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services
@@ -45,3 +48,4 @@ See also:
 [6]:https://github.com/warbe-maker/Common-VBA-File-Services
 [7]:https://github.com/warbe-maker/Common-VBA-Basic-Services
 [8]:https://github.com/warbe-maker/Common-VBA-Registry-Services
+[9]:https://warbe-maker.github.io/vba/common/2022/02/15/Personal-and-public-Common-Components.html
