@@ -8,23 +8,27 @@ categories:    vba common
 Managing the splits: Aiming for _Common Components_ well designed for being used in my own VB-Projects without bothering other users with my (more sophisticated) use of them. <!--more-->
 
 ## Preface
-I do not like the idea maintaining different code versions of _Common Components_, one which I use in my VB-Projects and another 'public' one. On the other hand I do not want to bother users of my _Common Components_ with other _Common Components_ regularly use.
+I do not like the idea maintaining different code versions of _Common Components_, one which I use in my VB-Projects and another 'public' one. On the other hand I do not want to bother users with integration issues when my _Common Components_ make use of other _Common Components_.
+
+My primary goal is to provide _Common Components_ which function as autonomous as possible while integrating and interacting with other _Common Components_ in my VB-Projects: The [Common VBA Message Service][1] which provides the desired flexibility the VBA.MsgBox does not have and the [Common VBA Error Services][2] which displays errors with the _path to the error_.
 
 ### Managing the splits
-My primary goal is to provide _Common Components_ which function as autonomous as possible - and also to optionally use them together with the/my [Common VBA Message Services][1] and the [Common VBA Error Services][2]. This 'optionally installed' is primarily achieved by the use of a couple of _Conditional Compile Arguments_ and procedures also by a couple of procedures which only optionally use other _Common Components_ only when installed.
+Optionally available/installed/used _Common Components_ are indicated by a couple of _[Conditional Compile Arguments](#conditional-compile-arguments)_ which are used in [Procedures providing the environment flexibility](#procedures-providing-the-environment-flexibility) procedures also by a couple of procedures which only optionally use other _Common Components_ only when installed.
 
-#### _Conditional Compile Arguments_ with _Common Components_
+#### _Conditional Compile Arguments_
 
-| Conditional Compile Argument | Purpose |
-| ---------------------------- | ------- |
-| _Debugging_                  | Indicates that error messages should be displayed with a debugging option allowing to resume the error line |
-| _ExecTrace_                  | Indicates that the _[mTrc][4]_ module is installed
-| _MsgComp_                    | indicates that the _[mMsg][5]_, _[fMsg.frm][6]_, and _[fMsg.frx][7]_ are installed |
-| _ErHComp_                    | Indicates that the _[mErH][8]_ is installed |
+| Cond.&nbsp;Comp.&nbsp;Arg. | Purpose |
+| -------------------------- | ------- |
+| `Debugging = 1`            | Indicates that the error messages should be displayed with a debugging option allowing to resume the error line |
+| `ExecTrace = 1`            | Indicates that the  _[Common VBA Execution Trace Service][3] is installed and will actively be used |
+|  `MsgComp = 1`             | Indicates that [Common VBA Message Service][1] is installed so that the _mMsg.Dsply_ service can be used as alternative to the `VBA.MsgBox` |
+| `ErHComp = 1`              | Indicates that the [Common VBA Error Services][2] is installed which is able to display the 'path-to-the-error' |
 
-#### Procedures providing an optional environment
+
+#### Procedures providing the environment flexibility
 ##### _ErrMsg_
-Used in each _Common Component_, provides the display of an error message using the VBA.MsgBox when no other components are installed but still provides a very useful debugging option allowing to resume the error line. When the _[Common VBA Message Services][1]_ (components _[mMsg][5]_, _[fMsg.frm][6]_, and _[fMsg.frx][7]_) are installed the Error Message will look much more convenient, when additionall the [Common VBA Error Services][2] (component _[mErH][8]_) is installed the Error Message will provide a 'path to the error')
+Used in each _Common Component_ for the display of an error message. When neither the [Common VBA Message Service][1] nor the [Common VBA Error Service][2] is installed the error message is displayed by means of the `VBA.MsgBox`, else the 'better option' is used.
+
 ```vb
 Private Function ErrMsg(ByVal err_source As String, _
                Optional ByVal err_no As Long = 0, _
