@@ -21,7 +21,7 @@ Private Function ErrSrc(ByVal proc_name As String) As String
     ErrSrc = "mDemo." & proc_name
 End Function
 ```
-Next we need and error message function which provided an extra button.
+Next we need and error message function which provides an extra button.
 ```vb
 Private Function ErrMsg(ByVal proc_name As String) As Variant
     ErrMsg = VBA.MsgBox(Prompt:="Error: " & Err.Description & vbLf & vbLf & _
