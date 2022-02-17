@@ -66,7 +66,7 @@ End Sub
 ```
 Executing TestProc displays the following message:<br>
 ![](../Assets/StraightToTheErrorLine.png)<br>
-![](/Assets/StraightToTheErrorLine.png)<br>(sorry for the German) that's it Yes/Ja and twice the F8 keystroke and voila! here we are.
+![](/Assets/StraightToTheErrorLine.png)<br>(sorry for the German) that's it! Yes/Ja and twice the F8 keystroke and voila! there we are.
 
 > One may think that's a lot of code lines but I can assure everyone: When an error message like this is displayed the debugging option will be perceived like a godsend.
 
