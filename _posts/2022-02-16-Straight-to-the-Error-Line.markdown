@@ -4,10 +4,8 @@ title: Straight to the Error Line
 date:     2022-02-16
 modified: 2020-02-17
 categories: vba common error handling
-excerpt: true
 ---
-
-An error message with a debugging option enabling to go straight to the error line without knowing the error line number - because, as usual, there aren't any.
+An error message with a debugging option enabling to go straight to the error line without knowing the error line number (as usual there aren't any).
 <!--more-->
 
 ## Preface
