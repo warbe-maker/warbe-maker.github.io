@@ -173,12 +173,12 @@ Private Sub EoP(ByVal e_proc As String, _
 End Sub
 ```
 
-### Example
+## Example
 The _[Common VBA Error Services][1]_ and the _[Common VBA Execution Trace Services][3]_ have the following in common:
 1. Both use in each component/module the `ErrSrc` function to uniquely identify a procedure's name (i.e. prefix it with the component's name) and the _AppErr_ function for Application Error numbers not conflicting with system errors.
 3. Both use _BoP/EoP_ statements to indicate the <u>B</u>egin and <u>E</u>nd <u>o</u>f a <u>P</u>rocedure.<br>The execution trace uses the statements to begin/end the trace of a procedure<br>the error uses the statements to indicate an 'entry procedure' to which the error is passed on for being displayed (which allows gathering the 'path to the error'.
 
-### Comments
+## Comments
 Comments are welcome. I apologize for the fact that commenting requires a login to GitHub. This seems to be the only way to keep away spammers.
 
 [1]:https://github.com/warbe-maker/Common-VBA-Message-Service
