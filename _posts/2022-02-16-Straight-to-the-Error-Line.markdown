@@ -72,7 +72,7 @@ Executing TestProc displays the following message:<br>
 
 However, I'd prefer an error message like this:<br>
 ![](../Assets/StraightToTheErrorLineOptimum.png)<br>
-It almost invites for debugging and that's why I have implemented this kind of error message with all my VB-Projects and all my  _[Common VBA Components][1]_. The implementation only requires:
+![](/Assets/StraightToTheErrorLineOptimum.png)<br>It almost invites for debugging and that's why I have implemented this kind of error message with all my VB-Projects and all my  _[Common VBA Components][1]_. The implementation only requires:
 
 - 4 procedures I use in each module (AppErr, BoP, EoP, and ErrMsg), the last one replacing the simple ErrMsg function above)
 - 2 of my _Common VBA Components_ ([Common VBA Error Services][2], and _Common VBA Message Service_) the latter installed together with the first one all well explained in the README) 
