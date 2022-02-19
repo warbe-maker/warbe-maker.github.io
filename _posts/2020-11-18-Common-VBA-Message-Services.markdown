@@ -31,7 +31,10 @@ The quick-and-dirty VBA.MsgBox is fine for many things but it has its limits. I 
 ![](/Assets/ExecutionTrace.png)
 
 ### Process monitoring
-See the [Monitor service demonstration][2]
+See the [_Monitor_ service demonstration][2]
+
+### Process monitoring instances
+See the [_Monitor_ service instances demonstration][3]. It makes use of the _MsgInstance_ service to position the message windows on the display. 
 
 
 ## Comments
@@ -40,4 +43,4 @@ Comments of any kind are more than welcome. I apologize for the fact that it req
 
 [1]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md
 [2]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md#monitor-service-demonstration
-
+[3]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md#demo-of-the-monitor-service-using-the-msginstance-service
