@@ -18,23 +18,27 @@ The quick-and-dirty VBA.MsgBox is fine for many things but it has its limits. I 
 - Width and height adjusted up to a specifiable maximum (within a min/max range)
 - Minimum width specifiable
 - Up to 7 x 7 reply buttons with any caption text plus all the VBA.MsgBox button values
-- Vertical and horizontal scroll-bars when maximum width/height is exeeded (proportional message sections adapt, mono-spaced sections determine their widht by the longest line)
-- An optional mode-less display allows the use of any number of message displays in parallel.
+- Vertical and horizontal scroll-bars when maximum width/height is exceeded (proportional message sections adapt, mono-spaced sections determine their width by the longest line)
+- An optional mode-less display allows the use of any number of message displays in parallel (i.e. instances of the message UserForm).
 
-## Usage examples
-### Error Message
+## Display examples
+The following display examples show the great flexibility of the _[Common VBA Message Services][1]_
+### Display of an Error Message 
 ![](../Assets/ErrMsgWithDebuggingOption.png)
-![](/Assets/ErrMsgWithDebuggingOption.png)
+![](/Assets/ErrMsgWithDebuggingOption.png)<br>
+<small>Note: The path-to-the-error is a service provided by the _Common VBA Error Services_! The example is shown because the error service uses the message service the error message display.</small>
 
-### Display of execution trace
+### Display of an Execution trace
 ![](../Assets/ExecutionTrace.png)
 ![](/Assets/ExecutionTrace.png)
 
-### Process monitoring
-See the [_Monitor_ service demonstration][2]
+### Display of a Process monitor
+![](../Assets/DemoMonitorService.gif)
+![](/Assets/DemoMonitorService.gif)
 
-### Process monitoring instances
-See the [_Monitor_ service instances demonstration][3]. It makes use of the _MsgInstance_ service to position the message windows on the display. 
+### Display of several Process monitoring instances
+![](../Assets/DemoMonitorServiceInstances.gif)
+![](/Assets/DemoMonitorServiceInstances.gif)
 
 
 ## Comments
@@ -42,5 +46,4 @@ Comments of any kind are more than welcome. I apologize for the fact that it req
 
 
 [1]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md
-[2]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md#monitor-service-demonstration
-[3]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md#demo-of-the-monitor-service-using-the-msginstance-service
+
