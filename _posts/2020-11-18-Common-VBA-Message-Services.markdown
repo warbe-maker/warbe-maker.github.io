@@ -3,13 +3,14 @@ layout: post
 title: Common VBA Message Service
 subtitle: An alternative for the VBA MsgBox with less constraints, more options, and a better display
 date:          2020-11-17
-modified_date: 2022-02-18
+modified_date: 2022-05-06
 categories:    vba common
 ---
-An alternative to the VBA.MsgBox of which the limits hardly will ever been reached.
+An alternative to the VBA.MsgBox with limits hardly will ever been reached and  great functionality and features.
 <!--more-->
+
 ## Preface
-The quick-and-dirty VBA.MsgBox is fine for many things but it has its limits. I found it almost impossible to display anything a little bit nicer designed. And because I've got the time and the ambition I implemented one without all the limits. The _[Common VBA Message Service README][1]_ public GitHub repo provides all information on how to install and use it. 
+The VBA.MsgBox is fine for ad-hoc messages but it has its limits. I found it almost impossible to display anything a little bit nicer designed. And because I've got the time and the ambition I implemented one without all the limits. The _[Common VBA Message Service README][1]_ public GitHub repo provides all information on how to install and use it. 
 
 ## Features
 ![](../Assets/CommMsgServiceDemo.png)
@@ -21,7 +22,7 @@ The quick-and-dirty VBA.MsgBox is fine for many things but it has its limits. I 
 - Vertical and horizontal scroll-bars when maximum width/height is exceeded (proportional message sections adapt, mono-spaced sections determine their width by the longest line)
 - An optional mode-less display allows the use of any number of message displays in parallel (i.e. instances of the message UserForm).
 
-## Display examples
+## Examples
 The following display examples show the great flexibility of the _[Common VBA Message Services][1]_
 ### Display of an Error Message 
 ![](../Assets/ErrMsgWithDebuggingOption.png)
@@ -40,9 +41,14 @@ The following display examples show the great flexibility of the _[Common VBA Me
 ![](../Assets/DemoMonitorServiceInstances.gif)
 ![](/Assets/DemoMonitorServiceInstances.gif)
 
+### Buttons with action
+When a service displays the message form mode-less buttons are usually useless because there is no recipient to which the clicked button is returned as a reply. The _[Common VBA Message Service][1]_ offers a service to provide displayed buttons with `Application.Run` information executed when clicked. This service boosts the functionality of displayed message. It may be used to trigger actions/services provided by the VB-Project which displayed the message or even provided by another (open) Workbooks, possibly an Addin-Workbook - ***with arguments passed on***. <span id="a1">[¹](#1)</span>
+
 
 ## Comments
 Comments of any kind are more than welcome. I apologize for the fact that it requires a GitHup account/login but this is appropriate for keeping away spammers.
+
+<br><span id="1">¹</span> A _CommandButton_ on a Worksheet can only be assigned a macro without arguments! In this respect the provided feature is an enormous advantage [⏎](#a1)<br>
 
 
 [1]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md
