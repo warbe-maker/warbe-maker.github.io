@@ -12,15 +12,15 @@ A true development performance boost provided they are well designed, continuous
 ### Disambiguation
 > A _Common Component_ has the same content in any VB-Project using it. It is developed, maintained, and tested in ***one*** specific -  preferably dedicated - Workbook/VB-Project.<br>A component/module just having the same name with different code is ***not*** a _Common Component_ in the subsequent sense.
 
-### _Common Components_ 
+### My _Common Components_ 
 - had initially been developed when it seemed appropriate
 - had been maintained and extended every now and then
 - has its dedicated VB-Project which includes a test environment and an unattended Regression Test
 - is kept in a public GitHub repo of which I use clones
 - meets a consistent coding standard and follows clean code principals (no defaults, early binding, avoiding unintended 'case' changes, etc.)
 
-## Managing _Common Components_
-I use a _[Common Component Management][1]_ Workbook which is saved as _Addin_ and provides - amongst others - the service to _Update Outdated Common Components_. A bit sophisticated but well for the  job.
+## My management of _Common Components_
+I use a _[Common Component Management][1]_ Workbook (in a public GitHub repository) which optionally may be saved as _Addin_. It provides the (not only) the service to _Update Outdated Common Components_. A Somehow sophisticated approach but it does the job already for years - and is still supported.
 
 ## My _Common Components_ (overview)
 
@@ -40,7 +40,7 @@ See also: [Conflicts with personal and public _Common Components_][9]
 Comments are welcome. I apologize for the fact that commenting requires a login to GitHub. This seems to be the only way to keep away spammers.
  
 
-[1]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services
+[1]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services/blob/master/README.md?#management-of-excel-vb-project-components
 [2]:https://github.com/warbe-maker/Common-VBA-Message-Service
 [3]:https://github.com/warbe-maker/Common-VBA-Error-Services
 [4]:https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
