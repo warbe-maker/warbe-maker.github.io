@@ -2,7 +2,7 @@
 layout: post
 title: Common VBA Components
 date:          2021-02-19
-modified_date: 2022-02-15
+modified_date: 2023-02-24
 categories:    vba common
 ---
 A true development performance boost provided they are well designed, continuously maintained and carefully tested.
@@ -24,15 +24,16 @@ I use a _[Common Component Management][1]_ Workbook (in a public GitHub reposito
 
 ## My _Common Components_ (overview)
 
-|Component                          |Module(s)       |Status                 |Comment               |
-| --------------------------------- | -------------- | --------------------- | -------------------- |
-|Common VBA Message Services        |mMsg, fMsg      |[public GitHub repo][2]|Used by mErH (optionally by mTrc |
-|Common VBA Error Services          |mErH, mMsg, fMsg|[public GitHub repo][3]|Optionally uses mTrc|
-|Common VBA Execution Trace Services|mTrc            |[public GitHub repo][4]|stand-alone or as optional component of mErH|
-|Common VBA Excel Workbook Services |mWrkbk          |[public GitHub repo][5]|Existence/open check over multiple Excel instances, open services and other|
-|Common VBA File Services           |mFile           |[public GitHub repo][6]|Existence check, etc.|
-|Common VBA Basic Services          |mBasic          |private GitHub repo    | 
-|Common VBA Registry Services       |mReg            |private GitHub repo    | Read/write named values simplified to the max |
+|Component                           |Module(s)               | Status                 |Comment               |
+| ---------------------------------- | ---------------------- | ---------------------- | -------------------- |
+|Common VBA Message Services         |mMsg, fMsg              |[public GitHub repo][2] |Universal message service, used by _mErH_ for instance|
+|Common VBA Error Services           |mErH, mMsg, fMsg        |[public GitHub repo][3] |Optionally uses _mTrc_|
+|Common VBA Execution Trace Services |mTrc                    |[public GitHub repo][4] |stand-alone or as optional component of mErH|
+|Common VBA Excel Workbook Services  |mWbk                    |[public GitHub repo][5] |Existence/open check over multiple Excel instances, open services and other|
+|Common VBA File Services            |mFso                    |[public GitHub repo][6] |Files and folder services including PrivateProfile file services|
+|Common VBA Basic Services           |mBasic                  |private GitHub repo     |The code is visible via the [CompMan Workbook][1] where the component is used|
+|Common VBA Queue and Stack services |mQ, clsQ<br>mStck,&nbsp;clsStck|[public GitHub repo][10]| Stack an Queue usage unified|
+|Common VBA Registry Services        |mReg                    |private GitHub repo     | Read/write named values simplified to the max |
  
 See also: [Conflicts with personal and public _Common Components_][9]
 
@@ -49,3 +50,4 @@ Comments are welcome. I apologize for the fact that commenting requires a login 
 [7]:https://github.com/warbe-maker/Common-VBA-Basic-Services
 [8]:https://github.com/warbe-maker/Common-VBA-Registry-Services
 [9]:https://warbe-maker.github.io/vba/common/2022/02/15/Personal-and-public-Common-Components.html
+[10]:https://github.com/warbe-maker/Common-VBA-Queue-and-Stack-services
