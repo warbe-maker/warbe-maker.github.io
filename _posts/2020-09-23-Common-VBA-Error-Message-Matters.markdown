@@ -4,9 +4,8 @@ title:         All the matter for a VB error message
 date:          2020-11-21
 modified_date: 2023-04-15
 ---
-<!--more-->
-
 For professionally and semi-professionally developed VB-Projects this post considers the absolute minimum about a proper, i.e. debug supporting error handling/message.
+<!--more-->
 
 ## The Error Number
 The _Number_ property of the _Err_ object may indicate a VB Runtime, a Database, or an Application Error. The latter is one explicitly raised by `Err.Raise`. Microsoft documentation says, the error number raised by means of `Err.Raise` should be the sum of the application error n +  [_vbObjectError_](<https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.constants.vbobjecterror?view=netcore-3.1>) in order to avoid conflicts with  is a _VB Runtime Error_. I call such an error an _Application Error_ of which the number is set by:
