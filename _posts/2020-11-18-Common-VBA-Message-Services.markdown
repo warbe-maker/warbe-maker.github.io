@@ -3,14 +3,14 @@ layout: post
 title: Common VBA Message Service
 subtitle: An alternative for the VBA MsgBox with less constraints, more options, and a better display
 date:          2020-11-17
-modified_date: 2022-05-06
+modified_date: 2023-04-18
 categories:    vba common
 ---
-An alternative to the VBA.MsgBox with limits hardly will ever been reached and  great functionality and features.
+An alternative to the VBA.MsgBox. Amongst others it has the advantages of an almost unlimited message size.
 <!--more-->
 
 ## Preface
-The VBA.MsgBox is fine for ad-hoc messages but it has its limits. I found it almost impossible to display anything a little bit nicer designed. And because I've got the time and the ambition I implemented one without all the limits. The _[Common VBA Message Service README][1]_ public GitHub repo provides all information on how to install and use it. 
+The VBA.MsgBox is fine for ad-hoc messages but one has to live with its limits. There's hardly any way to provide appealing messages and the size is very limited. I've got the time and motivation to implemented an alternative without all the limits. The _[Common VBA Message Service README][1]_ public GitHub repo provides all information on how to install and use it. 
 
 ## Features
 ![](../Assets/CommMsgServiceDemo.png)
@@ -41,15 +41,14 @@ The following display examples show the great flexibility of the _[Common VBA Me
 ![](../Assets/DemoMonitorServiceInstances.gif)
 ![](/Assets/DemoMonitorServiceInstances.gif)
 
-### Buttons with action
-When a service displays the message form mode-less buttons are usually useless because there is no recipient to which the clicked button is returned as a reply. The _[Common VBA Message Service][1]_ offers a service to provide displayed buttons with `Application.Run` information executed when clicked. This service boosts the functionality of displayed message. It may be used to trigger actions/services provided by the VB-Project which displayed the message or even provided by another (open) Workbooks, possibly an Addin-Workbook - ***with arguments passed on***. <span id="a1">[¹](#1)</span>
+### Mode-less displayed Buttons with an Application.Run service
+Displaying a message mode-less is rather useless when the buttons do not call services via `Application.Run`. The _[Common VBA Message Service][1]_ offers a service to provide displayed buttons with `Application.Run` information executed when clicked - provided the message is displayed mode-less. This service substantially extends a displayed messages functionality. It may be used to trigger actions/services provided by any open Workbook, i.e. not only the Workbook which displayed the message. [^1]
 
 
 ## Comments
 Comments of any kind are more than welcome. I apologize for the fact that it requires a GitHup account/login but this is appropriate for keeping away spammers.
 
-<br><span id="1">¹</span> A _CommandButton_ on a Worksheet can only be assigned a macro without arguments! In this respect the provided feature is an enormous advantage [⏎](#a1)<br>
-
+[^1]: A _CommandButton_ on a Worksheet can only be assigned a macro without arguments! In contrast, Buttons displayed by the [Common VBA Message Services][1] may be provided with any number of arguments.
 
 [1]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md
 
