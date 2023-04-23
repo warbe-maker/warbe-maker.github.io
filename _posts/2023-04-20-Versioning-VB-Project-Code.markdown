@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Excel VB Component Management
-subtitle: Keeping Common Components up-to-date in Vb-Projects using them
+title: Versioning Excel VB-Projects
+subtitle: Automating changed Code Export with a single code line
 date:   2023-04-20
 modified_date: 2023-04-20
 categories: vba excel vb-project versioning
