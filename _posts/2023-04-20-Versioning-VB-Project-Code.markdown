@@ -3,19 +3,19 @@ layout: post
 title: Versioning Excel VB-Projects
 subtitle: Automating changed Code Export with a single code line
 date:   2023-04-20
-modified_date: 2023-04-20
+modified_date: 2023-04-25
 categories: vba excel vb-project versioning
 ---
-My [Component Management Workbook][7] requires a single code line in combination with an imported Export-File for a fully automated export of changed VBComponents .
+My [Component Management Workbook][7] provides a fully automated export service for changed VBComponents in any Workbook and this service requires only a single code line in combination with an imported Export-File.
 <!--more-->
 ## The fully automated Export service
 When the [Component Management Workbook][7] is downloaded and opened it provides its own default environment of files and folders and is immediately ready for servicing Workbooks which meet the required [preconditions][10]. The corresponding [README][8] in the [public GitHub repository][9] provides all required information not only for the fully automated _Export of Changed Components_ service here in the focus. 
 
 ## Service only when applicable
-The automated code export service is only provided when the Workbook resides at a defined location, wich preferably should differ from the location the Workbook is productively used.[^1] &nbsp; When this approach is followed, the productively used Workbook is not concerned by the export service. 
+The automated code export service is only provided when the Workbook resides at a defined location, which preferably should differ from the location the Workbook is productively used.[^1] &nbsp; When this approach is followed, the productively used Workbook is not concerned by the export service. 
 
 ## Versioning approaches and tools
-There are a number of [Alternatives](#alternatives-some) and so the final chosen versioning tool depends on personal preferences. Most of the alternatives are based on Export-Files provided when the code has changed [^2] &nbsp; I use [GitHub Desktop][3] for Windows as user interface for [GitHub][2]. GitHub is free and only requires 2 clicks (_Commit_ and _Push_) to complete the versioning task which by saving the changes into a GitHub _repository_ which may be private or public. The below focuses on my solution which I am using now for more than two years - continously improving it.
+There are a number of [Alternatives](#alternatives-some) and so the final chosen versioning tool depends on personal preferences. Most of the alternatives are based on Export-Files provided when the code has changed [^2] &nbsp; I use [GitHub Desktop][3] for Windows as user interface for [GitHub][2]. GitHub is free and only requires 2 clicks (_Commit_ and _Push_) to complete the versioning task which by saving the changes into a GitHub _repository_ which may be private or public. The below focuses on my solution which I am using now for more than two years - continuously improving it.
 
 [^1]: It may be an often practiced approach not to separate the productive use from the development task but it comes with the risk of an - at least  temporarily unusable Workbook. The resulting stress contradicts careful coding and testing. Likely the risky approach addresses the fact that when a Workbook is used while its code is maintained means that the code changes have to be transferred to - synchronized with respectively - the productive Workbook. Usually such a [VB-Project Synchronization][4] service is not available. also provided.
 
