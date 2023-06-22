@@ -3,7 +3,7 @@ layout: post
 title: Versioning Excel VB-Projects
 subtitle: Automating changed Code Export with a single code line
 date:   2023-04-20
-modified_date: 2023-04-25
+modified_date: 2023-04-27
 categories: vba excel vb-project versioning
 ---
 My [Component Management Workbook][7] provides a fully automated export service for changed VBComponents in any Workbook and this service requires only a single code line in combination with an imported Export-File.
@@ -24,7 +24,7 @@ The below alternatives are just a very first look with all provided information 
 
 | Alternative | Short description (derived from source) |
 |------------------|-------------------|
-|[vbaDeveloper][5] | VbaDeveloper is an excel addin for easy version control of all your vba code. If you write VBA code in excel, all your files are stored in binary format. You can commit those, but a version control system cannot do much more than that with them. Merging code from different branches, reverting commits (other than the last one), or viewing differences between two commits is very troublesome for binary files. The VbaDeveloper Addin aims to solve this problem.|
+|[vbaDeveloper][5] | VbaDeveloper is an excel add-in for easy version control of all your VBA code. If you write VBA code in excel, all your files are stored in binary format. You can commit those, but a version control system cannot do much more than that with them. Merging code from different branches, reverting commits (other than the last one), or viewing differences between two commits is very troublesome for binary files. The VbaDeveloper Addin aims to solve this problem.|
 |[VBASync][1]      | Maybe the only solution I know which does not touch the Workbook at all and not even uses Export-Files. However, this solution requires an additional manual step.|
 | [XLTools][6]     | Powerful Excel add-in designed for business users.|
 
@@ -33,10 +33,10 @@ The below alternatives are just a very first look with all provided information 
 [1]: https://github.com/chelh/VBASync
 [2]: https://github.com
 [3]: https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop
-[4]: https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services/blob/master/README.md?#synchronize-vb-project
+[4]: https://github.com/warbe-maker/VBA-Component-Management/blob/master/README.md?#synchronize-vb-project
 [5]: https://github.com/hilkoc/vbaDeveloper
 [6]: https://xltools.net/
-[7]: https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services/blob/master/CompMan.xlsb?raw=true
-[8]: https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services/blob/master/README.md
-[9]: https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services
-[10]: https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services/blob/master/README.md#enabling-the-services-serviced-or-not-serviced
+[7]: https://github.com/warbe-maker/VBA-Component-Management/blob/master/CompMan.xlsb?raw=true
+[8]: https://github.com/warbe-maker/VBA-Component-Management/blob/master/README.md
+[9]: https://github.com/warbe-maker/VBA-Component-Management
+[10]: https://github.com/warbe-maker/VBA-Component-Management/blob/master/README.md#enabling-the-services-serviced-or-not-serviced

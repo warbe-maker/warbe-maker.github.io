@@ -2,7 +2,7 @@
 layout: post
 title: Common VBA Components
 date:          2021-02-19
-modified_date: 2023-02-24
+modified_date: 2023-06-19
 categories:    vba common
 ---
 A true development performance boost provided they are well designed, continuously maintained and carefully tested.
@@ -41,13 +41,13 @@ See also: [Conflicts with personal and public _Common Components_][9]
 Comments are welcome. I apologize for the fact that commenting requires a login to GitHub. This seems to be the only way to keep away spammers.
  
 
-[1]:https://github.com/warbe-maker/Common-VBA-Excel-Component-Management-Services/blob/master/README.md?#management-of-excel-vb-project-components
-[2]:https://github.com/warbe-maker/Common-VBA-Message-Service
-[3]:https://github.com/warbe-maker/Common-VBA-Error-Services
-[4]:https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
+[1]:https://github.com/warbe-maker/VBA-Component-Management/blob/master/README.md?#management-of-excel-vb-project-components
+[2]:https://github.com/warbe-maker/VBA-Message
+[3]:https://github.com/warbe-maker/VBA-Error
+[4]:https://github.com/warbe-maker/VBA-Trace
 [5]:https://github.com/warbe-maker/Common-VBA-Excel-Workbook-Services
 [6]:https://github.com/warbe-maker/Common-VBA-File-Services
-[7]:https://github.com/warbe-maker/Common-VBA-Basic-Services
-[8]:https://github.com/warbe-maker/Common-VBA-Registry-Services
+[7]:https://github.com/warbe-maker/VBA-Basics
+[8]:https://github.com/warbe-maker/VBA-Registry
 [9]:https://warbe-maker.github.io/vba/common/2022/02/15/Personal-and-public-Common-Components.html
-[10]:https://github.com/warbe-maker/Common-VBA-Queue-and-Stack-services
+[10]:https://github.com/warbe-maker/VBA-Queue-and-Stack

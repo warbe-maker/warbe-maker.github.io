@@ -2,8 +2,8 @@
 layout: post
 title: Common VBA Error Services
 date:          2021-01-16
+modified_date: 2023-06-17
 categories: vba common error handling
-modified_date: 2022-05-04
 ---
 An inviting error message with features! This will make a difference for the development of a VBA-Project. Error services inspired by the-best-of-the-web, worth being considered not only by professionals.
 <!--more-->
@@ -37,7 +37,7 @@ Looks much better and the debugging option is much more self explanatory.
 ![](/Assets/DemoAppErrByErhErrMsg.png)
 For complex VBA-Projects and/or those having a (recommended by professionals) fine module structure, having the "path-to-the-error" displayed can make a difference.
 
-### Conlusion
+### Conclusion
 A error message displayed by the mErH.ErrMsg service provides:
 - A inviting appearance by design
 - A [Path to the error][5]
@@ -45,10 +45,10 @@ A error message displayed by the mErH.ErrMsg service provides:
 - An optional _About the error_ section for _Application Errors_ (those raised by `Err.Raise`)
 
 ## Comments
-Any comments are welcome whether here in this blog or in the [public GiHub repo][1] which is open for Discussions. I appologize for the fact that whichever way is used requires an acoount and a login. This is the only way to hinder spammers.
+Any comments are welcome whether here in this blog or in the [public GiHub repo][1] which is open for Discussions. I apologize for the fact that whichever way is used requires an account and a login. This is the only way to hinder spammers.
 
-[1]:https://github.com/warbe-maker/Common-VBA-Error-Services
+[1]:https://github.com/warbe-maker/VBA-Error
 [2]:https://warbe-maker.github.io/vba/common/2021/02/19/Common-VBA-Components.html
 [3]:https://warbe-maker.github.io/vba/common/error/handling/2022/02/16/Straight-to-the-Error-Line.html
-[4]:https://github.com/warbe-maker/Common-VBA-Error-Services/blob/master/README.md
-[5]:https://github.com/warbe-maker/Common-VBA-Error-Services/blob/master/README.md#the-path-to-the-error 
+[4]:https://github.com/warbe-maker/VBA-Error/blob/master/README.md
+[5]:https://github.com/warbe-maker/VBA-Error/blob/master/README.md#the-path-to-the-error 

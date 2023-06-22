@@ -3,7 +3,7 @@ layout: post
 title: Common VBA Message Service
 subtitle: An alternative for the VBA MsgBox with less constraints, more options, and a better display
 date:          2020-11-17
-modified_date: 2023-04-18
+modified_date: 2023-06-17
 categories:    vba common
 ---
 An alternative to the VBA.MsgBox. Amongst others it has the advantages of an almost unlimited message size.
@@ -50,5 +50,5 @@ Comments of any kind are more than welcome. I apologize for the fact that it req
 
 [^1]: A _CommandButton_ on a Worksheet can only be assigned a macro without arguments! In contrast, Buttons displayed by the [Common VBA Message Services][1] may be provided with any number of arguments.
 
-[1]:https://github.com/warbe-maker/Common-VBA-Message-Service/blob/master/README.md
+[1]:https://github.com/warbe-maker/VBA-Message/blob/master/README.md
 

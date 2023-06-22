@@ -2,7 +2,7 @@
 layout: post
 title: Straight to the Error Line
 date:     2022-02-16
-modified: 2020-02-17
+modified: 2023-06-17
 categories: vba common error handling
 ---
 An error message with a debugging option enabling to go straight to the error line without knowing the error line number (as usual there aren't any).
@@ -89,6 +89,6 @@ Anything looking strange? Maybe the use of the Conditional Compile Argument? The
 Any kind of contribution is welcome. I apologize for the fact that logging in to GitHub may be an all but insurmountable obstacle. It is an appropriate means for keeping away spammers.
 
  [1]:https://warbe-maker.github.io/vba/common/2021/02/19/Common-VBA-Components.html
- [2]:https://github.com/warbe-maker/Common-VBA-Error-Services
+ [2]:https://github.com/warbe-maker/VBA-Error
  [3]:https://warbe-maker.github.io/vba/common/2022/02/15/Personal-and-public-Common-Components.html
  [4]:https://gitcdn.link/cdn/warbe-maker/Straight-to-the-error-line-demo/master/StraightToTheErrorLine.xlsm
