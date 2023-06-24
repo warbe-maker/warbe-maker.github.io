@@ -5,21 +5,37 @@ subtitle:
 date:   2023-06-12
 categories: vba excel component management common components
 ---
-## Excel VB-Project development towards professionalism
-It's the heritage of may active professional IT life time and the result of my retirement life: Means substantially supporting - mainly Excel - VB-Project development. A bunch of ***Common Component*** increase efficiency of development and a ***Component-Management*** keep this ***Common Components*** up-to-date in all VB-Projects using them.
+It's the heritage of may active professional IT life time and the result of my retirement life: Means substantially supporting - mainly Excel - VB-Project development. A bunch of ***Common Component*** increase efficiency of development and a ***Component-Management*** keep this ***Common Components*** up-to-date in all VB-Projects using them.  
+> The matter of this blog may appear a bit overwhelming at first but it will sustainable change your Excel VP-Project development life.
 
 ### Common Components
-A peace of code with properties potentially useful for more than one VB-Project, triggers the birth of a Common Component. A dedicated development and test Workbook hosting it provides the means for:
-- **Execution trace**: supports test documentation and helps identifying the source of performance issues
-- **Elaborated error handling**: supports debugging and regression testing 
-- **log services**: make it easy to write entries to log-files
-- etc.
-
-Each of my Common Components work completely autonomous. I.e they are 'single VB-Components not requiring other modules, the use of other Common Components remains optional.
+A peace of code with properties potentially useful for more than one VB-Project, triggers the birth of a _Common Component_. Preferably hosted in a dedicated development and test Workbook provides the chance for:
+- The use of the **[Common VBA Execution Trace Service][1]** which supports (regression) test documentation and last but not least supports identifying the source of performance issues
+- The use of the **[Common VBA Error Services][2]** which supports debugging and regression testing
 
 ### Components Management (Excel only)
-- An **Update outdated Common Components** service keeps used **Common Components** up-to-date by updating any outdated when a Workbook is opened for development/maintenance (but not when opened productively!)
-- An **Export of changed VB-Components** service supports versioning - in combination with versioning means like GitHub (what I prefer)
-- A **Synchronization VB-Projects** service supports development and maintenance without a downtime for the productive Workbook
+Not only for the management of _Common Components_ but also for maintaining the basis for versioning.
+- An **Update outdated Common Components** service keeps used **Common Components** up-to-date by updating them when outdated and the Workbook is opened for development/maintenance (in a dedicated folder!)
+- An **Export of changed VB-Components** service supports versioning - in combination with versioning means like GitHub (what I prefer) by exporting any changed component
+- A **Synchronization VB-Projects** service supports development and maintenance without the unavoidable downtime for the productive Workbook otherwise  
 
+See the _[Common VBA Components Management][3] for more information.
 
+### Regression testing
+It is the nature and the advantage of a _Common Component_ that it allows a dedicated development environment which enables regression-testing. Something which hardly can be achieved when a component is just declared as such in a non-dedicated Workbook. Regression testing is supported by the **[Common VBA Error Services][2]** and the **[Common VBA Execution Trace Service][1]**.  
+See a complete example with the **[Common VBA Basic Services][8]**.
+The [RegressionTest.ExecTrace.log][4] file shows the result of the execution trace. The [mBasicTest.bas][5] is the test component which produces the execution trace result. See how to [fork][6] the public [GitHub repo][8] to make it all available as your own personal GitHub repo which you the may clone to your computer [by means of [GitHub DeskTop][7]) of which makes the whole thing available in a dedicated folder on your computer.[^1]
+
+### My _Common Components_
+All my _Common Component_ development aim for working completely autonomous, i.e. they are not requiring other module. The use of other _Common Components_ remains optional. The first three of them are mentioned in this blog. Others are also available as public GitHub repos.
+
+[^1]:Having a look on what GitHub provides - also for Excel VB-Project development will open a complete new world for those never heard if it - or having it ignored for a long time like me.
+
+[1]:https://github.com/warbe-maker/VBA-Trace
+[2]:https://github.com/warbe-maker/VBA-Error
+[3]:https://github.com/warbe-maker/VBA-Component-Management
+[4]:https://github.com/warbe-maker/VBA-Basics/blob/master/RegressionTest.ExecTrace.log
+[5]:https://github.com/warbe-maker/VBA-Basics/blob/master/source/mBasicTest.bas
+[6]:https://www.freecodecamp.org/news/how-to-fork-a-github-repository/#:~:text=Forking%20a%20repository%20is%20the%20matter%20of%20clicking,forked%20repository%20gets%20created%20under%20your%20GitHub%20account.
+[7]:https://desktop.github.com
+[8]:https://github.com/warbe-maker/VBA-Basics
