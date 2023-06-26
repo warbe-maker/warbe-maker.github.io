@@ -20,6 +20,9 @@ _Common Components_, specifically when hosted in dedicated Workbooks are ideal f
 - the use of **[Common VBA Error Services][2]** supporting debugging and regression testing
 - A management tool which keeps them up-to-date in any using VB-Project.
 
+#### My favorites
+Those components I use most are mentioned in here. Almost all of [my _Common Components](#my-common-components) (about ten, not all public) are an integrated part of the _[Common VBA Components Management][3] mentioned below. 
+
 ### Component Management (Excel only)
 Not only for the management of _Common Components_ but also for maintaining a basis for versioning:
 - An **Update outdated Common Components** service keeps used **Common Components** up-to-date by updating them when outdated and the Workbook is opened for development/maintenance (in a dedicated folder!)
