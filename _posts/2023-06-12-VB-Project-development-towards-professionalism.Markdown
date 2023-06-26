@@ -21,7 +21,7 @@ _Common Components_, specifically when hosted in dedicated Workbooks are ideal f
 - A management tool which keeps them up-to-date in any using VB-Project.
 
 ### Component Management (Excel only)
-Not only for the management of _Common Components_ but also for maintaining a basis for ersioning:
+Not only for the management of _Common Components_ but also for maintaining a basis for versioning:
 - An **Update outdated Common Components** service keeps used **Common Components** up-to-date by updating them when outdated and the Workbook is opened for development/maintenance (in a dedicated folder!)
 - An **Export of changed VB-Components** service supports versioning - in combination with versioning means like GitHub (what I prefer) by exporting any changed component
 - A **Synchronization VB-Projects** service supports development and maintenance without the unavoidable downtime for the productive Workbook otherwise  
