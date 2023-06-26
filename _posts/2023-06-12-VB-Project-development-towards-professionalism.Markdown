@@ -6,15 +6,18 @@ date:       2023-06-12
 modified:   2023-06-26
 categories: vba excel component management common components
 ---
-It's the heritage of may active professional IT life time and the result of my retirement life: Means substantially supporting - mainly Excel - VB-Project development: A bunch of ***Common Components*** to increase efficiency of development and a ***Component Management*** which keeps them up-to-date in all using VB-Projects.  
-> Those possibly overwhelmed likely will benefit most. It is able to sustainable change their Excel VP-Project development life from tinkered to professional.
+It's the heritage of may active professional IT life time and the result of my retirement life: A bunch of ***Common Components*** to increase the performance and quality of Excel VB-Project  development together with a ***Component Management*** Addin which keeps them up-to-date in all VB-Projects using them.  
+> Those feeling overwhelmed will likely benefit most. Both, _Common Components_ and _Component Management is able to sustainable changes Excel VP-Project development life from tinkered to professional.
 
 ### Attraction for _Common Components_
-Disambiguation: Procedure (Function, Methods, code snippets, etc.) with useful properties for more than just one VB-Project, collected in a _Standard Module_ or a _Class Module_.
-Such components are ideal for:
-- The use of the **[Common VBA Execution Trace Service][1]** which supports the identification of performance flaws and last but not least the  documentation (extent of) a [regression test](#regression-testing)
-- The use of the **[Common VBA Error Services][2]** which supports debugging and regression testing
-- and last but not least management means which keeps them up-to-date in all VB-Projects using them.
+#### Disambiguation: _Common Components_ in this context are Procedures (Function, Methods, code snippets, etc.) with useful properties for more than just one VB-Project, collected in a _Standard Module_ or a _Class Module_.
+
+### Benefit, potential
+_Common Components_, specifically when hosted in dedicated Workbooks are ideal for:
+- being tested extensively (see [regression testing](#regression-testing)
+- the use of a **[Common VBA Execution Trace Service][1]** which supports the identification of performance flaws as well as the  documentation (extent of) a [regression test](#regression-testing)
+- the use of **[Common VBA Error Services][2]** supporting debugging and regression testing
+- A management tool which keeps them up-to-date in any using VB-Project.
 
 ### Component Management (Excel only)
 Not only for the management of _Common Components_ but also for maintaining a versioning basis.
