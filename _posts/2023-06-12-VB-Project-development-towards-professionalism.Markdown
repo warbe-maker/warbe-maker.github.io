@@ -10,7 +10,8 @@ It's the heritage of may active professional IT life time and the result of my r
 > Those feeling overwhelmed will likely benefit most. Both, _Common Components_ and _Component Management is able to sustainable changes Excel VP-Project development life from tinkered to professional.
 
 ### Attraction for _Common Components_
-#### Disambiguation: _Common Components_ in this context are Procedures (Function, Methods, code snippets, etc.) with useful properties for more than just one VB-Project, collected in a _Standard Module_ or a _Class Module_.
+#### Disambiguation
+_Common Components_ in this context are Procedures (Function, Methods, code snippets, etc.) with useful properties for more than just one VB-Project, collected in a _Standard Module_ or a _Class Module_.
 
 ### Benefit, potential
 _Common Components_, specifically when hosted in dedicated Workbooks are ideal for:
