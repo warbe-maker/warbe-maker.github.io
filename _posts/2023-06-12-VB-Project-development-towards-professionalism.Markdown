@@ -2,19 +2,22 @@
 layout: post
 title: Excel VB-Project development towards professionalism
 subtitle: 
-date:   2023-06-12
+date:       2023-06-12
+modified:   2023-06-26
 categories: vba excel component management common components
 ---
-It's the heritage of may active professional IT life time and the result of my retirement life: Means substantially supporting - mainly Excel - VB-Project development. A bunch of ***Common Component*** increase efficiency of development and a ***Component-Management*** keep this ***Common Components*** up-to-date in all VB-Projects using them.  
-> The matter of this blog may appear a bit overwhelming at first but it will sustainable change your Excel VP-Project development life.
+It's the heritage of may active professional IT life time and the result of my retirement life: Means substantially supporting - mainly Excel - VB-Project development. A bunch of ***Common Component*** to increase efficiency of development and a ***Component Management*** which keeps them up-to-date in all using VB-Projects.  
+> Those possibly overwhelmed likely will benefit most. It is able to sustainable change their Excel VP-Project development life from tinkered to professional.
 
-### Common Components
-A peace of code with properties potentially useful for more than one VB-Project, triggers the birth of a _Common Component_. Preferably hosted in a dedicated development and test Workbook provides the chance for:
-- The use of the **[Common VBA Execution Trace Service][1]** which supports (regression) test documentation and last but not least supports identifying the source of performance issues
+### Attraction for _Common Components_
+Disambiguation: Procedure (Function, Methods, code snippets, etc.) with useful properties for more than just one VB-Project, collected in a _Standard Module_ or a _Class Module_.
+Such components are ideal for:
+- The use of the **[Common VBA Execution Trace Service][1]** which supports the identification of performance flaws and last but not least the  documentation (extent of) a [regression test](#regression-testing)
 - The use of the **[Common VBA Error Services][2]** which supports debugging and regression testing
+- and last but not least management means which keeps them up-to-date in all VB-Projects using them.
 
-### Components Management (Excel only)
-Not only for the management of _Common Components_ but also for maintaining the basis for versioning.
+### Component Management (Excel only)
+Not only for the management of _Common Components_ but also for maintaining a versioning basis.
 - An **Update outdated Common Components** service keeps used **Common Components** up-to-date by updating them when outdated and the Workbook is opened for development/maintenance (in a dedicated folder!)
 - An **Export of changed VB-Components** service supports versioning - in combination with versioning means like GitHub (what I prefer) by exporting any changed component
 - A **Synchronization VB-Projects** service supports development and maintenance without the unavoidable downtime for the productive Workbook otherwise  
