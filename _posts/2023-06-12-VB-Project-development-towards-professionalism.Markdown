@@ -6,7 +6,7 @@ date:       2023-06-12
 modified:   2023-06-26
 categories: vba excel component management common components
 ---
-It's the heritage of may active professional IT life time and the result of my retirement life: Means substantially supporting - mainly Excel - VB-Project development. A bunch of ***Common Component*** to increase efficiency of development and a ***Component Management*** which keeps them up-to-date in all using VB-Projects.  
+It's the heritage of may active professional IT life time and the result of my retirement life: Means substantially supporting - mainly Excel - VB-Project development: A bunch of ***Common Components*** to increase efficiency of development and a ***Component Management*** which keeps them up-to-date in all using VB-Projects.  
 > Those possibly overwhelmed likely will benefit most. It is able to sustainable change their Excel VP-Project development life from tinkered to professional.
 
 ### Attraction for _Common Components_
