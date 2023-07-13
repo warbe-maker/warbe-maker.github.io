@@ -3,14 +3,14 @@ layout: post
 title: Common VBA Message Service
 subtitle: An alternative for the VBA MsgBox with less constraints, more options, and a better display
 date:          2020-11-17
-modified_date: 2023-06-17
+modified_date: 2023-07-13
 categories:    vba common
 ---
-An alternative to the VBA.MsgBox. Amongst others it has the advantages of an almost unlimited message size.
+An alternative to the VBA.MsgBox. Amongst others with the advantage of an almost unlimited message size.
 <!--more-->
 
 ## Preface
-The VBA.MsgBox is fine for ad-hoc messages but one has to live with its limits. There's hardly any way to provide appealing messages and the size is very limited. I've got the time and motivation to implemented an alternative without all the limits. The _[Common VBA Message Service README][1]_ public GitHub repo provides all information on how to install and use it. 
+The `VBA.MsgBox` is fine for ad-hoc messages but one has to live with its limits when it comes to the desire of better designed messages since formatting and message size is very very limited. Time and motivation resulted in an alternative without all the limits. The _[Common VBA Message Service README][1]_ public GitHub repo provides all information on how to install and use it. 
 
 ## Features
 ![](../Assets/CommMsgServiceDemo.png)
