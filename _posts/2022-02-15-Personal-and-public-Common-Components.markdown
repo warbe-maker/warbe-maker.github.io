@@ -2,72 +2,64 @@
 layout: post
 title: Personal and public use of my _Common Components_
 date:          2022-02-15
-modified_date: 2022-02-15
+modified_date: 2023-07-13
 categories:    vba common
 ---
-Managing the splits: Aiming for _Common Components_ well designed for being used in my own VB-Projects without bothering other users with my (more sophisticated) use of them. <!--more-->
+Managing the balancing act: _Common Components_ designed for a best possible fit with my own VB-Projects using them but without bothering others with my way of using/integrating them. However, maintaining different code versions of a _Common Component_, one which I use in my VB-Projects and another 'public' version is not worthwhile.<!--more-->
 
 ## Preface
-I do not like the idea maintaining different code versions of _Common Components_, one which I use in my VB-Projects and another 'public' one. On the other hand I do not want to bother users with integration issues when my _Common Components_ make use of other _Common Components_.
+My _Common Component's_ aim is to function as autonomous as possible, i.e. not requiring any additional installed component. In other words, any additional component I use with/for them needs to remain optional.
 
-My primary goal is to provide _Common Components_ which function as autonomous as possible while integrating and interacting with other _Common Components_ in my VB-Projects: The [Common VBA Message Service][1] which provides the desired flexibility the VBA.MsgBox does not have and the [Common VBA Error Services][2] which displays errors with the _path to the error_.
-
-## Managing the splits
-Optionally available/installed/used _Common Components_ are indicated by a couple of _[Conditional Compile Arguments](#conditional-compile-arguments)_ which are used in [Procedures providing the environment flexibility](#procedures-providing-the-environment-flexibility) procedures also by a couple of procedures which only optionally use other _Common Components_ only when installed.
+## Managing the balancing act
+1. Any additional component, i.e. another _Common Component_ remains optional by means of _[Conditional Compile Arguments](#conditional-compile-arguments)_ indication that a component is installed/available and should be used.
+2. "Interface" procedures call optional components only when indicated installed/available.
 
 ### _Conditional Compile Arguments_
 
 | Cond.&nbsp;Comp.&nbsp;Arg. | Purpose |
 | -------------------------- | ------- |
-| `Debugging = 1`            | Indicates that the error messages should be displayed with a debugging option allowing to resume the error line |
-| `ExecTrace = 1`            | Indicates that the  _[Common VBA Execution Trace Service][3] is installed and will actively be used |
+| `Debugging = 1`            | Indicates that an error messages should be displayed with a [_debugging option_](#the-debugging-option). This error message option is already available with the "Interface" procedure _[ErrMsg](#the-errmsg-interface-procedure)_ even when no other components are installed/available. |
+| `ExecTrace = 1`            | Indicates that the _[Common VBA Execution Trace Service_][3] is installed and will actively be used |
 |  `MsgComp = 1`             | Indicates that [Common VBA Message Service][1] is installed so that the _mMsg.Dsply_ service can be used as alternative to the `VBA.MsgBox` |
 | `ErHComp = 1`              | Indicates that the [Common VBA Error Services][2] is installed which is able to display the 'path-to-the-error' |
 
 
 ### Procedures providing the environment flexibility
-#### _ErrMsg_
-Used in each _Common Component_ for the display of an error message. When neither the [Common VBA Message Service][1] nor the [Common VBA Error Service][2] is installed the error message is displayed by means of the `VBA.MsgBox`, else the 'better option' is used.
+#### The _ErrMsg_ interface procedure
+A copy of the _ErrMsg_ "interface" procedure is used in each _Common Component_ for the display of an error message with the following options:
+- a [debugging option](#the-debugging-option) button when the _Conditional Compile Argument_ 'Debugging = 1'
+- an optional additional "About:" section when the err_dscrptn argument has an additional string concatenated by two vertical bars (||)
+- the display of the error message by means of the _[Common VBA Message Service][1]_ when installed and active (_Conditional Compile Argument_ `MsgComp = 1`)
+- the display of the possibly most comprehensive and well designed error message by the  [Common VBA Error Service][2] when installed (_Conditional Compile Argument_ `MsgComp = 1`)
+- the display of an error message by means of the `VBA.MsgBox` when neither the [Common VBA Message Service][1] nor the [Common VBA Error Service][2] is installed.
 
 ```vb
-Private Function ErrMsg(ByVal err_source As String, _
-               Optional ByVal err_no As Long = 0, _
-               Optional ByVal err_dscrptn As String = vbNullString, _
-               Optional ByVal err_line As Long = 0) As Variant
+Public Function ErrMsg(ByVal err_source As String, _
+              Optional ByVal err_no As Long = 0, _
+              Optional ByVal err_dscrptn As String = vbNullString, _
+              Optional ByVal err_line As Long = 0) As Variant
 ' ------------------------------------------------------------------------------
-' Universal error message display service. See:
-' https://warbe-maker.github.io/vba/common/2022/02/15/Personal-and-public-Common-Components.html
+' Universal error message display service. Obligatory copy Private for any
+' VB-Component using the common error service but not having the mBasic common
+' component installed.
 '
-' - Displays a debugging option button when the Conditional Compile Argument
-'   'Debugging = 1'
-' - Displays an optional additional "About the error:" section when a string is
-'   concatenated with the error message by two vertical bars (||)
-' - Invokes mErH.ErrMsg when the Conditional Compile Argument ErHComp = !
-' - Invokes mMsg.ErrMsg when the Conditional Compile Argument MsgComp = ! (and
-'   the mErH module is not installed / MsgComp not set)
-' - Displays the error message by means of VBA.MsgBox when neither of the two
-'   components is installed
+' Uses: AppErr  For programmed application errors (Err.Raise AppErr(n), ....)
+'               to turn them into a negative and in the error message back into
+'               its origin positive number.
 '
-' Uses:
-' - AppErr For programmed application errors (Err.Raise AppErr(n), ....) to
-'          turn them into negative and in the error message back into a
-'          positive number.
-' - ErrSrc To provide an unambiguous procedure name by prefixing is with the
-'          module name.
-'
-' See:
-' https://github.com/warbe-maker/Common-VBA-Error-Services
-'
-' W. Rauschenberger Berlin, Feb 2022
-' ------------------------------------------------------------------------------' ------------------------------------------------------------------------------
+' W. Rauschenberger Berlin, June 2023
+' See: https://github.com/warbe-maker/VBA-Error
+' ------------------------------------------------------------------------------
 #If ErHComp = 1 Then
     '~~ When Common VBA Error Services (mErH) is availabel in the VB-Project
     '~~ (which includes the mMsg component) the mErh.ErrMsg service is invoked.
     ErrMsg = mErH.ErrMsg(err_source, err_no, err_dscrptn, err_line): GoTo xt
+    GoTo xt
 #ElseIf MsgComp = 1 Then
     '~~ When (only) the Common Message Service (mMsg, fMsg) is available in the
     '~~ VB-Project, mMsg.ErrMsg is invoked for the display of the error message.
     ErrMsg = mMsg.ErrMsg(err_source, err_no, err_dscrptn, err_line): GoTo xt
+    GoTo xt
 #End If
     '~~ When neither of the Common Component is available in the VB-Project
     '~~ the error message is displayed by means of the VBA.MsgBox
@@ -88,37 +80,33 @@ Private Function ErrMsg(ByVal err_source As String, _
     If err_source = vbNullString Then err_source = Err.source
     If err_dscrptn = vbNullString Then err_dscrptn = Err.Description
     If err_dscrptn = vbNullString Then err_dscrptn = "--- No error description available ---"
-    
-    '~~ Consider extra information is provided with the error description
+    '~~ About
+    ErrDesc = err_dscrptn
     If InStr(err_dscrptn, "||") <> 0 Then
         ErrDesc = Split(err_dscrptn, "||")(0)
         ErrAbout = Split(err_dscrptn, "||")(1)
+    End If
+    '~~ Type of error
+    If err_no < 0 Then
+        ErrType = "Application Error ": ErrNo = AppErr(err_no)
     Else
-        ErrDesc = err_dscrptn
+        ErrType = "VB Runtime Error ":  ErrNo = err_no
+        If err_dscrptn Like "*DAO*" _
+        Or err_dscrptn Like "*ODBC*" _
+        Or err_dscrptn Like "*Oracle*" _
+        Then ErrType = "Database Error "
     End If
     
-    '~~ Determine the type of error
-    Select Case err_no
-        Case Is < 0
-            ErrNo = AppErr(err_no)
-            ErrType = "Application Error "
-        Case Else
-            ErrNo = err_no
-            If err_dscrptn Like "*DAO*" _
-            Or err_dscrptn Like "*ODBC*" _
-            Or err_dscrptn Like "*Oracle*" _
-            Then ErrType = "Database Error " _
-            Else ErrType = "VB Runtime Error "
-    End Select
-    
-    If err_source <> vbNullString Then ErrSrc = " in: """ & err_source & """"   ' assemble ErrSrc from available information"
-    If err_line <> 0 Then ErrAtLine = " at line " & err_line                    ' assemble ErrAtLine from available information
-    ErrTitle = Replace(ErrType & ErrNo & ErrSrc & ErrAtLine, "  ", " ")         ' assemble ErrTitle from available information
-       
-    ErrText = "Error: " & vbLf & ErrDesc & vbLf & vbLf & "Source: " & vbLf & err_source & ErrAtLine
+    '~~ Title
+    If err_source <> vbNullString Then ErrSrc = " in: """ & err_source & """"
+    If err_line <> 0 Then ErrAtLine = " at line " & err_line
+    ErrTitle = Replace(ErrType & ErrNo & ErrSrc & ErrAtLine, "  ", " ")
+    '~~ Description
+    ErrText = "Error: " & vbLf & ErrDesc
+    '~~ About
     If ErrAbout <> vbNullString Then ErrText = ErrText & vbLf & vbLf & "About: " & vbLf & ErrAbout
     
-#If Debugging Then
+#If Debugging = 1 Then
     ErrBttns = vbYesNo
     ErrText = ErrText & vbLf & vbLf & "Debugging:" & vbLf & "Yes    = Resume Error Line" & vbLf & "No     = Terminate"
 #Else
@@ -128,65 +116,53 @@ Private Function ErrMsg(ByVal err_source As String, _
 xt:
 End Function
 ```
-#### _BoP/EoP_
-Keeps the use of the mErH module and the mTrc module optional.
+#### The _BoP/EoP_ interface procedures
+A copy of the below procedures in each _Common Component_ keeps the installation/availability of the _[Common VBA Error Services][2]_ and the _[Common VBA Execution Trace Service][3]_ optional. See how these procedures (the corresponding code lines respectively effects the display of the _[path to the error][6]_ displayed when the _[Common VBA Error Services][2]_ is installed.
+
 ```vb
-Private Sub BoP(ByVal b_proc As String, _
-                ParamArray b_arguments() As Variant)
+Public Sub BoP(ByVal b_proc As String, _
+      Optional ByVal b_args As String = vbNullString)
 ' ------------------------------------------------------------------------------
-' Common 'Begin of Procedure' service.
-' Has no effect unless the Conditional Compile Argument 'ExecTrace = 1' (when
-' the Common Execution Trace Component (mTrc) is installed. Serves for the
-' Common Error Handling Component (mErH) when installed and the Conditional
-' Compile Arguments 'ExecTrace = 1'.
+' Common 'Begin of Procedure' interface serving the 'Common VBA Error Services'
+' and - if not installed/activated the 'Common VBA Execution Trace Service'.
+' Obligatory copy Private for any VB-Component using the service but not having
+' the mBasic common component installed.
 ' ------------------------------------------------------------------------------
-    Dim s As String:    If UBound(b_arguments) >= 0 Then s = Join(b_arguments, ",")
-
-#If ErHComp = 1 Then
-    '~~ The error handling also hands over to the mTrc component when 'ExecTrace = 1'
-    '~~ so the Else is only for the case only the mTrc is installed but not the merH.
-    mErH.BoP b_proc, s
-#ElseIf ExecTrace = 1 Then
-    mTrc.BoP b_proc, s
+#If ErHComp = 1 Then          ' serves the mTrc/clsTrc when installed and active
+    mErH.BoP b_proc, b_args
+#ElseIf XcTrc_clsTrc = 1 Then ' when only clsTrc is installed and active
+    Trc.BoP b_proc, b_args
+#ElseIf XcTrc_mTrc = 1 Then   ' when only mTrc is installed and activate
+    mTrc.BoP b_proc, b_args
 #End If
-
 End Sub
 
 Private Sub EoP(ByVal e_proc As String, _
-       Optional ByVal e_inf As String = vbNullString)
+       Optional ByVal e_args As String = vbNullString)
 ' ------------------------------------------------------------------------------
-' Common 'End of Procedure' service. When neither the Common Execution Trace
-' Component (mTrc) nor the Common Error Handling Component (mErH) is installed
-' (indicated by the Conditional Compile Arguments 'ExecTrace = 1' and/or the
-' Conditional Compile Argument 'ErHComp = 1') this procedure does nothing.
-' Else the service is handed over to the corresponding procedures.
-' May be copied as Private Sub into any module or directly used when mBasic is
-' installed.
+' Common 'Begin of Procedure' interface serving the 'Common VBA Error Services'
+' and - if not installed/activated the 'Common VBA Execution Trace Service'.
+' Obligatory copy Private for any VB-Component using the service but not having
+' the mBasic common component installed.
 ' ------------------------------------------------------------------------------
-#If ErHComp = 1 Then
-    '~~ The error handling also hands over to the mTrc component when 'ExecTrace = 1'
-    '~~ so the Else is only for the case the mTrc is installed but the merH is not.
-    mErH.EoP e_proc
-#ElseIf ExecTrace = 1 Then
-    mTrc.EoP e_proc, e_inf
+#If ErHComp = 1 Then          ' serves the mTrc/clsTrc when installed and active
+    mErH.EoP e_proc, e_args
+#ElseIf XcTrc_clsTrc = 1 Then ' when only clsTrc is installed and active
+    Trc.EoP e_proc, e_args
+#ElseIf XcTrc_mTrc = 1 Then   ' when only mTrc is installed and activate
+    mTrc.EoP e_proc, e_args
 #End If
 End Sub
 ```
-
-## Example
-The _[Common VBA Error Services][1]_ and the _[Common VBA Execution Trace Services][3]_ have the following in common:
-1. Both use in each component/module the `ErrSrc` function to uniquely identify a procedure's name (i.e. prefix it with the component's name).
-3. Both use `BoP/EoP` statements to indicate the <u>B</u>egin and <u>E</u>nd <u>o</u>f a <u>P</u>rocedure. The execution trace uses the statements to begin/end the trace of a procedure, the error message uses the statements to indicate an _Entry Procedure_ to which the error is passed o - while assembling the path-to-the-error - for being displayed.
+### The "Debugging Option"
+See the _[Used Common Components_][5] section in the README of the _[Common VBA Error Services][2]_ for how the option is displayed depending on the used (or not used) _Common Components_.
 
 ## Comments
 Comments are welcome. I apologize for the fact that commenting requires a login to GitHub. This seems to be the only way to keep away spammers.
 
-[1]:https://github.com/warbe-maker/Common-VBA-Message-Service
-[2]:https://github.com/warbe-maker/Common-VBA-Error-Services
-[3]:https://github.com/warbe-maker/Common-VBA-Execution-Trace-Service
-
-[4]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/mTrc.bas
-[5]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/mMsg.bas
-[6]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/fMsg.frm
-[7]:https://gitcdn.link/cdn/warbe-maker/Common-VBA-Execution-Trace-Service/master/source/fMsg.frx
-[6]:https://gitcdn.link/repo/warbe-maker/Common-VBA-Error-Services/master/source/mErH.bas
+[1]:https://github.com/warbe-maker/VBA-Message
+[2]:https://github.com/warbe-maker/VBA-Error
+[3]:https://github.com/warbe-maker/VBA-Trace
+[4]:https://github.com/warbe-maker/VBA-Basics
+[5]:https://github.com/warbe-maker/VBA-Error#used-common-components
+[6]:https://github.com/warbe-maker/VBA-Error#the-path-to-the-error
