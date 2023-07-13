@@ -3,11 +3,11 @@ layout: post
 title: Excel VB-Project development towards professionalism
 subtitle: 
 date:       2023-06-12
-modified:   2023-06-26
+modified:   2023-07-13
 categories: vba excel component management common components
 ---
-It's the heritage of may active professional IT life time and the result of my retirement life: A bunch of ***Common Components*** to increase the performance and quality of Excel VB-Project  development together with a ***Component Management*** Addin which keeps them up-to-date in all VB-Projects using them.  
-> Those feeling overwhelmed will likely benefit most. Both, _Common Components_ and _Component Management is able to sustainable changes Excel VP-Project development life from tinkered to professional.
+It's the heritage of may active professional IT life time, a passion for Excel VB-Projects, and the result of my retirement life: A bunch of ***Common Components*** to increase the performance and quality of Excel VB-Project development, a ***Component Management*** Addin which keeps ***Common Components** up-to-date in all VB-Projects using them and last but not least a _[professional ***Error Handling***](#attraction-for-a-professional-error-handling-with-a-comprehensive-error-message-display)_ with a comprehensive ***Error Message*** displayed.  
+> Those feeling overwhelmed will likely benefit most. Both, _Common Components_ and _Component Management_ is able to sustainable changes Excel VP-Project development life from tinkered to professional.
 
 ### Attraction for _Common Components_
 #### Disambiguation
@@ -20,10 +20,7 @@ _Common Components_, specifically when hosted in dedicated Workbooks are ideal f
 - the use of **[Common VBA Error Services][2]** supporting debugging and regression testing
 - A management tool which keeps them up-to-date in any using VB-Project.
 
-#### My favorites
-Those components I use most are mentioned in here. Almost all of [my _Common Components](#my-common-components) (about ten, not all public) are an integrated part of the _[Common VBA Components Management][3] mentioned below. 
-
-### Component Management (Excel only)
+#### Component Management (Excel only)
 Not only for the management of _Common Components_ but also for maintaining a basis for versioning:
 - An **Update outdated Common Components** service keeps used **Common Components** up-to-date by updating them when outdated and the Workbook is opened for development/maintenance (in a dedicated folder!)
 - An **Export of changed VB-Components** service supports versioning - in combination with versioning means like GitHub (what I prefer) by exporting any changed component
@@ -31,15 +28,24 @@ Not only for the management of _Common Components_ but also for maintaining a ba
 
 See the _[Common VBA Components Management][3] for more information.
 
-### Regression testing
-It is the nature and the advantage of a _Common Component_ that it allows a dedicated development environment which enables regression-testing. Something which hardly can be achieved when a component is just declared as such in a non-dedicated Workbook. Regression testing is supported by the **[Common VBA Error Services][2]** and the **[Common VBA Execution Trace Service][1]**.  
-See a complete example with the **[Common VBA Basic Services][8]**.
-The [RegressionTest.ExecTrace.log][4] file shows the result of the execution trace. The [mBasicTest.bas][5] is the test component which produces the execution trace result. See how to [fork][6] the public [GitHub repo][8] to make it all available as your own personal GitHub repo which you the may clone to your computer [by means of [GitHub DeskTop][7]) of which makes the whole thing available in a dedicated folder on your computer.[^1]
-
-### My _Common Components_
+#### My _Common Components_
 All my _Common Component_ development aim for working completely autonomous, i.e. they are not requiring other module. The use of other _Common Components_ remains optional. The first three of them are mentioned in this blog. Others are also available as public GitHub repos.
 
-[^1]:Having a look on what GitHub provides - also for Excel VB-Project development will open a complete new world for those never heard if it - or having it ignored for a long time like me.
+#### Regression testing
+It is the nature and the advantage of a _Common Component_ when it is hosted in a dedicated Workbook. It allows a dedicated development environment which enables regression-testing. Something which hardly can be achieved when a component is just declared as _common_ in a non-dedicated Workbook&nbsp;[^1]. Regression testing is supported by the **[Common VBA Error Services][2]** and the **[Common VBA Execution Trace Service][1]**.  
+See a complete example with the **[Common VBA Basic Services][8]**.
+The [RegressionTest.ExecTrace.log][4] file shows the result of the execution trace. The [mBasicTest.bas][5] is the test component which produces the execution trace result. See how to [fork][6] the public [GitHub repo][8] to make it all available as your own personal GitHub repo which you the may clone to your computer [by means of [GitHub DeskTop][7]) of which makes the whole thing available in a dedicated folder on your computer.[^2]
+
+
+### Attraction for a professional Error Handling with a comprehensive Error Message display
+
+A professional Error Handling provides both: an optimum support for debugging by means of the display of a comprehensive error message and a _[regression testing](#regression-testing)_ support and the (ideal) error message will look as follows:
+
+![](../Assets/DemoAppErrByErhErrMsg.png)  
+It provides a maximum of possible information and supports debugging with two key strokes - even when code lines are not numbered, which is common!. See _[Common VBA Error Handling][2]_ for detailed information how to end up with error messages like the above.
+
+[^1]:The _Component Management_ supports both however, even the ad-hoc modification of _Common Component_ in its using VB-Project.
+[^2]:Having a look on what GitHub provides - also for Excel VB-Project development will open a complete new world for those never heard if it - or having it ignored for a long time like me.
 
 [1]:https://github.com/warbe-maker/VBA-Trace
 [2]:https://github.com/warbe-maker/VBA-Error
