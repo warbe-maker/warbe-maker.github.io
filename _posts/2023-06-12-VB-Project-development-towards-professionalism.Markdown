@@ -11,41 +11,35 @@ It's the heritage of may active professional IT life time, a passion for Excel V
 
 ### Attraction for _Common Components_
 #### Disambiguation
-_Common Components_ in this context are Procedures (Function, Methods, code snippets, etc.) with useful properties for more than just one VB-Project, collected in a _Standard Module_ or a _Class Module_.
-
+A _Common Component_ in this context is a _Standard Module_ or _Class Module_) with procedures regarding a certain context (`Sub`, `Function`, `Property`) designed for being used in any VB-Project.
 #### Benefit, potential
-_Common Components_, specifically when hosted in dedicated Workbooks are ideal for:
-- being tested extensively (see [regression testing](#regression-testing)
-- the use of a **[Common VBA Execution Trace Service][1]** which supports the identification of performance flaws as well as the  documentation (extent of) a [regression test](#regression-testing)
-- the use of **[Common VBA Error Services][2]** supporting debugging and regression testing
-- A management tool which keeps them up-to-date in any using VB-Project.
-
+_Common Componets_ are a true efficacy boost for the VB-Project development not only when used/imported as a whole but also as a rich source of procedures for being copied into other modules. To unfold its full potential a _Common Component_ needs to be thorowly and extensively tested (see [regression testing](#regression-testing) which is possible best in a dedicated Workbook hosting it (a non dedicated Workbook will hardly ever provide a complete, comprehensive test environment which also supports regression testing. Last but not least, a _Common Component_ should be kept identical in all Workbooks/VB-Projects using it.
 #### Component Management (Excel only)
 Not only for the management of _Common Components_ but also for maintaining a basis for versioning:
 - An **Update outdated Common Components** service keeps used **Common Components** up-to-date by updating them when outdated and the Workbook is opened for development/maintenance (in a dedicated folder!)
 - An **Export of changed VB-Components** service supports versioning - in combination with versioning means like GitHub (what I prefer) by exporting any changed component
-- A **Synchronization VB-Projects** service supports development and maintenance without the unavoidable downtime for the productive Workbook otherwise  
+- A **Synchronization VB-Projects** service supports development and maintenance without the unavoidable downtime for the productive Workbook otherwise.  
 
 See the _[Common VBA Components Management][3] for more information.
 
 #### My _Common Components_
-All my _Common Component_ development aim for working completely autonomous, i.e. they are not requiring other module. The use of other _Common Components_ remains optional. The first three of them are mentioned in this blog. Others are also available as public GitHub repos.
+All my _Common Component_ development aim for working completely autonomous, i.e. they are not requiring any other module, the use of other _Common Components_ remains optional respectively. The most frequently used three of them are mentioned in this blog. Others are also available as public GitHub repos.
 
-#### Regression testing
-It is the nature and the advantage of a _Common Component_ when it is hosted in a dedicated Workbook. It allows a dedicated development environment which enables regression-testing. Something which hardly can be achieved when a component is just declared as _common_ in a non-dedicated Workbook&nbsp;[^1]. Regression testing is supported by the **[Common VBA Error Services][2]** and the **[Common VBA Execution Trace Service][1]**.  
+### Attraction for a professional _Error Handling_ with a comprehensive _Error Message_
+An ideal error message in this respect will look as follows&nbsp;[^1]:  
+![](../Assets/DemoAppErrByErhErrMsg.png)
+It provides the best possible support for debugging by means of a comprehensive error message and the means to resume the code line which raised/caused the error. Furthermore the _Error Handling_ should provide a _[regression testing](#regression-testing)_ support, i.e. the ability to suppress the display of _asserted_ error (errors which are explicitly tested and thus expected).
+
+### Attraction for _Regression Testing_
+Regression testing could be considered the Holy Grail of IT quality management. For VB-Projects as a whole it may be not possible or too cumbersome. _Common Components_ in contrast are perfect candidates for it (I've provided one for each of mine), specifically when hosted in a dedicated Workbook which allows a dedicated development environment. Something which hardly can be achieved when a component is just declared as _common_ in a non-dedicated Workbook&nbsp;[^2]. Regression testing is supported by the **[Common VBA Error Services][2]** and the **[Common VBA Execution Trace Service][1]**.  
 See a complete example with the **[Common VBA Basic Services][8]**.
-The [RegressionTest.ExecTrace.log][4] file shows the result of the execution trace. The [mBasicTest.bas][5] is the test component which produces the execution trace result. See how to [fork][6] the public [GitHub repo][8] to make it all available as your own personal GitHub repo which you the may clone to your computer [by means of [GitHub DeskTop][7]) of which makes the whole thing available in a dedicated folder on your computer.[^2]
+The [RegressionTest.ExecTrace.log][4] file shows the result of the execution trace. The [mBasicTest.bas][5] is the test component which produces the execution trace result. See how to [fork][6] the public [GitHub repo][8] to make it all available as your own personal GitHub repo which you the may clone to your computer [by means of [GitHub DeskTop][7]) of which makes the whole thing available in a dedicated folder on your computer.[^3]
 
 
-### Attraction for a professional Error Handling with a comprehensive Error Message display
+[^1]: The **[Common VBA Error Services][2]** provides a best possible support for debugging and regression testing.
+[^2]:The _Component Management_ supports both however, even the ad-hoc modification of _Common Component_ in its using VB-Project.
+[^3]:Having a look on what GitHub provides - also for Excel VB-Project development will open a complete new world for those never heard if it - or having it ignored for a long time like me.
 
-A professional Error Handling provides both: an optimum support for debugging by means of the display of a comprehensive error message and a _[regression testing](#regression-testing)_ support and the (ideal) error message will look as follows:
-
-![](../Assets/DemoAppErrByErhErrMsg.png)  
-It provides a maximum of possible information and supports debugging with two key strokes - even when code lines are not numbered, which is common!. See _[Common VBA Error Handling][2]_ for detailed information how to end up with error messages like the above.
-
-[^1]:The _Component Management_ supports both however, even the ad-hoc modification of _Common Component_ in its using VB-Project.
-[^2]:Having a look on what GitHub provides - also for Excel VB-Project development will open a complete new world for those never heard if it - or having it ignored for a long time like me.
 
 [1]:https://github.com/warbe-maker/VBA-Trace
 [2]:https://github.com/warbe-maker/VBA-Error
