@@ -2,7 +2,7 @@
 layout: post
 title: Personal and public use of my _Common Components_
 date:          2022-02-15
-modified_date: 2023-07-13
+modified_date: 2024-05-18
 categories:    vba common
 ---
 Managing the balancing act: _Common Components_ designed for a best possible fit with my own VB-Projects using them but without bothering others with my way of using/integrating them. However, maintaining different code versions of a _Common Component_, one which I use in my VB-Projects and another 'public' version is not worthwhile.<!--more-->
@@ -18,13 +18,12 @@ My _Common Component's_ aim is to function as autonomous as possible, i.e. not r
 
 | Cond.&nbsp;Comp.&nbsp;Arg. | Purpose |
 | -------------------------- | ------- |
-| `Debugging = 1`            | Indicates that an error messages should be displayed with a [_debugging option_](#the-debugging-option). This error message option is already available with the "Interface" procedure _[ErrMsg](#the-errmsg-interface-procedure)_ even when no other components are installed/available. |
-| `ExecTrace = 1`            | Indicates that the _[Common VBA Execution Trace Service_][3] is installed and will actively be used |
-|  `MsgComp = 1`             | Indicates that [Common VBA Message Service][1] is installed so that the _mMsg.Dsply_ service can be used as alternative to the `VBA.MsgBox` |
-| `ErHComp = 1`              | Indicates that the [Common VBA Error Services][2] is installed which is able to display the 'path-to-the-error' |
+| `mTrc = 1`            | Indicates that the _[Common VBA Execution Trace Service_][3] (mTrc) is installed and will actively be used |
+| `clsTrc = 1`            | Indicates that the _[Common VBA Execution Trace Service_][3] (clsTrc) is installed and will actively be used |
+|  `mMsg = 1`             | Indicates that [Common VBA Message Service][1] (mMsg/fMsg) is installed so that the _mMsg.Dsply_ service can be used as alternative to the `VBA.MsgBox` |
+| `mErH = 1`              | Indicates that the [Common VBA Error Services][2] (mErH) is installed which is able to display the 'path-to-the-error' |
 
-
-### Procedures providing the environment flexibility
+### Provisioning the flexibility
 #### The _ErrMsg_ interface procedure
 A copy of the _ErrMsg_ "interface" procedure is used in each _Common Component_ for the display of an error message with the following options:
 - a [debugging option](#the-debugging-option) button when the _Conditional Compile Argument_ 'Debugging = 1'
