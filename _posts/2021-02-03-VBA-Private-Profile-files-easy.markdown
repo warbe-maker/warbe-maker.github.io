@@ -24,8 +24,7 @@ There are a couple of library calls available for the maintenance of a _Private 
 For comprehensiveness there are a couple of other methods and properties thinkable.
 
 ## An example
-The autonomous Class Module _[clsPrivProf][1]_ may be downloaded from GitHub and imported into any VB-Project.
-It runs without any specific library calls and provides the following advantages:
+The autonomous Class Module _[clsPrivProf][1]_ may be downloaded [^1] from GitHub and imported or the code may directly be copied into a Class Module named _clsProvProf_. It runs without any specific library calls and provides the following advantages:
 - unlimited string length
 - Sections and Value-Names are maintained in ascending order
 - Optional file header, file footer, section comment, and value comment
@@ -38,6 +37,9 @@ It runs without any specific library calls and provides the following advantages
 Note: Both, the section-name and the file-name are optional. Specifically the _file\_full\_name_ will usually be omitted since specified once when the class instance is established.
 
 For further information see the corresponding [README][2] and a supplementing [SpecsAndUse][3] document.
+
+[^1]: The code may be copied or the Export-File [downloaded] ![downloaded](../Assets/GitHubDownload.png)<br>
+![](/Assets/GitHubDownload.png) or imported
 
 [1]: https://github.com/warbe-maker/Common-VBA-Private-Profile-Services/blob/main/CompMan/source/clsPrivProf.cls
 [2]: https://github.com/warbe-maker/Common-VBA-Private-Profile-Services
