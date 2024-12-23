@@ -1,6 +1,6 @@
 ---
 layout: post
-title: An easy way to Private Profile files in VBA
+title: An easy way to Private Profile files in VB-Projects
 date:          2021-02-03
 modified_date: 2024-12-23
 categories:    vba Office Excel
