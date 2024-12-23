@@ -24,7 +24,7 @@ There are a couple of library calls available for the maintenance of a _Private 
 For comprehensiveness there are a couple of other methods and properties thinkable.
 
 ## An example
-The autonomous Class Module _[clsPrivProf][1]_ may be downloaded (see [how to](#load-from-githbub) when unfamiliar with GitHub) and imported from the public GitHub repository or the code may directly be copied into a Class Module named _clsProvProf_. The module runs without any specific library calls and provides the following advantages:
+The autonomous Class Module _[clsPrivProf][1]_ may be downloaded (see [how to](#download-from-githbub) when unfamiliar with GitHub) and imported from the public GitHub repository or the code may directly be copied into a Class Module named _clsProvProf_. The module runs without any specific library calls and provides the following advantages:
 - An unlimited string length (no hassle with buffer size)
 - Sections and Value-Names are maintained in ascending order
 - Optional comment lines (file header, file footer, section comment, and value comment)
